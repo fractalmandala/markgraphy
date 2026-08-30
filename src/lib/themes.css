@@ -1,0 +1,51 @@
+/*
+ * fractalgraphy theme tokens.
+ *
+ * Optional. Import once in your app entry:
+ *   import "fractalgraphy/themes.css";
+ *
+ * Without it, every component falls back to the dark values below.
+ * Override any token on an ancestor of your graphs:
+ *   .docs { --graph-accent: oklch(0.72 0.14 255); }
+ *
+ * Tokens: --graph-font, --graph-background, --graph-foreground,
+ * --graph-accent, --graph-accent-2, --graph-accent-3,
+ * --graph-frame, --graph-muted, --graph-faint
+ */
+
+:root,
+[data-graph-theme='dark'] {
+	--graph-font: "JetBrains Mono", monospace;
+	--graph-background: oklch(0.16 0.01 160);
+	--graph-foreground: oklch(0.93 0 0);
+	--graph-accent: oklch(0.78 0.17 155);
+	--graph-accent-2: oklch(0.78 0.12 70);
+	--graph-accent-3: oklch(0.75 0.1 200);
+	--graph-frame: oklch(0.6 0 0 / 0.5);
+	--graph-muted: oklch(0.62 0 0);
+	--graph-faint: oklch(0.3 0 0);
+}
+
+[data-graph-theme='light'] {
+	--graph-background: oklch(1 0 0);
+	--graph-foreground: oklch(0.16 0 0);
+	--graph-accent: oklch(0.55 0.16 150);
+	--graph-accent-2: oklch(0.58 0.14 70);
+	--graph-accent-3: oklch(0.5 0.12 165);
+	--graph-frame: oklch(0.205 0 0 / 0.28);
+	--graph-muted: oklch(0.45 0 0);
+	--graph-faint: oklch(0.85 0 0);
+}
+
+@media (prefers-color-scheme: light) {
+	:root:not([data-graph-theme='dark']) {
+		--graph-background: oklch(1 0 0);
+		--graph-foreground: oklch(0.16 0 0);
+		--graph-accent: oklch(0.55 0.16 150);
+		--graph-accent-2: oklch(0.58 0.14 70);
+		--graph-accent-3: oklch(0.5 0.12 165);
+		--graph-frame: oklch(0.205 0 0 / 0.28);
+		--graph-muted: oklch(0.45 0 0);
+		--graph-faint: oklch(0.85 0 0);
+	}
+}
