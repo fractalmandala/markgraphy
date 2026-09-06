@@ -13,7 +13,7 @@ component. There is no markdown parser running in the browser and no second
 pipeline: the figures below are part of the component tree, and they
 server-render with the rest of the page.
 
-That is the entire pitch of fractalgraphy. When you are writing a document
+That is the entire pitch of markgraphy. When you are writing a document
 and you need a number in the middle of it, you should not have to stop,
 open a chart tool, export an image, and embed the image. You type a tag and
 keep going.
@@ -86,7 +86,7 @@ this:
 
 ````md
 <script lang="ts">
-  import { GraphStat } from 'fractalgraphy';
+  import { GraphStat } from 'markgraphy';
 </script>
 
 # Deploy report

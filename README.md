@@ -1,16 +1,16 @@
-# fractalgraphy
+# Markgraphy
 
 Svelte components for tables, charts, and diagrams in markdown. Each graph sits in a dashed frame with a `[ TITLE ]` on the top edge. Glyphs draw the chart — no SVG, no canvas, no dependencies. One accent color by default; drawing graphs can take `palette="duo"` or `palette="multi"`.
 
-[Docs](https://fractalgraphy.vercel.app/docs) · [Examples](https://fractalgraphy.vercel.app/docs/examples) · [Install](https://fractalgraphy.vercel.app/docs/installation) · [Skill](https://fractalgraphy.vercel.app/docs/skill) · [GitHub](https://github.com/fractalmandala/fractalgraphy)
+[Docs](https://markgraphy.vercel.app/docs) · [Examples](https://markgraphy.vercel.app/docs/examples) · [Install](https://markgraphy.vercel.app/docs/installation) · [Skill](https://markgraphy.vercel.app/docs/skill) · [GitHub](https://github.com/fractalmandala/markgraphy)
 
 ## Install
 
 ```bash
-pnpm add fractalgraphy
+pnpm add markgraphy
 ```
 
-Svelte 5 is the only peer. No CSS import, no config — theming is CSS variables (below).
+Svelte 5 is the only peer. One optional CSS import (`markgraphy/themes.css`), no config — theming is CSS variables (below).
 
 ## Quickstart
 
@@ -18,7 +18,7 @@ In a `+page.svelte` (or any component):
 
 ```svelte
 <script>
-	import { GraphKpi, GraphTimeline } from 'fractalgraphy';
+	import { GraphKpi, GraphTimeline } from 'markgraphy';
 </script>
 
 <GraphTimeline
@@ -76,7 +76,7 @@ In `.svx` markdown files (mdsvex), the same imports go in the script block at th
 | Waterfall | `GraphWaterfall` | Running total as floating bars             |
 | Frame     | `Graph`, `GraphBody`, `GraphRule`, `GraphTrack`, `GraphTick`, `GraphArrow` | Shared dashed frame primitives |
 
-Composed write-ups (refactor, incident, tradeoff, PR, sprint, migration) live on [Examples](https://fractalgraphy.vercel.app/docs/examples). Every graph has its own page under [Docs](https://fractalgraphy.vercel.app/docs) with the full props.
+Composed write-ups (refactor, incident, tradeoff, PR, sprint, migration) live on [Examples](https://markgraphy.vercel.app/docs/examples). Every graph has its own page under [Docs](https://markgraphy.vercel.app/docs) with the full props.
 
 ## Theming
 
@@ -112,13 +112,13 @@ Set CSS variables on any container — the components pick them up wherever they
 A `SKILL.md` in [`skills/markdown-graphs/`](skills/markdown-graphs/SKILL.md) teaches an agent when to put a graph next to the prose, which component to pick, and how to write the usage. Drop the two files into the skills folder your agent already reads (`.claude/skills/markdown-graphs`, `.cursor/skills/markdown-graphs`, …), or fetch them from the site:
 
 ```bash
-curl -fsSL https://fractalgraphy.vercel.app/skill.md -o <dir>/markdown-graphs/SKILL.md
-curl -fsSL https://fractalgraphy.vercel.app/skill/recipes.md -o <dir>/markdown-graphs/recipes.md
+curl -fsSL https://markgraphy.vercel.app/skill.md -o <dir>/markdown-graphs/SKILL.md
+curl -fsSL https://markgraphy.vercel.app/skill/recipes.md -o <dir>/markdown-graphs/recipes.md
 ```
 
-- [`/skill.md`](https://fractalgraphy.vercel.app/skill.md) and [`/skill/recipes.md`](https://fractalgraphy.vercel.app/skill/recipes.md) — the raw skill files
-- [`/llms.txt`](https://fractalgraphy.vercel.app/llms.txt) — the whole library on one page for agents
-- [`/docs/skill`](https://fractalgraphy.vercel.app/docs/skill) — install prompts and the chooser
+- [`/skill.md`](https://markgraphy.vercel.app/skill.md) and [`/skill/recipes.md`](https://markgraphy.vercel.app/skill/recipes.md) — the raw skill files
+- [`/llms.txt`](https://markgraphy.vercel.app/llms.txt) — the whole library on one page for agents
+- [`/docs/skill`](https://markgraphy.vercel.app/docs/skill) — install prompts and the chooser
 
 ## Development
 
@@ -134,6 +134,20 @@ pnpm check
 ```
 
 The package build (`pnpm package`) outputs to `dist/` via `svelte-package`.
+
+### Docs development in fractalsvelte
+
+The site (`../fractalsvelte`) imports this package through a local link while it is unpublished — its dependency is declared as `"markgraphy": "link:../markgraphy"`. To work on the library and its docs at the same time:
+
+```bash
+# terminal 1 — rebuild dist/ on every change
+pnpm package:watch
+
+# terminal 2 — the site's dev server
+pnpm --dir ../fractalsvelte dev
+```
+
+Components edited here recompile into `dist/` and hot-reload in the site. Restart the site's dev server after changing the link or dependency versions. Until this package is on npm, pages that import it cannot build in the site's Vercel deploys — publish, then flip the link to a version range.
 
 ## License
 

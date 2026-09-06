@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { reveal } from '$lib/frame/motion';
+	import PageHeader from '$site/components/docs/page-header.svelte';
 	import {
 		skillAgents,
 		skillCopyFromRepo,
@@ -102,7 +102,7 @@
 </script>
 
 <svelte:head>
-	<title>Skill — fractalgraphy</title>
+	<title>Skill — Markgraphy</title>
 	<meta name="description" content={description} />
 </svelte:head>
 
@@ -130,15 +130,12 @@
 {/snippet}
 
 <div class="page">
-	<header class="head" use:reveal={{ amount: 0.4 }}>
-		<h1>Skill</h1>
-		<p class="lead">{description}</p>
+	<PageHeader title="Give it to an agent." kicker="skill" lead={description}>
 		<p class="note">
 			The graphs themselves still need to be in the project.
-			<a href="/docs/installation">Install the package</a> first if it is
-			missing.
+			<a href="/docs/installation">Install the package</a> first if it is missing.
 		</p>
-	</header>
+	</PageHeader>
 
 	<section class="section">
 		<h2>Install</h2>
@@ -254,33 +251,6 @@
 		gap: 3rem;
 	}
 
-	.head {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	h1 {
-		margin: 0;
-		font-size: 2rem;
-		font-weight: 600;
-		letter-spacing: -0.025em;
-	}
-
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		font-weight: 600;
-		letter-spacing: -0.025em;
-	}
-
-	.lead {
-		max-width: 56ch;
-		margin: 0;
-		color: var(--site-muted);
-		text-wrap: pretty;
-	}
-
 	.note {
 		max-width: 56ch;
 		margin: 0;
@@ -367,7 +337,8 @@
 	.block {
 		display: flex;
 		flex-direction: column;
-		border: 1px dashed var(--site-rail);
+		border: 1px solid var(--site-rail);
+		background: #0c0c0c;
 	}
 
 	.block-head {
@@ -376,11 +347,13 @@
 		justify-content: space-between;
 		gap: 1rem;
 		padding: 0.5rem 1rem;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dotted #2a2a2a;
 	}
 
 	.block-label {
-		font-size: 0.875rem;
+		font-size: 0.62rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		color: var(--site-muted);
 	}
 
@@ -406,7 +379,7 @@
 		margin: 0;
 		padding: 1rem;
 		overflow-x: auto;
-		font-size: 0.875rem;
+		font-size: 0.8rem;
 		line-height: 1.6;
 		color: var(--site-muted);
 		white-space: pre;

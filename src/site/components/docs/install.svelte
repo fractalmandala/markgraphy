@@ -1,40 +1,95 @@
 <script lang="ts">
-	import CopyCode from './copy-code.svelte';
-	import MonoLabel from './mono-label.svelte';
+	const managers = [
+		{ id: 'pnpm', cmd: 'pnpm add markgraphy' },
+		{ id: 'npm', cmd: 'npm install markgraphy' },
+		{ id: 'bun', cmd: 'bun add markgraphy' }
+	];
+
+	let current = $state(managers[0]);
+	let copied = $state(false);
+	let timer: ReturnType<typeof setTimeout> | undefined;
+
+	$effect(() => () => clearTimeout(timer));
+
+	async function copy() {
+		try {
+			await navigator.clipboard.writeText(current.cmd);
+		} catch {
+			return;
+		}
+		copied = true;
+		clearTimeout(timer);
+		timer = setTimeout(() => (copied = false), 1400);
+	}
 </script>
 
 <div class="install">
-	<MonoLabel>Install</MonoLabel>
-	<CopyCode text="pnpm add fractalgraphy">
-		<pre class="cmd"><code>pnpm add fractalgraphy</code></pre>
-	</CopyCode>
-	<p class="alt">or <code>npm install fractalgraphy</code></p>
+	<div class="pkg" role="group" aria-label="Package manager">
+		{#each managers as pm (pm.id)}
+			<button
+				type="button"
+				class="tab"
+				aria-pressed={pm.id === current.id}
+				onclick={() => (current = pm)}
+			>
+				{pm.id}
+			</button>
+		{/each}
+	</div>
+	<div class="cmd">
+		<code>{current.cmd}</code>
+		<button class="primo" type="button" onclick={copy}>{copied ? 'Copied' : 'Copy'}</button>
+	</div>
 </div>
 
 <style>
 	.install {
 		display: flex;
 		flex-direction: column;
-		gap: 0.75rem;
+		gap: 0.6rem;
+	}
+
+	.pkg {
+		display: flex;
+		gap: 0.3rem;
+		flex-wrap: wrap;
+	}
+
+	.tab {
+		min-height: 32px;
+		padding: 0 0.7rem;
+		border: 1px solid var(--site-rail);
+		background: transparent;
+		color: var(--site-muted);
+		font: inherit;
+		font-size: 0.62rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	.tab:hover {
+		color: var(--site-fg);
+		border-color: var(--site-fg);
+	}
+
+	.tab[aria-pressed='true'] {
+		color: var(--site-bg);
+		background: var(--site-fg);
+		border-color: var(--site-fg);
 	}
 
 	.cmd {
-		margin: 0;
-		overflow-x: auto;
-		color: var(--site-muted);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 0.8rem;
+		padding: 0.85rem 0.9rem;
+		border: 1px solid var(--site-rail);
+		background: #0c0c0c;
 	}
 
 	.cmd code {
+		font-size: 0.84rem;
 		white-space: nowrap;
-	}
-
-	.alt {
-		margin: 0;
-		font-size: 0.875rem;
-		color: var(--site-muted);
-	}
-
-	.alt code {
-		color: var(--site-fg);
 	}
 </style>

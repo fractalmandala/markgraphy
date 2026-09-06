@@ -13,7 +13,7 @@ const MUTED = 'var(--site-muted)';
 const FG = 'var(--site-fg)';
 
 export const codeTheme: ThemeRegistrationRaw = {
-	name: 'fractalgraphy',
+	name: 'markgraphy',
 	type: 'dark',
 	colors: {
 		'editor.background': 'transparent',
@@ -53,9 +53,9 @@ function getHighlighter() {
 export async function highlight(code: string, lang = 'svelte'): Promise<string> {
 	const highlighter = await getHighlighter();
 	try {
-		return highlighter.codeToHtml(code, { lang, theme: 'fractalgraphy' });
+		return highlighter.codeToHtml(code, { lang, theme: 'markgraphy' });
 	} catch {
-		return highlighter.codeToHtml(code, { lang: 'text', theme: 'fractalgraphy' });
+		return highlighter.codeToHtml(code, { lang: 'text', theme: 'markgraphy' });
 	}
 }
 

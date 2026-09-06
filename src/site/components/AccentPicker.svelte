@@ -5,10 +5,6 @@
 
 	let current = $state(DEFAULT_ACCENT_ID);
 
-	const lastSolid = $derived(
-		accents.reduce((last, accent, index) => (accent.kind === 'solid' ? index : last), 0)
-	);
-
 	function sync() {
 		current = currentAccentId();
 	}
@@ -24,7 +20,7 @@
 	<p class="label">Accent</p>
 {/if}
 <div class="group" class:compact role="radiogroup" aria-label="Accent color">
-	{#each accents as accent, index (accent.id)}
+	{#each accents as accent (accent.id)}
 		<button
 			type="button"
 			role="radio"
@@ -37,13 +33,9 @@
 			<span
 				aria-hidden="true"
 				class="dot"
-				class:ring={accent.id === 'mono'}
 				style:background={accent.swatch}
 			></span>
 		</button>
-		{#if !compact && index === lastSolid}
-			<span class="divider" aria-hidden="true"></span>
-		{/if}
 	{/each}
 </div>
 
@@ -87,14 +79,4 @@
 		overflow: hidden;
 	}
 
-	.dot.ring {
-		border: 1px solid var(--site-rail);
-	}
-
-	.divider {
-		width: 1px;
-		height: 1rem;
-		margin-inline: 0.25rem;
-		background: var(--site-rail);
-	}
 </style>

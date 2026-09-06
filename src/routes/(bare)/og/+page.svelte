@@ -29,7 +29,7 @@
 				<span class="bar short">████████▓▓▓▓▒▒▒░░░░</span>
 				<span class="muted">reads 12,400</span>
 			</div>
-			<p class="install">pnpm add fractalgraphy</p>
+			<p class="install">pnpm add markgraphy</p>
 		</div>
 	</div>
 </div>

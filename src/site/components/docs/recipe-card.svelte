@@ -12,8 +12,8 @@
 		GraphTimeline,
 		GraphUptime
 	} from '$lib';
-	import { reveal, stagger } from '$lib/frame/motion';
 	import { figureLabel, recipeCopy, type Recipe } from '$site/docs/recipes';
+	import CopyCode from './copy-code.svelte';
 
 	let {
 		recipe,
@@ -22,29 +22,15 @@
 		usageHtml
 	}: {
 		recipe: Recipe;
-		/** Heading level for the recipe title: 2 on the examples page, 3 in Scenarios. */
+		/** Heading level for the recipe title: 2 on the examples page, 3 elsewhere. */
 		titleLevel?: 2 | 3;
-		/** Show the copyable usage block. Scenarios hides it to stay light. */
+		/** Show the copyable usage block. */
 		showCode?: boolean;
 		/** Shiki HTML for the usage block, highlighted on the server; plain text when absent. */
 		usageHtml?: string;
 	} = $props();
 
-	let copied = $state(false);
-	let timeout: ReturnType<typeof setTimeout> | undefined;
-
 	const headingTag = $derived(titleLevel === 3 ? 'h3' : 'h2');
-
-	async function copy() {
-		try {
-			await navigator.clipboard.writeText(recipeCopy(recipe));
-			copied = true;
-			clearTimeout(timeout);
-			timeout = setTimeout(() => (copied = false), 1600);
-		} catch {
-			/* clipboard unavailable — the pre block stays selectable */
-		}
-	}
 </script>
 
 <section class="card" id={recipe.slug}>
@@ -53,53 +39,59 @@
 			<svelte:element this={headingTag} class="title">{recipe.title}</svelte:element>
 			<p class="story">{recipe.story}</p>
 		</div>
-		{#if showCode}
-			<button class="copy" class:done={copied} type="button" onclick={copy}>
-				{copied ? 'copied' : 'copy svelte'}
-			</button>
-		{/if}
+		<p class="tags">
+			{#each recipe.tags as tag (tag)}
+				<span>[ {tag} ]</span>
+			{/each}
+		</p>
 	</div>
 
 	<div class="figures">
-		{#each recipe.graphs as figure, index (figure.slug)}
-			<div class="figure" use:reveal={{ delay: stagger(index, 40), amount: 0.4 }}>
-				{#if figure.component === 'GraphCompare'}
-					<GraphCompare {...figure.props} />
-				{:else if figure.component === 'GraphDiff'}
-					<GraphDiff {...figure.props} />
-				{:else if figure.component === 'GraphFlow'}
-					<GraphFlow {...figure.props} />
-				{:else if figure.component === 'GraphGantt'}
-					<GraphGantt {...figure.props} />
-				{:else if figure.component === 'GraphKpi'}
-					<GraphKpi {...figure.props} />
-				{:else if figure.component === 'GraphMeter'}
-					<GraphMeter {...figure.props} />
-				{:else if figure.component === 'GraphRank'}
-					<GraphRank {...figure.props} />
-				{:else if figure.component === 'GraphSlope'}
-					<GraphSlope {...figure.props} />
-				{:else if figure.component === 'GraphStat'}
-					<GraphStat {...figure.props} />
-				{:else if figure.component === 'GraphTimeline'}
-					<GraphTimeline {...figure.props} />
-				{:else if figure.component === 'GraphUptime'}
-					<GraphUptime {...figure.props} />
-				{/if}
-				<p class="fig-link">
-					<a href="/docs/{figure.slug}">{figureLabel(figure.slug)}</a>
-				</p>
+		{#each recipe.graphs as figure (figure.slug)}
+			<div class="figure">
+				<div class="plate">
+					{#if figure.component === 'GraphCompare'}
+						<GraphCompare {...figure.props} />
+					{:else if figure.component === 'GraphDiff'}
+						<GraphDiff {...figure.props} />
+					{:else if figure.component === 'GraphFlow'}
+						<GraphFlow {...figure.props} />
+					{:else if figure.component === 'GraphGantt'}
+						<GraphGantt {...figure.props} />
+					{:else if figure.component === 'GraphKpi'}
+						<GraphKpi {...figure.props} />
+					{:else if figure.component === 'GraphMeter'}
+						<GraphMeter {...figure.props} />
+					{:else if figure.component === 'GraphRank'}
+						<GraphRank {...figure.props} />
+					{:else if figure.component === 'GraphSlope'}
+						<GraphSlope {...figure.props} />
+					{:else if figure.component === 'GraphStat'}
+						<GraphStat {...figure.props} />
+					{:else if figure.component === 'GraphTimeline'}
+						<GraphTimeline {...figure.props} />
+					{:else if figure.component === 'GraphUptime'}
+						<GraphUptime {...figure.props} />
+					{/if}
+				</div>
+				<a class="fig-link" href="/docs/{figure.slug}">[ {figureLabel(figure.slug)} ]</a>
 			</div>
 		{/each}
 	</div>
 
 	{#if showCode}
-		<div class="usage">
-			{#if usageHtml}
-				{@html usageHtml}
-			{:else}
-				{recipeCopy(recipe)}
-			{/if}
+		<div class="import-box">
+			<header>
+				<span>usage</span>
+				<CopyCode text={recipeCopy(recipe)} label="copy svelte" />
+			</header>
+			<div class="usage">
+				{#if usageHtml}
+					{@html usageHtml}
+				{:else}
+					<pre>{recipeCopy(recipe)}</pre>
+				{/if}
+			</div>
 		</div>
 	{/if}
 </section>
@@ -108,14 +100,16 @@
 	.card {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
-		scroll-margin-top: 5rem;
+		gap: 1.2rem;
+		scroll-margin-top: 4.5rem;
 	}
 
 	.head {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: 0.6rem;
+		padding-bottom: 0.9rem;
+		border-bottom: 1px dashed var(--site-rail);
 	}
 
 	@media (min-width: 640px) {
@@ -129,15 +123,16 @@
 	.lede {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.4rem;
 		min-width: 0;
 	}
 
 	.title {
 		margin: 0;
-		font-size: 1.25rem;
+		font-family: var(--font-sans);
+		font-size: 1.45rem;
 		font-weight: 600;
-		letter-spacing: -0.025em;
+		letter-spacing: -0.04em;
 		color: var(--site-fg);
 	}
 
@@ -145,74 +140,91 @@
 		max-width: 56ch;
 		margin: 0;
 		color: var(--site-muted);
+		font-size: 0.85rem;
 		text-wrap: pretty;
 	}
 
-	.copy {
-		padding: 0.25rem 0.75rem;
-		border: 1px dashed var(--site-rail);
-		background: transparent;
-		color: var(--site-muted);
-		font: inherit;
-		font-size: 0.875rem;
-		cursor: pointer;
-	}
-
-	.copy:hover {
-		color: var(--site-fg);
-		background: var(--site-faint);
-	}
-
-	.copy.done {
-		color: var(--graph-accent, oklch(0.78 0.17 155));
-		border-color: currentColor;
+	.tags {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		margin: 0;
+		color: var(--site-faint);
+		font-size: 0.62rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 	}
 
 	.figures {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
+		display: grid;
+		gap: 1.1rem;
+	}
+
+	@media (min-width: 900px) {
+		.figures {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
 
 	.figure {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+		min-width: 0;
+	}
+
+	.plate {
+		--graph-background: var(--site-plate);
+		flex: 1;
+		padding: 1.8rem 1.3rem 1.2rem;
+		background: var(--site-plate);
+		overflow-x: auto;
 	}
 
 	.fig-link {
-		margin: 0;
-		font-size: 0.875rem;
-	}
-
-	.fig-link a {
+		align-self: flex-end;
 		color: var(--site-muted);
+		font-size: 0.62rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 		text-decoration: none;
 	}
 
-	.fig-link a:hover {
-		color: var(--site-fg);
-		text-decoration: underline;
-		text-underline-offset: 4px;
+	.fig-link:hover {
+		color: var(--graph-accent);
+	}
+
+	.import-box {
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+		min-width: 0;
+		padding: 0.85rem 0.9rem 0.95rem;
+		border: 1px solid var(--site-rail);
+		background: #0c0c0c;
+	}
+
+	.import-box header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: var(--site-muted);
+		font-size: 0.62rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 	}
 
 	.usage {
-		margin: 0;
-		padding: 1rem;
-		border: 1px dashed var(--site-rail);
+		min-width: 0;
 		overflow-x: auto;
-		font-size: 0.875rem;
-		line-height: 1.6;
-		color: var(--site-muted);
-		white-space: pre;
 	}
 
 	.usage :global(pre) {
 		margin: 0;
-		padding: 0;
-		overflow-x: visible;
-		font: inherit;
-		color: inherit;
-		white-space: inherit;
+		background: transparent !important;
+		font-size: 0.8rem;
+		line-height: 1.55;
+		color: var(--site-muted);
+		white-space: pre;
 	}
 </style>

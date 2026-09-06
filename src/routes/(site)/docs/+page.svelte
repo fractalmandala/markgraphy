@@ -1,204 +1,367 @@
 <script lang="ts">
-	import { reveal, stagger } from '$lib/frame/motion';
-	import Install from '$site/components/docs/install.svelte';
+	// The set: a cabinet of specimens. Hover or arrow through the index; the
+	// plate shows the live component, the import box its snippet.
+	import CopyCode from '$site/components/docs/copy-code.svelte';
 	import PageHeader from '$site/components/docs/page-header.svelte';
-	import SiteCorners from '$site/components/SiteCorners.svelte';
-	import SiteRule from '$site/components/SiteRule.svelte';
-	import { animatedComponents, staticComponents } from '$site/docs/catalog';
+	import { animatedComponents, components, staticComponents } from '$site/docs/catalog';
+	import { previews } from '$site/docs/previews';
 	import { SITE_NAME } from '$site/lib/site';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+
+	type Family = 'all' | 'graphs' | 'animated' | 'diagrams';
+	const families: Family[] = ['all', 'graphs', 'animated', 'diagrams'];
+
+	const animatedSlugs = new Set(animatedComponents.map((c) => c.slug));
+
+	function familyOf(slug: string): Exclude<Family, 'all'> {
+		if (animatedSlugs.has(slug)) return 'animated';
+		if (slug.startsWith('graph-')) return 'graphs';
+		return 'diagrams';
+	}
+
+	const specimens = components
+		.filter((c) => previews[c.slug]?.length)
+		.map((c) => ({ ...c, fam: familyOf(c.slug), entry: previews[c.slug][0] }));
+
+	let fam = $state<Family>('all');
+	let query = $state('');
+	let selected = $state(specimens[0].slug);
+
+	const visible = $derived.by(() => {
+		const q = query.trim().toLowerCase();
+		return specimens.filter(
+			(s) =>
+				(fam === 'all' || s.fam === fam) &&
+				(!q || (s.title + s.name + s.description).toLowerCase().includes(q))
+		);
+	});
+
+	const active = $derived(
+		visible.find((s) => s.slug === selected) ?? visible[0] ?? specimens[0]
+	);
+
+	const graphs = staticComponents.filter((c) => c.slug.startsWith('graph-')).length;
+	const diagrams = staticComponents.length - graphs;
+
+	function step(delta: number) {
+		if (!visible.length) return;
+		const i = visible.findIndex((s) => s.slug === active.slug);
+		selected = visible[(i + delta + visible.length) % visible.length].slug;
+	}
+
+	function onkeydown(event: KeyboardEvent) {
+		const t = event.target as HTMLElement | null;
+		if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA')) return;
+		if (event.metaKey || event.ctrlKey || event.altKey) return;
+		if (event.key === 'j' || event.key === 'ArrowDown') {
+			event.preventDefault();
+			step(1);
+		} else if (event.key === 'k' || event.key === 'ArrowUp') {
+			event.preventDefault();
+			step(-1);
+		}
+	}
 </script>
 
+<svelte:window {onkeydown} />
+
 <svelte:head>
-	<title>Introduction — {SITE_NAME}</title>
+	<title>The set — {SITE_NAME}</title>
 	<meta
 		name="description"
-		content="ASCII-framed graph components for Svelte. Install from npm, import into any SvelteKit app."
+		content="Every graph, animation and diagram in the library, one plate at a time."
 	/>
 </svelte:head>
 
-<div class="page">
+<div class="site-wrapper">
 	<PageHeader
-		title="Introduction"
-		lead="ASCII-framed graph components for Svelte 5. Install from npm, import into any SvelteKit app, and drop them next to prose in markdown. Each graph sits in a dashed frame with a title on the top edge and one accent color. Drawing graphs also take a palette of two or three accents."
-	>
-		<p class="links">
-			<a href="/docs/examples">Examples</a> are short write-ups with two graphs each — a
-			refactor, an incident, a tradeoff. <a href="/docs/animations">Animations</a> are
-			live glyph components, every one moving on a single page.
-			<a href="/docs/skill">Skill</a> is the SKILL.md that tells an agent to use those
-			instead of drawing SVG.
-		</p>
-	</PageHeader>
+		title="A cabinet of instruments."
+		kicker="the set"
+		lead="{graphs} graphs, {animatedComponents.length} animations, {diagrams} diagrams. Hover a name or press j / k. The plate is the specimen. Open page for props and every example."
+	/>
 
-	<section class="install">
-		<Install />
-		<p class="full"><a href="/docs/installation">Full installation</a></p>
-	</section>
-
-	<section class="list">
-		<h2>Components</h2>
-		<div class="box">
-			<SiteRule placement="top" />
-			<SiteRule placement="bottom" />
-			<SiteCorners />
-			<ul class="grid" role="list">
-				{#each staticComponents as item, i (item.slug)}
-					<li class="cell" use:reveal={{ delay: stagger(i, 40), amount: 0.4 }}>
-						<a class="card" href={`/docs/${item.slug}`}>
-							<span class="name">{item.title}</span>
-							<span class="desc">{item.description}</span>
-							<span class="arrow" aria-hidden="true">→</span>
-						</a>
-					</li>
+	<div class="cabinet">
+		<aside class="index">
+			<div class="tools">
+				<input
+					class="find"
+					type="search"
+					placeholder="find a graph…"
+					aria-label="Find a graph"
+					bind:value={query}
+				/>
+				<div class="tabs" role="group" aria-label="Family">
+					{#each families as f (f)}
+						<button
+							type="button"
+							class="tab"
+							aria-pressed={fam === f}
+							onclick={() => {
+								fam = f;
+								query = '';
+							}}
+						>
+							[ {f} ]
+						</button>
+					{/each}
+				</div>
+			</div>
+			<div class="list" role="listbox" aria-label="Specimens">
+				{#if visible.length === 0}
+					<p class="none">No match.</p>
+				{/if}
+				{#each visible as s (s.slug)}
+					<button
+						type="button"
+						role="option"
+						class="spec"
+						aria-selected={s.slug === active.slug}
+						onmouseenter={() => (selected = s.slug)}
+						onclick={() => (selected = s.slug)}
+						onfocus={() => (selected = s.slug)}
+					>
+						<span class="trim">{s.title.toLowerCase()}</span>
+						<span class="fam">{s.fam}</span>
+					</button>
 				{/each}
-			</ul>
-		</div>
-	</section>
+			</div>
+		</aside>
 
-	<section class="list">
-		<h2>Animated</h2>
-		<div class="box">
-			<SiteRule placement="top" />
-			<SiteRule placement="bottom" />
-			<SiteCorners />
-			<ul class="grid" role="list">
-				{#each animatedComponents as item, i (item.slug)}
-					<li class="cell" use:reveal={{ delay: stagger(i, 40), amount: 0.4 }}>
-						<a class="card" href={`/docs/${item.slug}`}>
-							<span class="name">{item.title}</span>
-							<span class="desc">{item.description}</span>
-							<span class="arrow" aria-hidden="true">→</span>
-						</a>
-					</li>
-				{/each}
-			</ul>
+		<div class="plate-wrap">
+			<div class="plate">
+				{#key active.slug}
+					<div class="art">
+						<active.entry.Comp {...active.entry.props} />
+					</div>
+				{/key}
+			</div>
+			<div class="import-box">
+				<header>
+					<span>{active.fam} · {active.name}</span>
+					<span class="actions">
+						<CopyCode text={active.entry.code} label="copy" />
+						<a class="ghost" href={`/docs/${active.slug}`}>Open page</a>
+					</span>
+				</header>
+				<div class="code">{@html data.codeHtml[active.slug]}</div>
+			</div>
 		</div>
-	</section>
+	</div>
 </div>
 
 <style>
 	.page {
 		display: flex;
 		flex-direction: column;
-		gap: 2.5rem;
+		gap: 0;
 	}
 
-	.links {
-		max-width: 56ch;
-		margin: 0;
-		color: var(--site-muted);
-		text-wrap: pretty;
+	.cabinet {
+		display: grid;
+		grid-template-columns: 17rem minmax(0, 1fr);
+		min-height: 0;
 	}
 
-	.links a {
+	.index {
+		border-right: 1px dashed var(--site-rail);
+		padding: 0.9rem 0.85rem 1.2rem 0;
+		overflow: auto;
+		max-height: calc(100svh - 14rem);
+		scrollbar-width: thin;
+		scrollbar-color: var(--site-rail) transparent;
+	}
+
+	.tools {
+		display: grid;
+		gap: 0.7rem;
+		margin-bottom: 0.9rem;
+	}
+
+	.find {
+		width: 100%;
+		min-height: 44px;
+		padding: 0.55rem 0;
+		background: transparent;
+		border: 0;
+		border-bottom: 1px dashed var(--site-rail);
 		color: var(--site-fg);
-		text-decoration: underline;
-		text-decoration-color: var(--site-rail);
-		text-underline-offset: 4px;
+		font: inherit;
 	}
 
-	.links a:hover {
-		text-decoration-color: var(--site-fg);
+	.find::placeholder {
+		color: var(--site-faint);
 	}
 
-	.install {
+	.find:focus-visible {
+		outline: none;
+		border-bottom-color: var(--graph-accent);
+	}
+
+	.tabs {
 		display: flex;
-		flex-direction: column;
-		gap: 1rem;
+		gap: 0.25rem;
+		flex-wrap: wrap;
 	}
 
-	.full {
-		margin: 0;
+	.tab {
+		min-height: 32px;
+		padding: 0 0.6rem;
+		border: 1px solid var(--site-rail);
+		background: transparent;
+		color: var(--site-muted);
+		font: inherit;
+		font-size: 0.62rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
 	}
 
-	.full a {
+	.tab:hover {
 		color: var(--site-fg);
-		text-decoration: underline;
-		text-decoration-color: var(--site-rail);
-		text-underline-offset: 4px;
+		border-color: var(--site-fg);
 	}
 
-	.full a:hover {
-		text-decoration-color: var(--site-fg);
+	.tab[aria-pressed='true'] {
+		color: var(--site-bg);
+		background: var(--site-fg);
+		border-color: var(--site-fg);
 	}
 
 	.list {
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-	}
-
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		font-weight: 600;
-		letter-spacing: -0.025em;
-	}
-
-	.box {
-		position: relative;
-	}
-
-	.grid {
 		display: grid;
+	}
+
+	.none {
 		margin: 0;
-		padding: 0;
-		list-style: none;
+		padding: 0.6rem 0.35rem;
+		color: var(--site-muted);
 	}
 
-	@media (min-width: 640px) {
-		.grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
+	.spec {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 0.6rem;
+		width: 100%;
+		min-height: 36px;
+		align-items: center;
+		padding: 0.42rem 0.35rem;
+		border: 0;
+		border-bottom: 1px dotted #2a2a2a;
+		background: transparent;
+		color: var(--site-muted);
+		font: inherit;
+		text-align: left;
 	}
 
-	.cell {
-		border-top: 1px dashed var(--site-rail);
+	.spec:hover {
+		color: var(--site-fg);
 	}
 
-	.cell:first-child {
-		border-top: 0;
+	.spec[aria-selected='true'] {
+		color: var(--graph-accent);
 	}
 
-	@media (min-width: 640px) {
-		.cell:nth-child(2) {
-			border-top: 0;
-		}
-
-		.cell:nth-child(odd) {
-			border-right: 1px dashed var(--site-rail);
-		}
+	.trim {
+		min-width: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 
-	.card {
+	.fam {
+		color: var(--site-faint);
+		font-size: 0.62rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.plate-wrap {
 		display: flex;
 		flex-direction: column;
+		gap: 1rem;
+		min-width: 0;
+		padding: 1.6rem 0 1.3rem 1.3rem;
+	}
+
+	.plate {
+		--graph-background: var(--site-plate);
+		min-height: 320px;
+		padding: 1.8rem 1.3rem 1.2rem;
+		background: var(--site-plate);
+		display: grid;
+		align-items: center;
+	}
+
+	.art {
+		min-width: 0;
+		width: min(100%, 52rem);
+		margin: 0 auto;
+		overflow-x: auto;
+	}
+
+	.import-box {
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+		min-width: 0;
+		padding: 0.85rem 0.9rem 0.95rem;
+		border: 1px solid var(--site-rail);
+		background: #0c0c0c;
+	}
+
+	.import-box header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		color: var(--site-muted);
+		font-size: 0.62rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.actions {
+		display: inline-flex;
+		align-items: center;
 		gap: 0.5rem;
-		height: 100%;
-		padding: 1.25rem 1.5rem;
 	}
 
-	.card:hover .name {
-		color: var(--graph-accent, oklch(0.78 0.17 155));
+	.actions .ghost {
+		height: 32px;
+		min-width: 0;
+		padding: 0 0.85rem;
+		font-size: 0.62rem;
 	}
 
-	.card:hover .arrow {
-		color: var(--site-fg);
+	.code {
+		min-width: 0;
+		overflow-x: auto;
 	}
 
-	.name {
-		font-weight: 500;
-		color: var(--site-fg);
-	}
-
-	.desc {
-		max-width: 40ch;
+	.code :global(pre) {
+		margin: 0;
+		background: transparent !important;
+		font-size: 0.8rem;
+		line-height: 1.55;
 		color: var(--site-muted);
-		text-wrap: pretty;
+		white-space: pre;
 	}
 
-	.arrow {
-		align-self: flex-end;
-		color: var(--site-muted);
+	@media (max-width: 980px) {
+		.cabinet {
+			grid-template-columns: 1fr;
+		}
+
+		.index {
+			max-height: 14rem;
+			padding-right: 0;
+			border-right: 0;
+			border-bottom: 1px dashed var(--site-rail);
+		}
+
+		.plate-wrap {
+			padding-left: 0;
+		}
 	}
 </style>

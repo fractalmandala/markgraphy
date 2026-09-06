@@ -2,12 +2,12 @@
 // +page.server.ts can highlight them with shiki at build time.
 
 export const LAYOUT_CODE = `// +layout.svelte — import the theme once, at the root
-import 'fractalgraphy/themes.css';
+import 'markgraphy/themes.css';
 
 let { children } = $props();`;
 
 export const PAGE_CODE = `<script>
-  import { GraphStat } from 'fractalgraphy';
+  import { GraphStat } from 'markgraphy';
 <\/script>
 
 <GraphStat
@@ -24,7 +24,7 @@ title: Field notes
 ---
 
 <script>
-  import { GraphMeter } from 'fractalgraphy';
+  import { GraphMeter } from 'markgraphy';
 <\/script>
 
 ## Throughput

@@ -1,53 +1,72 @@
 <script lang="ts">
+	// Installation: the bench. Three stations, a live row, the token bay.
 	import { GraphStat } from '$lib';
 	import CodeBlock from '$site/components/docs/code-block.svelte';
 	import Install from '$site/components/docs/install.svelte';
 	import PageHeader from '$site/components/docs/page-header.svelte';
-	import Preview from '$site/components/docs/preview.svelte';
 	import { ACCENT_CODE, LAYOUT_CODE, PAGE_CODE, SVX_CODE } from '$site/docs/install-code';
 	import { SITE_NAME } from '$site/lib/site';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 
+	const tokens = [
+		['--graph-accent', 'The one highlight. Default Svelte orange.'],
+		['--graph-accent-2', 'Second series when palette is duo or multi.'],
+		['--graph-accent-3', 'Third cycle. Leave it alone unless earned.'],
+		['--graph-frame', 'Dashed edge color. Keep it quieter than ink.'],
+		['--graph-framer', 'The dash pattern itself: on-length, off-length.'],
+		['--graph-foreground', 'Primary ink inside the frame.'],
+		['--graph-background', 'What the title and corners knock out of the edge.'],
+		['--graph-muted', 'Unused rows, captions, the receding path.'],
+		['--graph-faint', 'Empty cells and the quietest glyphs.']
+	];
 </script>
 
 <svelte:head>
 	<title>Installation — {SITE_NAME}</title>
 	<meta
 		name="description"
-		content="Install fractalgraphy: add the package, import the theme once, use the graphs in pages or .svx markdown, and override the accent with CSS variables."
+		content="Install markgraphy: add the package, import the theme once, drop a graph in a page or .svx file, and override the accent with CSS variables."
 	/>
 </svelte:head>
 
 <div class="page">
 	<PageHeader
-		title="Installation"
-		lead="fractalgraphy ships as one npm package: the graphs, the frame they share, and one stylesheet. Install it, add the theme, and the figures render wherever you put them."
-		note="Requires Svelte 5 — SvelteKit, Vite, or plain Svelte."
+		title="Put a graph next to the prose."
+		kicker="install"
+		lead="One npm package: the graphs, the shared frame, and one optional stylesheet. Svelte 5 is the only peer. Theming is nine CSS variables."
 	/>
 
-	<section class="block">
-		<Install />
-	</section>
+	<div class="bench">
+		<article class="station on">
+			<p class="st-num">[ station 01 ]</p>
+			<h2>Add the package.</h2>
+			<p>Graphs, frame, and theme in one install. No extra chart runtime.</p>
+			<Install />
+		</article>
+		<article class="station">
+			<p class="st-num">[ station 02 ]</p>
+			<h2>Import the theme once.</h2>
+			<p>
+				In the root <code>+layout.svelte</code>. Dark by default, one accent. The header dots on
+				this site do the same override at runtime.
+			</p>
+			<CodeBlock code={LAYOUT_CODE} html={data.layout} heading="+layout.svelte" />
+		</article>
+		<article class="station">
+			<p class="st-num">[ station 03 ]</p>
+			<h2>Drop a graph.</h2>
+			<p>
+				Import any graph from <code>markgraphy</code> and pass data as props. The frame, the
+				title, and the drawing come with it.
+			</p>
+			<CodeBlock code={PAGE_CODE} html={data.page} heading="+page.svelte" label="copy" />
+		</article>
+	</div>
 
-	<section class="block">
-		<h2>Theme</h2>
-		<p>
-			Import the theme once, in your root <code>+layout.svelte</code>. It defines the
-			<code>--graph-*</code> custom properties every component reads — dark by default, one
-			accent. The accent picker in this site's header does exactly this override, at runtime.
-		</p>
-		<CodeBlock code={LAYOUT_CODE} html={data.layout} />
-	</section>
-
-	<section class="block">
-		<h2>Use in a page</h2>
-		<p>
-			Import any graph from <code>fractalgraphy</code> and pass data as props. The frame, the
-			title, and the drawing come with it — no chart config.
-		</p>
-		<Preview code={PAGE_CODE} html={data.page}>
+	<div class="live-row">
+		<div class="plate">
 			<GraphStat
 				title="THIS WEEK"
 				items={[
@@ -56,39 +75,39 @@
 					{ value: '860', label: 'shipped', accent: true }
 				]}
 			/>
-		</Preview>
-	</section>
+		</div>
+		<div class="svx">
+			<p class="eyebrow">[ markdown ]</p>
+			<h3>Use in a .svx file</h3>
+			<p class="ghost-p">
+				Add a script importing the component, then place it between paragraphs. The frame spans
+				the text column.
+			</p>
+			<CodeBlock code={SVX_CODE} html={data.svx} heading="post.svx" />
+		</div>
+	</div>
 
-	<section class="block">
-		<h2>Use in markdown</h2>
-		<p>
-			In a <code>.svx</code> file, add a <code>&lt;script&gt;</code> importing the components,
-			then place them between paragraphs. The frame spans the text column, so figures sit inline
-			with prose like any other element.
-		</p>
-		<CodeBlock code={SVX_CODE} html={data.svx} />
-	</section>
-
-	<section class="block">
-		<h2>Accent overrides</h2>
-		<p>
-			Every color is a CSS variable with a built-in fallback, so nothing breaks if a token is
-			missing. Set them on <code>:root</code> to retheme everything, or scope them to a section:
-			<code>--graph-accent</code>, <code>--graph-accent-2</code>, <code>--graph-accent-3</code>,
-			<code>--graph-frame</code>, <code>--graph-foreground</code>, <code>--graph-muted</code>,
-			<code>--graph-faint</code>.
-		</p>
-		<CodeBlock code={ACCENT_CODE} html={data.accent} />
+	<section class="tokens">
+		<p class="eyebrow">[ tokens ]</p>
+		<div class="token-bay">
+			{#each tokens as [name, note] (name)}
+				<div class="token">
+					<code>{name}</code>
+					<p>{note}</p>
+				</div>
+			{/each}
+		</div>
+		<CodeBlock code={ACCENT_CODE} html={data.accent} heading="app.css" />
 	</section>
 
 	<section class="block">
 		<h2>Palette and glyphs</h2>
 		<p>
-			Drawing graphs take a <code>palette</code> — <code>mono</code> (the default),
-			<code>duo</code>, or <code>multi</code> — mapped onto the accent variables above. Most also
-			take <code>glyphs</code>: a preset (<code>shade</code>, <code>ascii</code>,
-			<code>hash</code>, <code>bar</code>) or an array of characters, one per step. Table,
-			Invoice, Spec, Stat, Tree, and the Frame stay plain.
+			Drawing graphs take a <code>palette</code>: <code>mono</code> (the default),
+			<code>duo</code>, or <code>multi</code>, mapped onto the accent variables above. Most also take
+			<code>glyphs</code>: a preset (<code>shade</code>, <code>ascii</code>, <code>hash</code>,
+			<code>bar</code>) or an array of characters, one per step. Table, Invoice, Spec, Stat, Tree, and
+			the Frame stay plain. <a href="/docs/rules">Operate the grammar →</a>
 		</p>
 	</section>
 </div>
@@ -97,30 +116,191 @@
 	.page {
 		display: flex;
 		flex-direction: column;
-		gap: 2.5rem;
+		gap: 1.4rem;
+	}
+
+	.bench {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border-left: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--site-rail);
+	}
+
+	.station {
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		min-width: 0;
+		min-height: 280px;
+		padding: 1.5rem 1.2rem 1.4rem;
+		border-right: 1px dashed var(--site-rail);
+	}
+
+	.station:last-child {
+		border-right: 0;
+	}
+
+	.station.on {
+		background: color-mix(in oklab, var(--graph-accent) 6%, var(--site-bg));
+	}
+
+	.st-num {
+		margin: 0;
+		color: var(--site-faint);
+		letter-spacing: 0.16em;
+		font-size: 0.66rem;
+		text-transform: uppercase;
+	}
+
+	.station h2 {
+		font-size: 1.45rem;
+	}
+
+	.station p:not(.st-num) {
+		max-width: 36ch;
+		margin: 0;
+		color: var(--site-muted);
+		font-size: 0.85rem;
+	}
+
+	.station code,
+	.block code {
+		color: var(--site-fg);
+	}
+
+	.live-row {
+		display: grid;
+		grid-template-columns: 1.15fr 0.85fr;
+		gap: 1rem;
+	}
+
+	.plate {
+		--graph-background: var(--site-plate);
+		display: grid;
+		align-items: center;
+		min-width: 0;
+		padding: 1.8rem 1.3rem 1.2rem;
+		background: var(--site-plate);
+	}
+
+	.svx {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		min-width: 0;
+		padding: 1.3rem 1.2rem;
+		border: 1px dashed var(--site-rail);
+	}
+
+	.svx .eyebrow {
+		margin: 0;
+	}
+
+	.svx h3 {
+		margin: 0;
+		font-family: var(--font-sans);
+		font-size: 1.2rem;
+		font-weight: 600;
+		letter-spacing: -0.03em;
+	}
+
+	.ghost-p {
+		margin: 0 0 0.5rem;
+		color: var(--site-muted);
+		font-size: 0.85rem;
+	}
+
+	.tokens {
+		display: flex;
+		flex-direction: column;
+		gap: 0.8rem;
+		padding-top: 0.6rem;
+	}
+
+	.tokens .eyebrow {
+		margin: 0;
+	}
+
+	.token-bay {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border: 1px dashed var(--site-rail);
+	}
+
+	.token {
+		padding: 0.9rem 1rem;
+		border-right: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--site-rail);
+	}
+
+	.token:nth-child(3n) {
+		border-right: 0;
+	}
+
+	.token:nth-last-child(-n + 3) {
+		border-bottom: 0;
+	}
+
+	.token code {
+		color: var(--site-fg);
+		font-size: 0.78rem;
+	}
+
+	.token p {
+		margin: 0.3rem 0 0;
+		color: var(--site-muted);
+		font-size: 0.75rem;
 	}
 
 	.block {
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
-	}
-
-	h2 {
-		margin: 0;
-		font-size: 1.25rem;
-		font-weight: 600;
-		letter-spacing: -0.025em;
+		gap: 0.8rem;
+		padding-top: 0.6rem;
 	}
 
 	.block p {
-		max-width: 60ch;
+		max-width: 62ch;
 		margin: 0;
 		color: var(--site-muted);
-		text-wrap: pretty;
+		font-size: 0.88rem;
 	}
 
-	.block p code {
+	.block a {
 		color: var(--site-fg);
+		text-decoration: none;
+		border-bottom: 1px dotted var(--site-faint);
+	}
+
+	@media (max-width: 980px) {
+		.bench,
+		.live-row {
+			grid-template-columns: 1fr;
+		}
+
+		.station {
+			border-right: 0;
+			border-bottom: 1px dashed var(--site-rail);
+		}
+
+		.station:last-child {
+			border-bottom: 0;
+		}
+
+		.token-bay {
+			grid-template-columns: 1fr 1fr;
+		}
+
+		.token:nth-child(3n) {
+			border-right: 1px dashed var(--site-rail);
+		}
+
+		.token:nth-child(2n) {
+			border-right: 0;
+		}
+
+		.token:nth-last-child(-n + 3) {
+			border-bottom: 1px dashed var(--site-rail);
+		}
 	}
 </style>

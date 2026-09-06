@@ -5,15 +5,18 @@
 </script>
 
 <section class="props">
-	<h2>Props</h2>
+	<div class="head">
+		<h2>Props</h2>
+		<p class="eyebrow">{rows.length} props</p>
+	</div>
 	<div class="scroll">
 		<table>
 			<thead>
 				<tr>
-					<th scope="col">Prop</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Description</th>
+					<th scope="col">prop</th>
+					<th scope="col">type</th>
+					<th scope="col">default</th>
+					<th scope="col">description</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,11 +40,15 @@
 		gap: 1rem;
 	}
 
-	h2 {
+	.head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+	}
+
+	.eyebrow {
 		margin: 0;
-		font-size: 1.25rem;
-		font-weight: 600;
-		letter-spacing: -0.025em;
 	}
 
 	.scroll {
@@ -51,27 +58,26 @@
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		font-size: 0.875rem;
+		font-size: 0.82rem;
 	}
 
 	th {
-		padding: 0.75rem;
+		padding: 0.5rem 0.6rem;
 		border-bottom: 1px dashed var(--site-rail);
-		font-weight: 500;
+		font-weight: 400;
+		font-size: 0.62rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
 		text-align: left;
-		color: var(--site-fg);
+		color: var(--site-muted);
 		white-space: nowrap;
 	}
 
 	td {
-		padding: 0.75rem;
-		border-bottom: 1px dashed var(--site-rail);
+		padding: 0.6rem;
+		border-bottom: 1px dotted #2a2a2a;
 		color: var(--site-muted);
 		vertical-align: top;
-	}
-
-	tbody tr:last-child td {
-		border-bottom: 0;
 	}
 
 	.name {
@@ -79,7 +85,11 @@
 		white-space: nowrap;
 	}
 
-	.type,
+	.type {
+		color: var(--graph-accent);
+		white-space: nowrap;
+	}
+
 	.default {
 		white-space: nowrap;
 	}

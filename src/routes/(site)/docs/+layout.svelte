@@ -1,17 +1,23 @@
 <script lang="ts">
+	// Docs shell: the "cabinet" — an index rail on the left, the plate on the
+	// right, dashed rails on both edges. Below 1024px the index becomes a strip.
 	import type { Snippet } from 'svelte';
+	import { page } from '$app/state';
 	import Nav from '$site/components/docs/nav.svelte';
-	import SiteRule from '$site/components/SiteRule.svelte';
 
 	let { children }: { children: Snippet } = $props();
+
+	const cabinet = $derived(page.url.pathname === '/docs');
 </script>
 
 <div class="docs">
-	<SiteRule orientation="y" placement="left" />
-	<SiteRule orientation="y" placement="right" />
-	<Nav variant="mobile" />
-	<div class="cols">
-		<Nav variant="rail" />
+	{#if !cabinet}
+		<Nav variant="mobile" />
+	{/if}
+	<div class="cabinet" class:solo={cabinet}>
+		{#if !cabinet}
+			<Nav variant="rail" />
+		{/if}
 		<main class="content">
 			{@render children()}
 		</main>
@@ -24,44 +30,46 @@
 		width: 100%;
 		max-width: var(--site-max);
 		margin-inline: auto;
-		padding-inline: 1rem;
+		padding: 0 var(--pad) 1.4rem;
 	}
 
-	@media (min-width: 640px) {
-		.docs {
-			padding-inline: 1.5rem;
-		}
-	}
-
-	@media (min-width: 1024px) {
-		.docs {
-			padding-inline: 2rem;
-		}
-	}
-
-	.cols {
+	.cabinet {
 		display: flex;
 		flex-direction: column;
 		min-width: 0;
+		border-left: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--site-rail);
 	}
 
 	@media (min-width: 1024px) {
-		.cols {
-			flex-direction: row;
-			align-items: flex-start;
-			gap: 2.5rem;
+		.cabinet {
+			display: grid;
+			grid-template-columns: 17rem minmax(0, 1fr);
+			align-items: start;
+		}
+
+		.cabinet.solo {
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 
 	.content {
-		flex: 1;
 		min-width: 0;
-		padding-block: 2rem 5rem;
+		padding: 1.6rem 1.3rem 4rem;
 	}
 
 	@media (min-width: 1024px) {
 		.content {
-			padding-block: 2.5rem 5rem;
+			padding: 1.6rem 1.6rem 5rem;
 		}
+	}
+
+	/* Section headings inside docs pages share one voice. */
+	.content :global(h2) {
+		margin: 0;
+		font-family: var(--font-sans);
+		font-size: 1.45rem;
+		font-weight: 600;
+		letter-spacing: -0.04em;
 	}
 </style>

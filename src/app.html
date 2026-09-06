@@ -1,34 +1,16 @@
 <!doctype html>
-<html lang="en" data-graph-theme="dark" data-accent="fractal" data-accent-kind="solid">
+<html lang="en" data-graph-theme="dark" data-accent="#ff3e00">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script>
-			// Restore the saved accent before first paint. Keep ids in sync
-			// with src/site/lib/accents.ts.
+			// Restore the saved accent before first paint.
 			(function () {
 				try {
-					var i = localStorage.getItem('fractalgraphy-accent');
-					var kinds = {
-						fractal: 'solid',
-						mono: 'solid',
-						mint: 'solid',
-						orange: 'solid',
-						green: 'solid',
-						cyan: 'solid',
-						blue: 'solid',
-						purple: 'solid',
-						pink: 'solid',
-						sunset: 'gradient',
-						ocean: 'gradient',
-						neon: 'gradient',
-						aurora: 'gradient',
-						fire: 'gradient',
-						prism: 'gradient'
-					};
-					if (!(i in kinds)) i = 'fractal';
+					var i = localStorage.getItem('markgraphy-accent');
+					var valid = ['#ff3e00','#e67700','#5c940d','#2f9e44','#087f5b','#1098ad','#1971c2','#862e9c','#c2255c','#c92a2a'];
+					if (valid.indexOf(i) === -1) i = '#ff3e00';
 					document.documentElement.setAttribute('data-accent', i);
-					document.documentElement.setAttribute('data-accent-kind', kinds[i]);
 				} catch (e) {
 					/* defaults already set on <html> */
 				}

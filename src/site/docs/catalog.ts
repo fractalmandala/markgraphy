@@ -26,6 +26,7 @@ export type ComponentDoc = {
 export const getStarted: NavLink[] = [
 	{ href: '/docs', label: 'Introduction' },
 	{ href: '/docs/installation', label: 'Installation' },
+	{ href: '/docs/rules', label: 'Rules' },
 	{ href: '/docs/examples', label: 'Examples' },
 	{ href: '/docs/editor', label: 'Editor' },
 	{ href: '/docs/skill', label: 'Skill' }
@@ -623,6 +624,91 @@ const catalog: ComponentDoc[] = [
 		]
 	},
 	{
+		slug: 'graph-latency',
+		title: 'Latency',
+		name: 'GraphLatency',
+		description:
+			'Percentile band chart. Each column stacks p50 (█) at the bottom, p50→p95 (▓), and p95→p99 (▒). Mark a point spike: true to draw a ^ above it.',
+		props: [
+			TITLE,
+			{
+				name: 'data',
+				type: 'LatencyPoint[]',
+				description: 'p50, p95, p99 in the same unit. Optional spike: true per point.'
+			},
+			{
+				name: 'unit',
+				type: 'string',
+				default: '"ms"',
+				description: 'Suffix for the percentile numbers and the y-axis.'
+			},
+			{
+				name: 'height',
+				type: 'number',
+				default: '8',
+				description: 'Rows in the plot. Clamped between 3 and 15.'
+			},
+			{
+				name: 'labels',
+				type: '[string, string]',
+				description: 'First and last axis labels under the chart.'
+			},
+			{
+				name: 'max',
+				type: 'number',
+				description: 'Lock the y-scale. Defaults to max(p99) across the data.'
+			},
+			PALETTE,
+			CORNER,
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-slo',
+		title: 'SLO',
+		name: 'GraphSlo',
+		description:
+			'Error-budget burn bar over a window. Spent fills the bar, remaining is the dim trail. Burn rate, time-to-empty, target, and actual follow below.',
+		props: [
+			TITLE,
+			{
+				name: 'budget',
+				type: 'number',
+				description: 'Fraction of the error budget consumed, 0–1.'
+			},
+			{ name: 'window', type: 'number', default: '30', description: 'Window length in the chosen unit.' },
+			{ name: 'unit', type: '"h" | "d" | "w" | "mo"', default: '"d"', description: 'Window unit.' },
+			{ name: 'target', type: 'number', description: 'Allowed error rate as a fraction, e.g. 0.001 for 99.9%.' },
+			{ name: 'actual', type: 'number', description: 'Actual error rate as a fraction.' },
+			{ name: 'burnRate', type: 'number', description: 'Burn rate multiplier (1 = on pace). Overrides elapsed.' },
+			{ name: 'elapsed', type: 'number', description: 'Time elapsed so far in the window, in units.' },
+			{ name: 'daily', type: 'number[]', description: 'Optional daily-burn samples, 0–1, drawn as a sparkline above the bar.' },
+			{ name: 'caption', type: 'string', description: 'Muted line under the panel.' },
+			CORNER,
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-quota',
+		title: 'Quota',
+		name: 'GraphQuota',
+		description:
+			'Usage against a hard limit, with a reset date and end-of-window projection. Billing-style: the headline figure, the "X of Y" copy, and pace are surfaced together.',
+		props: [
+			TITLE,
+			{ name: 'used', type: 'number', description: 'Amount consumed so far.' },
+			{ name: 'limit', type: 'number', description: 'Hard limit for the window.' },
+			{ name: 'unit', type: 'string', description: 'Unit label, e.g. "API calls" or "GB".' },
+			{ name: 'resets', type: 'string', description: 'Reset label, e.g. "Oct 1" or "in 4 days".' },
+			{ name: 'daysInto', type: 'number', description: 'Days elapsed in the window. Enables the projection.' },
+			{ name: 'daysTotal', type: 'number', description: 'Window length in days.' },
+			{ name: 'format', type: '(n: number) => string', description: 'Custom number formatter. Defaults to thousands-grouped.' },
+			{ name: 'caption', type: 'string', description: 'Muted line under the panel.' },
+			CORNER,
+			CLASS
+		]
+	},
+	{
 		slug: 'graph-slope',
 		title: 'Slope',
 		name: 'GraphSlope',
@@ -909,6 +995,235 @@ const catalog: ComponentDoc[] = [
 		]
 	},
 	{
+		slug: 'graph-agni',
+		title: 'Agni',
+		name: 'GraphAgni',
+		description:
+			'A vedic fire in a havan kund: heat rises from the pit mouth in a breathing column while sparks drift and fade. Decorative, and frozen under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '56',
+				description: 'Scene width in characters.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '16',
+				description: 'Scene height in rows.'
+			},
+			{
+				name: 'cooling',
+				type: 'number',
+				default: '0.6',
+				description: 'Random decay strength; higher burns out sooner.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-aum',
+		title: 'Aum',
+		name: 'GraphAum',
+		description:
+			'The om figure inked stroke by stroke, then held by a resonance crest that travels the stroke order and rests. Frozen settled under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '56',
+				description: 'Scene width in characters; at least 46 so the figure fits.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '22',
+				description: 'Scene height in rows; the figure fills the height.'
+			},
+			{
+				name: 'seedNum',
+				type: 'number',
+				default: '7',
+				description: 'Offsets the resonance wave along the stroke.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-boot',
+		title: 'Boot',
+		name: 'GraphBoot',
+		description:
+			'A deploy log: per-step progress bars (▰▱), ✓ on pass and ✗ on fail, plus a total `N/M passed 4.2s/6.0s` summary row. Frozen mid-run under reduced motion.',
+		props: [
+			{
+				name: 'steps',
+				type: 'GraphBootStep[]',
+				default: '—',
+				description: 'Ordered list of { label, eta?, fail? } steps to run.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '90',
+				description: 'Milliseconds per tick of the boot animation.'
+			},
+			{
+				name: 'stepTicks',
+				type: 'number',
+				default: '14',
+				description: 'Base ticks each step takes before flipping to ✓/✗.'
+			},
+			{
+				name: 'seedNum',
+				type: 'number',
+				default: '5',
+				description: 'Seed for per-step timing jitter; same seed = same run.'
+			},
+			{
+				name: 'label',
+				type: 'string',
+				default: 'from cold to live',
+				description: 'Short caption under the art.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-cron',
+		title: 'Cron',
+		name: 'GraphCron',
+		description:
+			'A zero-dep cron parser. The next N runs of any standard 5-field expression laid out on a tick timeline, with a date and HH:MM ribbon under each marker. Frozen on the first run under reduced motion.',
+		props: [
+			{
+				name: 'expr',
+				type: 'string',
+				description: 'Standard 5-field cron expression: `min hour dom mon dow`.'
+			},
+			{
+				name: 'count',
+				type: 'number',
+				default: '8',
+				description: 'Number of next runs to render on the timeline.'
+			},
+			{
+				name: 'baseTime',
+				type: 'number',
+				description: 'ms since epoch. Defaults to Date.now() at mount.'
+			},
+			{
+				name: 'cols',
+				type: 'number',
+				default: '60',
+				description: 'Timeline width in characters.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '12',
+				description: 'Scene height in rows.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '220',
+				description: 'Milliseconds per tick when the timeline advances.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-damru',
+		title: 'Damru',
+		name: 'GraphDamru',
+		description:
+			'Two triangles meet at a point and pulse on every beat of an 8-beat Adi tala, with a \u2592 ripple expanding and fading each time. Frozen on a clap beat under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '60',
+				description: 'Scene width in characters.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '16',
+				description: 'Scene height in rows.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '220',
+				description: 'Milliseconds per beat of the tala.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-deps',
+		title: 'Deps',
+		name: 'GraphDeps',
+		description:
+			'A dependency tree from a manifest, with version tags on every row and a depth-mark column on the left. Rows cascade in from the root, then a brief rest. Frozen fully-revealed under reduced motion.',
+		props: [
+			{
+				name: 'deps',
+				type: 'DepNode[]',
+				description: 'Root-level packages. Each has name, version, optional children, and optional accent.'
+			},
+			{
+				name: 'depth',
+				type: 'number',
+				default: '6',
+				description: 'Max depth to render, clamped 1..16.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '80',
+				description: 'Milliseconds between cascading row reveals.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-diya',
+		title: 'Diya',
+		name: 'GraphDiya',
+		description:
+			'A row of oil lamps lights left-to-right one by one, then breathes together, occasionally one gutters and relights. Frozen lit under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '60',
+				description: 'Scene width in characters.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '14',
+				description: 'Scene height in rows.'
+			},
+			{
+				name: 'lamps',
+				type: 'number',
+				default: '5',
+				description: 'Number of diyas across the row.'
+			},
+			{
+				name: 'seedNum',
+				type: 'number',
+				default: '13',
+				description: 'Seed for per-lamp phase and gutter schedule.'
+			},
+			CLASS
+		]
+	},
+	{
 		slug: 'graph-fire',
 		title: 'Fire',
 		name: 'GraphFire',
@@ -932,6 +1247,27 @@ const catalog: ComponentDoc[] = [
 				type: 'number',
 				default: '0.6',
 				description: 'Random decay strength; higher burns out sooner.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-flame',
+		title: 'Flame',
+		name: 'GraphFlame',
+		description:
+			'ASCII flame graph: nested rows of frames where each frame’s width is its share of time. Cycles through hot leaves and lights the ancestor chain. Frozen on the first leaf under reduced motion.',
+		props: [
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '600',
+				description: 'Milliseconds per leaf cycle step.'
+			},
+			{
+				name: 'label',
+				type: 'string',
+				description: 'Optional caption drawn under the art.'
 			},
 			CLASS
 		]
@@ -965,6 +1301,114 @@ const catalog: ComponentDoc[] = [
 				type: 'boolean',
 				default: 'true',
 				description: 'Prev, play/pause, next, seek dots, speed slider.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-ganga',
+		title: 'Ganga',
+		name: 'GraphGanga',
+		description:
+			'Three meandering flow lines cascade in steps, with a lone diya flame bobbing downstream. A calmer GraphStream. Frozen mid-flow under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '60',
+				description: 'Scene width in characters.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '18',
+				description: 'Scene height in rows.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '110',
+				description: 'Milliseconds per tick.'
+			},
+			{
+				name: 'seedNum',
+				type: 'number',
+				default: '17',
+				description: 'Seed for the flow pattern and the diya bob.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-hash',
+		title: 'Hash',
+		name: 'GraphHash',
+		description:
+			'Any string → its 64-bit FNV-1a digest as a 4-tier glyph-checkerboard fingerprint (· ░ ▒ ▓) with a scan line that sweeps the grid and a hex readout underneath. Same input always yields the same fingerprint.',
+		props: [
+			{
+				name: 'input',
+				type: 'string',
+				default: "'markgraphy'",
+				description: 'Any string. Its 64-bit digest is the seed — same input = same fingerprint.'
+			},
+			{
+				name: 'cols',
+				type: 'number',
+				default: '16',
+				description: 'Grid width in cells (2 bits per cell, 64-bit digest total).'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '6',
+				description: 'Grid height in cells.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '60',
+				description: 'Milliseconds per tick of the scan-line sweep.'
+			},
+			{
+				name: 'label',
+				type: 'string',
+				default: 'any string → a glyph fingerprint',
+				description: 'Short caption under the art.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-japa',
+		title: 'Japa',
+		name: 'GraphJapa',
+		description:
+			'A 108-bead mala with a marker advancing clockwise, a soft tail behind, and a corner counter; the whole ring shimmers on every revolution. Frozen mid-mala under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '60',
+				description: 'Scene width in characters.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '22',
+				description: 'Scene height in rows; the mala fills the height minus the counter row.'
+			},
+			{
+				name: 'beads',
+				type: 'number',
+				default: '108',
+				description: 'Total beads per mala; the counter shows current/total.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '110',
+				description: 'Milliseconds per bead.'
 			},
 			CLASS
 		]
@@ -1038,6 +1482,46 @@ const catalog: ComponentDoc[] = [
 		]
 	},
 	{
+		slug: 'graph-mandala',
+		title: 'Mandala',
+		name: 'GraphMandala',
+		description:
+			'Lotus-petal rings bloom ring by ring from a bindu, with K-fold rotational symmetry; one canonical petal is rotated K times. Every seed is a different mandala. Frozen fully bloomed under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '48',
+				description: 'Scene width in characters; at least 38 so the outermost ring fits.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '24',
+				description: 'Scene height in rows; at least 20 so the circle fits the cell aspect.'
+			},
+			{
+				name: 'folds',
+				type: 'number',
+				default: '8',
+				description: 'Rotational folds (K); one cell of the canonical petal is rotated K times.'
+			},
+			{
+				name: 'rings',
+				type: 'number',
+				default: '5',
+				description: 'Number of concentric lotus-petal rings.'
+			},
+			{
+				name: 'seedNum',
+				type: 'number',
+				default: '11',
+				description: 'Seed for per-ring radius and phase perturbation.'
+			},
+			CLASS
+		]
+	},
+	{
 		slug: 'graph-pulse',
 		title: 'Pulse',
 		name: 'GraphPulse',
@@ -1105,6 +1589,73 @@ const catalog: ComponentDoc[] = [
 		]
 	},
 	{
+		slug: 'graph-scatter',
+		title: 'Scatter',
+		name: 'GraphScatter',
+		description:
+			'An x/y dot plot in the glyph grid, with a 4-char y-axis gutter and an x-axis ribbon under the plot. Pass trend={true} to add a single-row linear-regression strip below. Reveals left-to-right, then a brief rest. Frozen fully-revealed under reduced motion.',
+		props: [
+			{
+				name: 'data',
+				type: 'ScatterPoint[]',
+				description: 'Points to plot. x and y are real numbers; the chart scales them.'
+			},
+			{
+				name: 'cols',
+				type: 'number',
+				default: '60',
+				description: 'Scene width (excluding the y-axis gutter).'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '14',
+				description: 'Scene height (excluding the x-axis row and trend row).'
+			},
+			{
+				name: 'trend',
+				type: 'boolean',
+				default: 'false',
+				description: 'Render a single-row linear-regression strip below the plot.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '60',
+				description: 'Milliseconds between reveals of new points.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-surya',
+		title: 'Surya',
+		name: 'GraphSurya',
+		description:
+			'A spoked sun that rises from behind the horizon line, turns one spoke at a time, and sets again. Frozen mid-morning under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '60',
+				description: 'Scene width in characters.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '18',
+				description: 'Scene height in rows.'
+			},
+			{
+				name: 'rays',
+				type: 'number',
+				default: '12',
+				description: 'Spokes on the wheel.'
+			},
+			CLASS
+		]
+	},
+	{
 		slug: 'graph-scope',
 		title: 'Scope',
 		name: 'GraphScope',
@@ -1133,6 +1684,39 @@ const catalog: ComponentDoc[] = [
 				type: '"line" | "area"',
 				default: '"line"',
 				description: 'Line trace or filled area under it.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-sequence',
+		title: 'Sequence',
+		name: 'GraphSequence',
+		description:
+			'ASCII sequence diagram: participants on columns, labeled dashed arrows between them, and activation bars on each lifeline. The current message and its endpoints light up. Frozen on the first message under reduced motion.',
+		props: [
+			{
+				name: 'cols',
+				type: 'number',
+				default: '68',
+				description: 'Scene width in characters; at least 40 so four participants fit.'
+			},
+			{
+				name: 'rows',
+				type: 'number',
+				default: '12',
+				description: 'Scene height in rows; at least 10 so header + 6 messages fit.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '600',
+				description: 'Milliseconds per message step.'
+			},
+			{
+				name: 'label',
+				type: 'string',
+				description: 'Optional caption drawn under the art.'
 			},
 			CLASS
 		]
@@ -1171,6 +1755,27 @@ const catalog: ComponentDoc[] = [
 		]
 	},
 	{
+		slug: 'graph-state',
+		title: 'State',
+		name: 'GraphState',
+		description:
+			'ASCII state-machine chart: state boxes in a 2×2 grid with labeled transitions on the arrows. The current state and its outgoing transition light up. Frozen on the first state under reduced motion.',
+		props: [
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '700',
+				description: 'Milliseconds per state step.'
+			},
+			{
+				name: 'label',
+				type: 'string',
+				description: 'Optional caption drawn under the art.'
+			},
+			CLASS
+		]
+	},
+	{
 		slug: 'graph-stream',
 		title: 'Stream',
 		name: 'GraphStream',
@@ -1199,6 +1804,46 @@ const catalog: ComponentDoc[] = [
 				type: 'string',
 				default: '""',
 				description: 'Suffix after the value, rendered muted.'
+			},
+			CLASS
+		]
+	},
+	{
+		slug: 'graph-terminal',
+		title: 'Terminal',
+		name: 'GraphTerminal',
+		description:
+			'A scripted shell session: a `$ ` prompt gets typed character-by-character, output blocks stream right after, the whole script loops. Combines a typewriter (prompt) and a stream (output) into one frame.',
+		props: [
+			{
+				name: 'lines',
+				type: 'TerminalLine[]',
+				default: '—',
+				description: "Scripted session: { kind: 'prompt' | 'output', text: string } entries."
+			},
+			{
+				name: 'typeMs',
+				type: 'number',
+				default: '28',
+				description: 'Milliseconds per character when typing a prompt line.'
+			},
+			{
+				name: 'streamMs',
+				type: 'number',
+				default: '14',
+				description: 'Milliseconds per character when streaming an output line.'
+			},
+			{
+				name: 'holdMs',
+				type: 'number',
+				default: '1600',
+				description: 'Hold time at the end of the script before looping.'
+			},
+			{
+				name: 'label',
+				type: 'string',
+				default: 'a session, scripted',
+				description: 'Short caption under the art.'
 			},
 			CLASS
 		]
@@ -1256,6 +1901,64 @@ const catalog: ComponentDoc[] = [
 			},
 			CLASS
 		]
+	},
+	{
+		slug: 'graph-workflow',
+		title: 'Workflow',
+		name: 'GraphWorkflow',
+		description:
+			'A typed workflow diagram: nodes and edges as data, auto-laid out as a top-down DAG, with a play/pause step-player that lights up the path.',
+		props: [
+			TITLE,
+			{
+				name: 'nodes',
+				type: 'WorkflowNode[]',
+				description: 'Nodes in input order. Within a rank, input order is preserved.'
+			},
+			{
+				name: 'edges',
+				type: 'WorkflowEdge[]',
+				description:
+					'Directed edges. If omitted, a linear chain in nodes[].id order is used.'
+			},
+			{
+				name: 'path',
+				type: 'string[]',
+				description: 'Activation order. Defaults to a topological pass over the graph.'
+			},
+			{
+				name: 'animated',
+				type: 'boolean',
+				default: 'true',
+				description:
+					'Animate the active-step pulse and color transitions. Off under reduced motion.'
+			},
+			{
+				name: 'autoPlay',
+				type: 'boolean',
+				default: 'false',
+				description: 'Start playing on mount. Never autoplays under reduced motion.'
+			},
+			{
+				name: 'speedMs',
+				type: 'number',
+				default: '1200',
+				description: 'Milliseconds per step. Adjustable on the controls.'
+			},
+			{
+				name: 'showControls',
+				type: 'boolean',
+				default: 'true',
+				description: 'Show the play / pause / step / speed controls.'
+			},
+			{
+				name: 'label',
+				type: 'string',
+				description: 'Short caption rendered under the diagram.'
+			},
+			CORNER,
+			CLASS
+		]
 	}
 ];
 
@@ -1274,7 +1977,25 @@ const ANIMATED_SLUGS = new Set([
 	'graph-pulse',
 	'graph-spinners',
 	'graph-fire',
-	'graph-rain'
+	'graph-rain',
+	'graph-agni',
+	'graph-aum',
+	'graph-boot',
+	'graph-cron',
+	'graph-damru',
+	'graph-deps',
+	'graph-diya',
+	'graph-ganga',
+	'graph-hash',
+	'graph-japa',
+	'graph-mandala',
+	'graph-scatter',
+	'graph-surya',
+	'graph-terminal',
+	'graph-flame',
+	'graph-sequence',
+	'graph-state',
+	'graph-workflow'
 ]);
 
 export const staticComponents: ComponentDoc[] = components.filter(

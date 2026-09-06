@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { reveal } from '$lib/frame/motion';
+	import PageHeader from '$site/components/docs/page-header.svelte';
 	import RecipeCard from '$site/components/docs/recipe-card.svelte';
 	import { recipes } from '$site/docs/recipes';
+	import { SITE_NAME } from '$site/lib/site';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -11,25 +12,24 @@
 </script>
 
 <svelte:head>
-	<title>Examples — fractalgraphy</title>
+	<title>Examples — {SITE_NAME}</title>
 	<meta name="description" content={description} />
 </svelte:head>
 
 <div class="page">
-	<header class="head" use:reveal={{ amount: 0.4 }}>
-		<h1>Examples</h1>
-		<p class="lead">
-			{description} Copy the Svelte and swap the labels for yours. Each graph
-			has its own page if you want the props.
-		</p>
-		<ul class="chips" role="list">
-			{#each recipes as item (item.slug)}
-				<li>
-					<a href="#{item.slug}">{item.title}</a>
-				</li>
-			{/each}
-		</ul>
-	</header>
+	<PageHeader
+		title="Next to the writing."
+		kicker="examples"
+		lead="{description} Copy the Svelte and swap the labels for yours. Each graph has its own page if you want the props."
+	/>
+
+	<ul class="chips" role="list">
+		{#each recipes as item (item.slug)}
+			<li>
+				<a href="#{item.slug}">[ {item.title} ]</a>
+			</li>
+		{/each}
+	</ul>
 
 	<div class="list">
 		{#each recipes as item (item.slug)}
@@ -38,8 +38,7 @@
 	</div>
 
 	<p class="outro">
-		Give this to an agent:
-		<a href="/docs/skill">Skill</a>. Every graph in one file:
+		Give this to an agent: <a href="/docs/skill">Skill</a>. Every graph in one file:
 		<a href="/llms.txt">/llms.txt</a>.
 	</p>
 </div>
@@ -48,71 +47,48 @@
 	.page {
 		display: flex;
 		flex-direction: column;
-		gap: 2.5rem;
-	}
-
-	.head {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	h1 {
-		margin: 0;
-		font-size: 2rem;
-		font-weight: 600;
-		letter-spacing: -0.025em;
-	}
-
-	.lead {
-		max-width: 56ch;
-		margin: 0;
-		color: var(--site-muted);
-		text-wrap: pretty;
+		gap: 2.4rem;
 	}
 
 	.chips {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.5rem 1.5rem;
+		gap: 0.15rem 0.5rem;
 		margin: 0;
 		padding: 0;
 		list-style: none;
-		color: var(--site-muted);
-		font-size: 0.875rem;
 	}
 
 	.chips a {
+		display: inline-block;
+		padding: 0.3rem 0.2rem;
 		color: var(--site-muted);
+		font-size: 0.68rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 		text-decoration: none;
 	}
 
 	.chips a:hover {
-		color: var(--site-fg);
-		text-decoration: underline;
-		text-underline-offset: 4px;
+		color: var(--graph-accent);
 	}
 
 	.list {
 		display: flex;
 		flex-direction: column;
-		gap: 4rem;
+		gap: 3.2rem;
 	}
 
 	.outro {
 		max-width: 56ch;
 		margin: 0;
 		color: var(--site-muted);
+		font-size: 0.85rem;
 	}
 
 	.outro a {
 		color: var(--site-fg);
-		text-decoration: underline;
-		text-decoration-color: var(--site-rail);
-		text-underline-offset: 4px;
-	}
-
-	.outro a:hover {
-		text-decoration-color: var(--site-fg);
+		text-decoration: none;
+		border-bottom: 1px dotted var(--site-faint);
 	}
 </style>

@@ -130,9 +130,9 @@
 		if (format === 'text') {
 			code = rawInput;
 		} else if (format === 'svelte') {
-			code = `<script lang="ts">\n  import { AsciiDiagram } from 'fractalgraphy';\n<\/script>\n\n<AsciiDiagram>\n  {\`${rawInput}\`}\n</AsciiDiagram>`;
+			code = `<script lang="ts">\n  import { AsciiDiagram } from 'markgraphy';\n<\/script>\n\n<AsciiDiagram>\n  {\`${rawInput}\`}\n</AsciiDiagram>`;
 		} else if (format === 'svx') {
-			code = `<script>\n  import { AsciiDiagram } from 'fractalgraphy';\n<\/script>\n\n<AsciiDiagram>\n\n\`\`\`diagram\n${rawInput}\n\`\`\`\n\n</AsciiDiagram>`;
+			code = `<script>\n  import { AsciiDiagram } from 'markgraphy';\n<\/script>\n\n<AsciiDiagram>\n\n\`\`\`diagram\n${rawInput}\n\`\`\`\n\n</AsciiDiagram>`;
 		}
 
 		try {

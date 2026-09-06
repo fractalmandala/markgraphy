@@ -96,6 +96,7 @@
 	}
 
 	.table {
+		font-size: 0.875rem;
 		width: 100%;
 		min-width: 32rem;
 		border-collapse: separate;

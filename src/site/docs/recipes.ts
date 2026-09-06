@@ -131,7 +131,7 @@ export const recipes: Recipe[] = [
 						}
 					]
 				},
-				code: `import { GraphFlow } from 'fractalgraphy'
+				code: `import { GraphFlow } from 'markgraphy'
 
 <GraphFlow
 	title="AUTH"
@@ -164,7 +164,7 @@ export const recipes: Recipe[] = [
 						{ date: 'w3', label: 'delete the old util', state: 'next' }
 					]
 				},
-				code: `import { GraphTimeline } from 'fractalgraphy'
+				code: `import { GraphTimeline } from 'markgraphy'
 
 <GraphTimeline
 	title="PLAN"
@@ -197,7 +197,7 @@ export const recipes: Recipe[] = [
 						{ date: '14:40', label: 'write the postmortem', state: 'next' }
 					]
 				},
-				code: `import { GraphTimeline } from 'fractalgraphy'
+				code: `import { GraphTimeline } from 'markgraphy'
 
 <GraphTimeline
 	title="INCIDENT"
@@ -232,7 +232,7 @@ export const recipes: Recipe[] = [
 						'ok'
 					]
 				},
-				code: `import { GraphUptime } from 'fractalgraphy'
+				code: `import { GraphUptime } from 'markgraphy'
 
 <GraphUptime
 	title="API"
@@ -280,7 +280,7 @@ export const recipes: Recipe[] = [
 						{ label: 'local', values: [true, false] }
 					]
 				},
-				code: `import { GraphCompare } from 'fractalgraphy'
+				code: `import { GraphCompare } from 'markgraphy'
 
 <GraphCompare
 	title="QUEUE"
@@ -305,7 +305,7 @@ export const recipes: Recipe[] = [
 						{ label: 'aws sdk', value: 120, display: '120 kb' }
 					]
 				},
-				code: `import { GraphRank } from 'fractalgraphy'
+				code: `import { GraphRank } from 'markgraphy'
 
 <GraphRank
 	title="INSTALL"
@@ -338,7 +338,7 @@ export const recipes: Recipe[] = [
 						{ label: 'legacy-auth.ts', value: 'gone', sign: 'remove' }
 					]
 				},
-				code: `import { GraphDiff } from 'fractalgraphy'
+				code: `import { GraphDiff } from 'markgraphy'
 
 <GraphDiff
 	title="FILES"
@@ -363,7 +363,7 @@ export const recipes: Recipe[] = [
 						{ label: 'docs', from: 11, to: 40 }
 					]
 				},
-				code: `import { GraphSlope } from 'fractalgraphy'
+				code: `import { GraphSlope } from 'markgraphy'
 
 <GraphSlope
 	title="COVERAGE"
@@ -400,7 +400,7 @@ export const recipes: Recipe[] = [
 						{ label: 'review', start: 0.7, end: 1, complete: 0 }
 					]
 				},
-				code: `import { GraphGantt } from 'fractalgraphy'
+				code: `import { GraphGantt } from 'markgraphy'
 
 <GraphGantt
 	title="THIS WEEK"
@@ -425,7 +425,7 @@ export const recipes: Recipe[] = [
 						{ value: '9', label: 'shipped', accent: true }
 					]
 				},
-				code: `import { GraphStat } from 'fractalgraphy'
+				code: `import { GraphStat } from 'markgraphy'
 
 <GraphStat
 	title="BOARD"
@@ -454,7 +454,7 @@ export const recipes: Recipe[] = [
 					value: 0.67,
 					caption: 'users table'
 				},
-				code: `import { GraphMeter } from 'fractalgraphy'
+				code: `import { GraphMeter } from 'markgraphy'
 
 <GraphMeter title="ROWS" value={0.67} caption="users table" />`
 			},
@@ -468,7 +468,7 @@ export const recipes: Recipe[] = [
 					hint: '67%',
 					data: [2, 3, 3, 5, 8, 9, 11, 12, 14, 16, 18, 21]
 				},
-				code: `import { GraphKpi } from 'fractalgraphy'
+				code: `import { GraphKpi } from 'markgraphy'
 
 <GraphKpi
 	title="MIGRATED"

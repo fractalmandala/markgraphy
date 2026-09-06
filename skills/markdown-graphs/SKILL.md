@@ -3,7 +3,7 @@ name: markdown-graphs
 description: >-
   Picks and writes markdown graphs (ASCII-framed Svelte components for
   SvelteKit and mdsvex) next to prose. Chooses a component from the
-  fractalgraphy library, writes real Svelte usage, and never draws SVG,
+  markgraphy library, writes real Svelte usage, and never draws SVG,
   Mermaid, Chart.js, canvas, or ASCII art. Use when explaining a refactor,
   incident, postmortem, tradeoff, pull request, sprint, or migration; when the
   user mentions markdown graphs, ASCII diagrams, framed charts, GraphFlow, or
@@ -12,7 +12,7 @@ description: >-
 
 # markdown graphs
 
-fractalgraphy components draw charts with characters: a dashed frame, `+`
+markgraphy components draw charts with characters: a dashed frame, `+`
 corners, and a `[ TITLE ]` on the top edge. Svelte 5, zero dependencies. The
 package installs from npm and the components are imported — nothing is copied
 into your project.
@@ -26,14 +26,14 @@ bullets, ask if a framed figure would scan faster.
 ## Install
 
 ```bash
-pnpm add fractalgraphy
+pnpm add markgraphy
 ```
 
 Svelte 5 is the only peer. No CSS import, no config — theming is CSS
 variables (below). If the import does not resolve, the package is missing.
 
 Read [recipes.md](recipes.md) before writing usage. Unsure which component?
-Fetch https://fractalgraphy.vercel.app/llms.txt.
+Fetch https://markgraphy.vercel.app/llms.txt.
 
 ## Procedure
 
@@ -102,7 +102,7 @@ In a `+page.svelte` (or any component):
 
 ```svelte
 <script>
-	import { GraphFlow } from 'fractalgraphy';
+	import { GraphFlow } from 'markgraphy';
 </script>
 
 <GraphFlow title="AUTH" rows={[{ nodes: [{ label: 'request' }, { label: 'handler' }] }]} />
@@ -113,7 +113,7 @@ top, then the component sits next to the prose:
 
 ```mdsvex
 <script>
-	import { GraphMeter } from 'fractalgraphy';
+	import { GraphMeter } from 'markgraphy';
 </script>
 
 Prose before the figure.

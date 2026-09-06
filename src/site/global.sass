@@ -1,0 +1,126 @@
+// Site tokens and utilities. Library-owned styles (frame, body, corners)
+// live in src/lib; this file only themes them through --graph-* tokens.
+:root
+	--site-bg: #101010
+	--site-surface: #161616
+	--site-plate: #000000
+	--site-fg: #f1f1f1
+	--site-muted: #878787
+	--site-faint: #474747
+	--site-rail: #373737
+	--font-sans: 'Overused Grotesk', sans-serif
+	--font-mono: 'Google Sans Code', ui-monospace, monospace
+	--col-svelte: #FF3E00
+	--site-max: 92rem
+	--pad: clamp(1rem, 2.4vw, 2rem)
+	--graph-font: var(--font-mono)
+	--graph-background: var(--site-bg)
+	--graph-foreground: var(--site-fg)
+	--graph-frame: var(--site-rail)
+	--graph-framer: var(--graph-frame) 0 4px, transparent 4px 8px
+	--graph-muted: var(--site-muted)
+	--graph-faint: var(--site-faint)
+
+// Dash variants a site page can pass through `class` on any Graph.
+:root
+	--graph-framer-gapped: var(--graph-frame) 0 4px, transparent 4px 16px
+	--graph-framer-long: var(--graph-frame) 0 12px, transparent 12px 24px
+	--graph-framer-short: var(--graph-frame) 0 2px, transparent 2px 4px
+	--graph-framer-dot: var(--graph-frame) 0 1px, transparent 1px 4px
+	--graph-framer-alt: var(--graph-frame) 0 2px, transparent 2px 5px, var(--graph-frame) 5px 13px, transparent 13px 16px
+
+.graph.gfgap
+	--graph-framer: var(--graph-framer-gapped)
+.graph.gflong
+	--graph-framer: var(--graph-framer-long)
+.graph.gfshort
+	--graph-framer: var(--graph-framer-short)
+.graph.gfdot
+	--graph-framer: var(--graph-framer-dot)
+.graph.gfalt
+	--graph-framer: var(--graph-framer-alt)
+
+// Layout utilities
+.grid-2
+	display: grid
+	grid-template-columns: 1fr
+	@media (min-width: 1025px)
+		grid-template-columns: 1fr 1fr
+
+.box, .row
+	display: flex
+
+.box
+	flex-direction: column
+
+.gap16
+	gap: 1rem
+.gap24
+	gap: 1.5rem
+.pad16
+	padding: 1rem
+.pad24
+	padding: 1.5rem
+.pad32
+	padding: 2rem
+
+// Type utilities (v2 vocabulary)
+.kicker
+	color: var(--graph-accent)
+
+.kicker-hover
+	&:hover
+		color: var(--graph-accent) !important
+
+a
+	&:hover
+		.kicker-hover
+			color: var(--graph-accent) !important
+
+.eyebrow
+	color: var(--site-muted)
+	font-size: 0.68rem
+	letter-spacing: 0.12em
+	text-transform: uppercase
+	font-family: var(--font-mono)
+
+.display
+	font-family: var(--font-sans)
+	font-weight: 600
+	letter-spacing: -0.045em
+	line-height: 0.92
+	text-wrap: balance
+
+// Buttons
+.primo, .ghost
+	display: inline-flex
+	align-items: center
+	justify-content: center
+	height: 36px
+	min-width: 96px
+	padding: 0 1rem
+	text-transform: uppercase
+	letter-spacing: 0.08em
+	font-size: 0.72rem
+	font-family: var(--font-sans)
+	font-weight: 600
+	text-decoration: none
+	transition: background 90ms, border-color 90ms
+
+.primo
+	background: #c9c9c9
+	color: var(--site-bg)
+	border: 1px solid #c9c9c9
+	&:hover
+		background: #fff
+		border-color: #fff
+
+.ghost
+	background: transparent
+	color: var(--site-fg)
+	border: 1px solid var(--site-rail)
+	&:hover
+		border-color: var(--site-fg)
+
+code
+	font-family: var(--font-mono)

@@ -1,0 +1,312 @@
+<script lang="ts">
+	// Room 03 — rules. Three constraints as rule plates, each demo driven by
+	// a real library component: the glyph set on a GraphRank, the corner mark
+	// on a bare Graph frame, and the palette on a GraphStack. Break any one
+	// and it becomes another chart library.
+	import { Graph, GraphBody, GraphRank, GraphStack } from '$lib';
+
+	const glyphSets = ['shade', 'ascii', 'hash', 'bar'] as const;
+	type GlyphSet = (typeof glyphSets)[number];
+	let glyphSet = $state<GlyphSet>('shade');
+
+	const corners = ['+', '*', '·', '⌜'];
+	let corner = $state('+');
+
+	const palettes = ['mono', 'duo', 'multi'] as const;
+	type Palette = (typeof palettes)[number];
+	let palette = $state<Palette>('mono');
+
+	const rankItems = [
+		{ label: 'cpu', value: 72 },
+		{ label: 'ram', value: 34 },
+		{ label: 'ssd', value: 91 }
+	];
+
+	const stackRows = [
+		{
+			label: 'docs',
+			segments: [
+				{ label: 'shipped', value: 8 },
+				{ label: 'review', value: 4 },
+				{ label: 'backlog', value: 4 }
+			]
+		},
+		{
+			label: 'site',
+			segments: [
+				{ label: 'shipped', value: 6 },
+				{ label: 'review', value: 6 },
+				{ label: 'backlog', value: 2 }
+			]
+		},
+		{
+			label: 'pkg',
+			segments: [
+				{ label: 'shipped', value: 12 },
+				{ label: 'review', value: 2 },
+				{ label: 'backlog', value: 2 }
+			]
+		}
+	];
+</script>
+
+<svelte:head>
+	<title>Rules — markgraphy</title>
+	<meta name="description" content="Three constraints: glyphs do the drawing, the frame is the brand, one accent on purpose." />
+</svelte:head>
+
+<section class="rules">
+	<div class="page-head">
+		<div>
+			<p class="kicker">[ rules ]</p>
+			<h1>A taste system<br />disguised as charts.</h1>
+		</div>
+		<p class="lede">Three constraints. Break any one and it becomes another chart library.</p>
+	</div>
+
+	<div class="grammar">
+		<article class="rule-plate">
+			<div class="rule-copy">
+				<p class="rule-idx">01</p>
+				<h2>Glyphs do the drawing.</h2>
+				<p>Borders are dashes and plus signs. Bars and cells are characters.</p>
+			</div>
+			<div class="rule-demo">
+				<div class="controls" role="group" aria-label="Glyph set">
+					{#each glyphSets as id (id)}
+						<button
+							type="button"
+							class="mark-btn"
+							aria-pressed={glyphSet === id}
+							onclick={() => (glyphSet = id)}
+						>
+							[ {id} ]
+						</button>
+					{/each}
+				</div>
+				<div class="demo-art">
+					<GraphRank title="RANK" glyphs={glyphSet} items={rankItems} />
+				</div>
+			</div>
+		</article>
+
+		<article class="rule-plate">
+			<div class="rule-copy">
+				<p class="rule-idx">02</p>
+				<h2>The frame is the brand.</h2>
+				<p>
+					Every graph sits in a dashed edge with a <span class="tok">[ TITLE ]</span> and corner
+					marks.
+				</p>
+			</div>
+			<div class="rule-demo">
+				<div class="controls" role="group" aria-label="Corner mark">
+					{#each corners as mark (mark)}
+						<button
+							type="button"
+							class="mark-btn"
+							aria-pressed={corner === mark}
+							onclick={() => (corner = mark)}
+						>
+							[ {mark} ]
+						</button>
+					{/each}
+				</div>
+				<div class="demo-art">
+					<Graph title="FRAME" corner={corner}>
+						<GraphBody>
+							<p class="caption">Graph · GraphBody · GraphRule · GraphTrack</p>
+						</GraphBody>
+					</Graph>
+				</div>
+			</div>
+		</article>
+
+		<article class="rule-plate">
+			<div class="rule-copy">
+				<p class="rule-idx">03</p>
+				<h2>One accent, on purpose.</h2>
+				<p>Unused rows recede. Default is <code>palette="mono"</code>.</p>
+			</div>
+			<div class="rule-demo">
+				<div class="controls" role="group" aria-label="Palette">
+					{#each palettes as id (id)}
+						<button
+							type="button"
+							class="mark-btn"
+							aria-pressed={palette === id}
+							onclick={() => (palette = id)}
+						>
+							[ {id} ]
+						</button>
+					{/each}
+				</div>
+				<div class="demo-art">
+					<GraphStack title="STACK" palette={palette} rows={stackRows} />
+				</div>
+			</div>
+		</article>
+	</div>
+
+	<div class="dont">
+		<article>
+			<p class="eyebrow">[ do ]</p>
+			<h3>Let unused rows go quiet.</h3>
+			<p>Accent the current step. Everything else stays muted ink.</p>
+		</article>
+		<article>
+			<p class="eyebrow">[ don't ]</p>
+			<h3>Do not plot in SVG.</h3>
+			<p>If it cannot be typed, it does not belong in the frame.</p>
+		</article>
+	</div>
+</section>
+
+<style>
+	.rules {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		min-height: calc(100svh - 3.4rem);
+		padding-bottom: 2rem;
+	}
+
+	.grammar {
+		display: grid;
+		gap: 1.4rem;
+		padding: 1.4rem 0 2rem;
+		max-width: var(--site-max);
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.rule-plate {
+		display: grid;
+		grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 1.2fr);
+		min-height: 280px;
+		background: var(--site-plate);
+	}
+
+	.rule-copy {
+		padding: 2rem 1.5rem 1.6rem;
+		border-right: 1px dashed var(--site-rail);
+		background: var(--site-bg);
+	}
+
+	.rule-idx {
+		margin: 0 0 0.8rem;
+		font-family: var(--font-sans);
+		font-size: clamp(3.4rem, 8vw, 6.2rem);
+		letter-spacing: -0.08em;
+		line-height: 0.8;
+		color: var(--site-faint);
+	}
+
+	.rule-copy h2 {
+		margin: 0 0 0.55rem;
+		font-family: var(--font-sans);
+		font-size: clamp(1.4rem, 2.4vw, 2rem);
+		letter-spacing: -0.045em;
+	}
+
+	.rule-copy p {
+		margin: 0;
+		color: var(--site-muted);
+		max-width: 38ch;
+		font-size: 0.88rem;
+	}
+
+	.rule-demo {
+		padding: 1.8rem 1.3rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		justify-content: center;
+		background: var(--site-plate);
+		min-width: 0;
+	}
+
+	.controls {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+	}
+
+	.mark-btn {
+		color: var(--site-muted);
+		padding: 0 0.7rem;
+		min-height: 36px;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		font-size: 0.62rem;
+		border: 1px solid var(--site-rail);
+		background: transparent;
+	}
+
+	.mark-btn:hover {
+		color: var(--site-fg);
+		border-color: var(--site-fg);
+	}
+
+	.mark-btn[aria-pressed='true'] {
+		color: var(--site-bg);
+		background: var(--site-fg);
+		border-color: var(--site-fg);
+	}
+
+	.demo-art {
+		min-width: 0;
+		overflow-x: auto;
+	}
+
+	.dont {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		border: 1px dashed var(--site-rail);
+		max-width: var(--site-max);
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	.dont article {
+		padding: 1.3rem 1.2rem;
+	}
+
+	.dont article:first-child {
+		border-right: 1px dashed var(--site-rail);
+	}
+
+	.dont h3 {
+		margin: 0.35rem 0 0.4rem;
+		font-family: var(--font-sans);
+		font-size: 1.1rem;
+		letter-spacing: -0.03em;
+	}
+
+	.dont p {
+		margin: 0;
+		color: var(--site-muted);
+		font-size: 0.85rem;
+		max-width: 44ch;
+	}
+
+	@media (max-width: 980px) {
+		.rule-plate {
+			grid-template-columns: 1fr;
+		}
+
+		.rule-copy {
+			border-right: 0;
+			border-bottom: 1px dashed var(--site-rail);
+		}
+
+		.dont {
+			grid-template-columns: 1fr;
+		}
+
+		.dont article:first-child {
+			border-right: 0;
+			border-bottom: 1px dashed var(--site-rail);
+		}
+	}
+</style>

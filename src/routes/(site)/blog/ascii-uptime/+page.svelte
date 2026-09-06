@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Uptime pages are just text — fractalgraphy</title>
+	<title>Uptime pages are just text — Markgraphy</title>
 	<meta
 		name="description"
 		content="A status page you can read in a terminal: sixty days of uptime glyphs, one live timer, and no chart library."
@@ -24,7 +24,7 @@
 	.page {
 		max-width: 46rem;
 		margin: 0 auto;
-		padding: 3rem 1.5rem 5rem;
+		padding: 2rem var(--pad) 5rem;
 	}
 
 	.back {

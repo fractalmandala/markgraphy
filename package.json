@@ -1,6 +1,6 @@
 {
-	"name": "fractalgraphy",
-	"version": "0.1.0",
+	"name": "markgraphy",
+	"version": "0.1.1",
 	"description": "ASCII-framed Svelte graphs for markdown. Glyphs in a dashed frame with + corners and a [ TITLE ] on the top edge. Zero dependencies.",
 	"license": "MIT",
 	"type": "module",
@@ -13,6 +13,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"package": "svelte-kit sync && svelte-package",
+		"package:watch": "svelte-kit sync && svelte-package -w",
 		"prepack": "npm run package"
 	},
 	"svelte": "./dist/index.js",
@@ -41,7 +42,7 @@
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"mdsvex": "^0.12.8",
 		"sass": "^1.103.1",
-		"shiki": "^4.4.3",
+		"shiki": "4.4.3",
 		"svelte": "^5.56.1",
 		"svelte-check": "^4.6.0",
 		"typescript": "^6.0.3",

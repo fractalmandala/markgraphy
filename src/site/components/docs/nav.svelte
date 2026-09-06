@@ -6,17 +6,54 @@
 		getStarted,
 		staticComponents
 	} from '$site/docs/catalog';
-	import MonoLabel from './mono-label.svelte';
-	import SiteCorners from '../SiteCorners.svelte';
-	import SiteRule from '../SiteRule.svelte';
 
 	/**
-	 * rail   — vertical sidebar for ≥1024px (sticky, scrolls internally).
-	 * mobile — horizontal scroll strip for small screens.
+	 * rail   — the cabinet index for ≥1024px (sticky, scrolls internally).
+	 * mobile — a horizontal strip of [ chips ] for small screens.
 	 */
 	let { variant = 'rail' }: { variant?: 'rail' | 'mobile' } = $props();
 
 	const path = $derived(page.url.pathname);
+
+	let query = $state('');
+
+	const graphs = staticComponents.filter((item) => item.slug.startsWith('graph-'));
+	const diagrams = staticComponents.filter((item) => !item.slug.startsWith('graph-'));
+
+	const groups = $derived.by(() => {
+		const q = query.trim().toLowerCase();
+		const match = (title: string, slug: string) =>
+			!q || title.toLowerCase().includes(q) || slug.includes(q);
+		return [
+			{
+				label: 'get started',
+				items: getStarted
+					.filter((item) => match(item.label, item.href))
+					.map((item) => ({ href: item.href, label: item.label, fam: '' }))
+			},
+			{
+				label: 'graphs',
+				items: graphs
+					.filter((item) => match(item.title, item.slug))
+					.map((item) => ({ href: `/docs/${item.slug}`, label: item.title, fam: 'graph' }))
+			},
+			{
+				label: 'animated',
+				items: [
+					{ href: '/docs/animations', label: 'All animations', fam: 'page' },
+					...animatedComponents
+						.filter((item) => match(item.title, item.slug))
+						.map((item) => ({ href: `/docs/${item.slug}`, label: item.title, fam: 'anim' }))
+				]
+			},
+			{
+				label: 'diagrams',
+				items: diagrams
+					.filter((item) => match(item.title, item.slug))
+					.map((item) => ({ href: `/docs/${item.slug}`, label: item.title, fam: 'diagram' }))
+			}
+		].filter((group) => group.items.length > 0);
+	});
 
 	const stripLinks = $derived([
 		...getStarted.map((item) => ({ href: item.href, label: item.label })),
@@ -26,74 +63,41 @@
 </script>
 
 {#if variant === 'rail'}
-	<aside class="rail">
-		<SiteRule orientation="y" placement="right" />
+	<aside class="index">
 		<div class="scroll">
+			<input
+				class="find"
+				type="search"
+				placeholder="find a graph…"
+				aria-label="Find a graph"
+				bind:value={query}
+			/>
 			<nav class="nav" aria-label="Docs">
-				<div class="group">
-					<div class="label">
-						<MonoLabel>Get started</MonoLabel>
+				{#each groups as group (group.label)}
+					<div class="group">
+						<p class="eyebrow">[ {group.label} ]</p>
+						<ul role="list">
+							{#each group.items as item (item.href)}
+								<li>
+									<a
+										class="spec"
+										class:active={path === item.href}
+										aria-current={path === item.href ? 'page' : undefined}
+										href={item.href}
+									>
+										<span class="trim">{item.label}</span>
+										{#if item.fam}<span class="fam">{item.fam}</span>{/if}
+									</a>
+								</li>
+							{/each}
+						</ul>
 					</div>
-					<ul role="list">
-						{#each getStarted as item (item.href)}
-							<li>
-								<a
-									class="item"
-									class:active={path === item.href}
-									aria-current={path === item.href ? 'page' : undefined}
-									href={item.href}
-								>
-									<span class="trim">{item.label}</span>
-								</a>
-							</li>
-						{/each}
-					</ul>
-				</div>
-				<div class="group">
-					<div class="label">
-						<MonoLabel>Components</MonoLabel>
-					</div>
-					<ul role="list">
-						{#each staticComponents as item (item.slug)}
-							<li>
-								<a
-									class="item"
-									class:active={path === `/docs/${item.slug}`}
-									aria-current={path === `/docs/${item.slug}` ? 'page' : undefined}
-									href={`/docs/${item.slug}`}
-								>
-									<span class="trim">{item.title}</span>
-								</a>
-							</li>
-						{/each}
-					</ul>
-				</div>
-				<div class="group">
-					<div class="label">
-						<MonoLabel>Animated</MonoLabel>
-					</div>
-					<ul role="list">
-						{#each animatedComponents as item (item.slug)}
-							<li>
-								<a
-									class="item"
-									class:active={path === `/docs/${item.slug}`}
-									aria-current={path === `/docs/${item.slug}` ? 'page' : undefined}
-									href={`/docs/${item.slug}`}
-								>
-									<span class="trim">{item.title}</span>
-								</a>
-							</li>
-						{/each}
-					</ul>
-				</div>
+				{/each}
 			</nav>
 		</div>
 	</aside>
 {:else}
 	<nav class="strip" aria-label="Docs">
-		<SiteRule placement="bottom" />
-		<SiteCorners corners={['bl', 'br']} />
 		<div class="row">
 			{#each stripLinks as item (item.href)}
 				<a
@@ -102,7 +106,7 @@
 					aria-current={path === item.href ? 'page' : undefined}
 					href={item.href}
 				>
-					{item.label}
+					[ {item.label} ]
 				</a>
 			{/each}
 		</div>
@@ -110,45 +114,66 @@
 {/if}
 
 <style>
-	/* --- Desktop sidebar --- */
+	/* --- Cabinet index (desktop) --- */
 
-	.rail {
+	.index {
 		display: none;
 	}
 
 	@media (min-width: 1024px) {
-		.rail {
+		.index {
 			display: block;
 			position: sticky;
-			top: 4.5rem;
-			align-self: flex-start;
-			flex-shrink: 0;
-			width: 15rem;
-			max-height: calc(100dvh - 5.5rem);
+			top: 3.6rem;
+			align-self: start;
+			border-right: 1px dashed var(--site-rail);
 		}
 	}
 
 	.scroll {
-		max-height: calc(100dvh - 5.5rem);
+		max-height: calc(100dvh - 3.6rem);
 		overflow-y: auto;
+		padding: 0.9rem 0.85rem 1.2rem;
+		scrollbar-width: thin;
+		scrollbar-color: var(--site-rail) transparent;
+	}
+
+	.find {
+		width: 100%;
+		min-height: 40px;
+		padding: 0.45rem 0;
+		background: transparent;
+		border: 0;
+		border-bottom: 1px dashed var(--site-rail);
+		color: var(--site-fg);
+		font: inherit;
+	}
+
+	.find::placeholder {
+		color: var(--site-faint);
+	}
+
+	.find:focus-visible {
+		outline: none;
+		border-bottom-color: var(--graph-accent);
 	}
 
 	.nav {
 		display: flex;
 		flex-direction: column;
-		gap: 2rem;
-		padding-block: 2.5rem;
-		padding-right: 1.5rem;
+		gap: 1.1rem;
+		padding-top: 0.9rem;
 	}
 
 	.group {
 		display: flex;
 		flex-direction: column;
-		gap: 0.375rem;
+		gap: 0.25rem;
 	}
 
-	.label {
-		padding: 0 0.75rem;
+	.group .eyebrow {
+		margin: 0 0 0.25rem 0.35rem;
+		color: var(--graph-accent);
 	}
 
 	.group ul {
@@ -159,25 +184,25 @@
 		list-style: none;
 	}
 
-	.item {
-		display: flex;
+	.spec {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 0.6rem;
+		min-height: 34px;
 		align-items: center;
-		justify-content: space-between;
-		gap: 0.5rem;
-		padding: 0.375rem 0.75rem;
-		font-size: 0.875rem;
+		padding: 0.3rem 0.35rem;
+		border-bottom: 1px dotted #2a2a2a;
+		font-size: 0.82rem;
 		color: var(--site-muted);
 		text-decoration: none;
 	}
 
-	.item:hover {
-		background: var(--site-faint);
+	.spec:hover {
 		color: var(--site-fg);
 	}
 
-	.item.active {
-		background: var(--site-faint);
-		color: var(--site-fg);
+	.spec.active {
+		color: var(--graph-accent);
 	}
 
 	.trim {
@@ -187,10 +212,22 @@
 		text-overflow: ellipsis;
 	}
 
+	.fam {
+		color: var(--site-faint);
+		font-size: 0.62rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.spec.active .fam {
+		color: var(--site-muted);
+	}
+
 	/* --- Mobile strip --- */
 
 	.strip {
 		position: relative;
+		border-bottom: 1px dashed var(--site-rail);
 	}
 
 	@media (min-width: 1024px) {
@@ -201,27 +238,29 @@
 
 	.row {
 		display: flex;
-		gap: 0.25rem;
-		padding-block: 0.75rem;
+		gap: 0.15rem;
+		padding-block: 0.55rem;
 		overflow-x: auto;
 		white-space: nowrap;
+		scrollbar-width: thin;
+		scrollbar-color: var(--site-rail) transparent;
 	}
 
 	.chip {
 		flex-shrink: 0;
-		padding: 0.25rem 0.5rem;
-		font-size: 0.875rem;
+		padding: 0.35rem 0.5rem;
+		font-size: 0.68rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 		color: var(--site-muted);
 		text-decoration: none;
 	}
 
 	.chip:hover {
-		background: var(--site-faint);
 		color: var(--site-fg);
 	}
 
 	.chip.active {
-		background: var(--site-faint);
-		color: var(--site-fg);
+		color: var(--graph-accent);
 	}
 </style>

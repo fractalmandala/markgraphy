@@ -70,7 +70,7 @@ cleanly into an incident channel, and it survives being pasted into a
 terminal without turning into a screenshot of itself.
 
 This post is itself an .svx file. The three figures above are imports from
-fractalgraphy, rendered in place — nothing is an image, and nothing needed
+markgraphy, rendered in place — nothing is an image, and nothing needed
 a client-side chart runtime to draw.
 
 So if your status page is a canvas, you are shipping a renderer to draw

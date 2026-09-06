@@ -1,7 +1,5 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import SiteCorners from '../SiteCorners.svelte';
-	import SiteRule from '../SiteRule.svelte';
 
 	let {
 		title,
@@ -11,9 +9,9 @@
 		children
 	}: {
 		title: string;
-		/** Component name above the title, e.g. GraphStat. */
+		/** Bracketed label above the title, e.g. GraphStat. */
 		kicker?: string;
-		/** Intro paragraph under the title. */
+		/** Intro paragraph, set to the right of the title on wide screens. */
 		lead?: string;
 		/** Extra muted line, e.g. when / when-not guidance. */
 		note?: string;
@@ -21,49 +19,87 @@
 	} = $props();
 </script>
 
-<header class="header">
-	{#if kicker}
-		<p class="kicker">{kicker}</p>
-	{/if}
-	<h1>{title}</h1>
-	{#if lead}
-		<p class="lead">{lead}</p>
-	{/if}
-	{#if note}
-		<p class="note">{note}</p>
-	{/if}
-	{@render children?.()}
-	<SiteRule placement="bottom" />
-	<SiteCorners corners={['bl', 'br']} />
+<header class="page-head">
+	<div class="left">
+		{#if kicker}
+			<p class="kicker">[ {kicker} ]</p>
+		{/if}
+		<h1 class="display">{title}</h1>
+	</div>
+	<div class="right">
+		{#if lead}
+			<p class="lead">{lead}</p>
+		{/if}
+		{#if note}
+			<p class="note">{note}</p>
+		{/if}
+		{@render children?.()}
+	</div>
 </header>
 
 <style>
-	.header {
-		position: relative;
+	.page-head {
 		display: flex;
-		flex-direction: column;
-		gap: 0.875rem;
-		padding-bottom: 2rem;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: 2rem;
+		padding: 0.2rem 0 1.2rem;
+		border-bottom: 1px dashed var(--site-rail);
+	}
+
+	.left {
+		min-width: 0;
 	}
 
 	.kicker {
-		margin: 0;
-		color: var(--graph-accent, oklch(0.78 0.17 155));
+		margin: 0 0 0.55rem;
 	}
 
 	h1 {
 		margin: 0;
-		font-size: 2.25rem;
-		font-weight: 600;
-		letter-spacing: -0.025em;
-		text-wrap: balance;
+		font-size: clamp(2rem, 4.2vw, 3.4rem);
+	}
+
+	.right {
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		max-width: 42ch;
+		margin-left: auto;
+		text-align: right;
 	}
 
 	.lead,
 	.note {
-		max-width: 56ch;
 		margin: 0;
 		color: var(--site-muted);
+		font-size: 0.88rem;
 		text-wrap: pretty;
+	}
+
+	.note {
+		font-size: 0.78rem;
+	}
+
+	.right :global(p) {
+		margin: 0;
+	}
+
+	.right :global(a) {
+		color: var(--site-fg);
+		text-decoration: none;
+		border-bottom: 1px dotted var(--site-faint);
+	}
+
+	@media (max-width: 980px) {
+		.page-head {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.right {
+			margin-left: 0;
+			text-align: left;
+		}
 	}
 </style>

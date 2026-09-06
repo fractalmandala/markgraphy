@@ -15,7 +15,7 @@ Walk through a change. Path first, then the weeks.
 
 ```svelte
 <script>
-	import { GraphFlow } from 'fractalgraphy';
+	import { GraphFlow } from 'markgraphy';
 </script>
 
 <GraphFlow
@@ -41,7 +41,7 @@ Walk through a change. Path first, then the weeks.
 
 ```svelte
 <script>
-	import { GraphTimeline } from 'fractalgraphy';
+	import { GraphTimeline } from 'markgraphy';
 </script>
 
 <GraphTimeline
@@ -60,7 +60,7 @@ What happened, then which days took the hit.
 
 ```svelte
 <script>
-	import { GraphTimeline } from 'fractalgraphy';
+	import { GraphTimeline } from 'markgraphy';
 </script>
 
 <GraphTimeline
@@ -75,7 +75,7 @@ What happened, then which days took the hit.
 
 ```svelte
 <script>
-	import { GraphUptime } from 'fractalgraphy';
+	import { GraphUptime } from 'markgraphy';
 </script>
 
 <GraphUptime
@@ -107,7 +107,7 @@ A matrix, then sizes if they matter.
 
 ```svelte
 <script>
-	import { GraphCompare } from 'fractalgraphy';
+	import { GraphCompare } from 'markgraphy';
 </script>
 
 <GraphCompare
@@ -125,7 +125,7 @@ A matrix, then sizes if they matter.
 
 ```svelte
 <script>
-	import { GraphRank } from 'fractalgraphy';
+	import { GraphRank } from 'markgraphy';
 </script>
 
 <GraphRank
@@ -144,7 +144,7 @@ What moved, and what the numbers did.
 
 ```svelte
 <script>
-	import { GraphDiff } from 'fractalgraphy';
+	import { GraphDiff } from 'markgraphy';
 </script>
 
 <GraphDiff
@@ -160,7 +160,7 @@ What moved, and what the numbers did.
 
 ```svelte
 <script>
-	import { GraphSlope } from 'fractalgraphy';
+	import { GraphSlope } from 'markgraphy';
 </script>
 
 <GraphSlope
@@ -181,7 +181,7 @@ Overlapping work, then the board counts.
 
 ```svelte
 <script>
-	import { GraphGantt } from 'fractalgraphy';
+	import { GraphGantt } from 'markgraphy';
 </script>
 
 <GraphGantt
@@ -199,7 +199,7 @@ Overlapping work, then the board counts.
 
 ```svelte
 <script>
-	import { GraphStat } from 'fractalgraphy';
+	import { GraphStat } from 'markgraphy';
 </script>
 
 <GraphStat
@@ -218,7 +218,7 @@ How far the job is, and the count behind it.
 
 ```svelte
 <script>
-	import { GraphMeter } from 'fractalgraphy';
+	import { GraphMeter } from 'markgraphy';
 </script>
 
 <GraphMeter title="ROWS" value={0.67} caption="users table" />
@@ -226,7 +226,7 @@ How far the job is, and the count behind it.
 
 ```svelte
 <script>
-	import { GraphKpi } from 'fractalgraphy';
+	import { GraphKpi } from 'markgraphy';
 </script>
 
 <GraphKpi

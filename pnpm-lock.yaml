@@ -30,7 +30,7 @@ importers:
         specifier: ^1.103.1
         version: 1.103.1
       shiki:
-        specifier: ^4.4.3
+        specifier: 4.4.3
         version: 4.4.3
       svelte:
         specifier: ^5.56.1

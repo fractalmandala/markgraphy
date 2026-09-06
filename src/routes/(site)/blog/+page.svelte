@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { reveal, stagger } from '$lib/frame/motion';
+	import PageHeader from '$site/components/docs/page-header.svelte';
 
 	const posts = [
 		{
@@ -13,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>Writing — fractalgraphy</title>
+	<title>Writing — Markgraphy</title>
 	<meta
 		name="description"
 		content="Short pieces on ASCII-framed graphs, markdown workflows, and text-first interfaces."
@@ -21,15 +21,11 @@
 </svelte:head>
 
 <section class="page">
-	<header class="head">
-		<p class="kicker">[ BLOG ]</p>
-		<h1>Writing</h1>
-		<p class="sub">Notes on glyphs, frames, and markdown surfaces.</p>
-	</header>
+	<PageHeader title="Writing." kicker="blog" lead="Notes on glyphs, frames, and markdown surfaces." />
 
 	<ul class="posts" role="list">
 		{#each posts as post, i (post.slug)}
-			<li class="post" use:reveal={{ delay: stagger(i, 60), amount: 0.4 }}>
+			<li class="post">
 				<a class="card" href="/blog/{post.slug}">
 					<p class="date">{post.date}</p>
 					<h2 class="title">{post.title}</h2>
@@ -45,39 +41,13 @@
 	.page {
 		max-width: var(--site-max);
 		margin: 0 auto;
-		padding: 3rem 1.5rem 5rem;
-	}
-
-	.head {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.kicker {
-		margin: 0;
-		color: var(--site-muted);
-		letter-spacing: 0.05em;
-	}
-
-	h1 {
-		margin: 0;
-		font-size: 2.25rem;
-		font-weight: 600;
-		letter-spacing: -0.025em;
-	}
-
-	.sub {
-		max-width: 52ch;
-		margin: 0;
-		line-height: 1.7;
-		color: var(--site-muted);
+		padding: 0 var(--pad) 5rem;
 	}
 
 	.posts {
 		display: flex;
 		flex-direction: column;
-		margin: 3rem 0 0;
+		margin: 1.5rem 0 0;
 		padding: 0;
 		list-style: none;
 	}
@@ -106,7 +76,9 @@
 
 	.title {
 		margin: 0;
-		font-size: 1.5rem;
+		font-family: var(--font-sans);
+		font-size: 1.6rem;
+		letter-spacing: -0.04em;
 		font-weight: 600;
 		letter-spacing: -0.025em;
 		color: var(--site-fg);
