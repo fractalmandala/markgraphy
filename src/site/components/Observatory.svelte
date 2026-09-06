@@ -55,8 +55,6 @@
 			<h1 class="display">
 				<Logo height={128} width={612}/>
 			</h1>
-		</div>
-		<div class="box">
 			<p class="text-3xl weight-300">
 				Graphs, charts and animated diagrams for a novel render and aesthetic to markdown notes.<br>
 				Block glyphs, dashed frames, one accent, thousands of iconsets.
@@ -64,14 +62,14 @@
 			<p class="text-xl text-secondary lh15">
 				{components.static} graphs, {components.animated} animations, {components.diagram} diagrams
 				— same frame, same accent, same vocabulary.
-				<button></button><span class="proof-pill">Svelte 5 only · 0 dependencies</span>
+				<button><span class="proof-pill">Svelte 5 only · 0 dependencies</span></button>
 			</p>
 			<div class="cta-row">
 				<a class="cta primary" href="/docs">Read the docs →</a>
 				<a class="cta ghost" href="/docs/installation">pnpm add markgraphy</a>
 				<a class="cta ghost" href="/docs/editor">Open the editor</a>
 			</div>
-		</div>
+		</div> 
 	</div>
 
 	<div class="stage">
