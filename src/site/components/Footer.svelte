@@ -3,7 +3,7 @@
 </script>
 
 <footer>
-	<span>markgraphy · glyphs, not geometry</span>
+	<span>amritanshu pandey | fractalmandala </span>
 	<nav aria-label="Footer">
 		<a href="/docs/skill">skill</a>
 		<a href="/llms.txt">llms.txt</a>

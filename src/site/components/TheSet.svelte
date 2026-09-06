@@ -1,6 +1,6 @@
 <script lang="ts">
 	// "The set": seven real components on one wall, each linking to its docs.
-	import { GraphActivity } from '$lib';
+	import { GraphActivity, reveal, stagger } from '$lib';
 	import { animatedComponents, staticComponents } from '$site/docs/catalog';
 	import { previews } from '$site/docs/previews';
 	import { commits } from '$site/lib/wall';
@@ -17,28 +17,34 @@
 		{ slug: 'graph-bars', entry: previews['graph-bars'][0] },
 		{ slug: 'graph-kpi', entry: previews['graph-kpi'][0] }
 	];
+
+	// Tiles rise in on scroll, one after the next. The cap is raised past the
+	// 280ms default so all seven cascade instead of the last few landing together.
+	const rise = (index: number) => ({
+		delay: stagger(index, 60, 400),
+		from: 'below' as const,
+		distance: 20,
+		duration: 420,
+		easing: 'out-expo' as const,
+		// Tiles are tall; wait for a quarter of one and it reveals too late.
+		amount: 0.15
+	});
 </script>
 
-<section class="section" id="set">
-	<div class="section-head">
-		<h2 class="display">The set.</h2>
-		<p>
-			Mix a kpi next to a status line, a flow under a paragraph, a spark beside a sentence. Same
-			frame, same accent — they read as one piece.
-		</p>
+<section class="section box gap-lg" id="set">
+	<div class="section-head ta-c box xcenter">
+		<h2 class="weight-500 text-2xl">Examples</h2>
 	</div>
-	<div class="wall">
-		{#each tiles as tile (tile.slug)}
-			<article class="tile">
+	<div class="wall wfull">
+		{#each tiles as tile, i (tile.slug)}
+			<article class="tile t{i}" use:reveal={rise(i)}>
 				<tile.entry.Comp {...tile.entry.props} />
-				<a class="docs" href={`/docs/${tile.slug}`}>[ docs ]</a>
 			</article>
 		{/each}
-		<article class="tile span">
+		<article class="tile span" use:reveal={rise(tiles.length)}>
 			<div class="scroll">
 				<GraphActivity title="COMMITS" palette="multi" days={commits} />
 			</div>
-			<a class="docs" href="/docs/graph-activity">[ docs ]</a>
 		</article>
 	</div>
 </section>
@@ -48,28 +54,6 @@
 		position: relative;
 		z-index: 1;
 		padding: 3.2rem var(--pad) 4rem;
-		border-top: 1px dashed var(--border);
-	}
-
-	.section-head {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: 1rem;
-		max-width: var(--site-max);
-		margin: 0 auto 1.6rem;
-	}
-
-	h2 {
-		margin: 0;
-		font-size: clamp(1.6rem, 3vw, 2.4rem);
-	}
-
-	.section-head p {
-		max-width: 42ch;
-		margin: 0;
-		color: var(--site-muted);
-		font-size: 0.85rem;
 	}
 
 	.wall {
@@ -77,17 +61,19 @@
 		margin: 0 auto;
 		display: grid;
 		grid-template-columns: 1.15fr 0.85fr;
-		gap: 1.1rem;
+		gap: var(--space-lg)
 	}
 
 	.tile {
-		--graph-background: var(--bg-raised);
 		position: relative;
 		min-width: 0;
 		display: flex;
 		flex-direction: column;
-		background: var(--bg-raised);
 	}
+
+	.t1, .t4 { background: var(--bg-surface); }
+	.t0, .t3, .t6 { background: var(--bg-dialog); }
+	.t2, .t5 { background: none }
 
 	.tile :global(.graph) {
 		flex: 1;
@@ -95,11 +81,6 @@
 
 	.tile.span {
 		grid-column: 1 / -1;
-	}
-
-	.scroll {
-		min-width: 0;
-		overflow-x: auto;
 	}
 
 	.docs {

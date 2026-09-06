@@ -85,10 +85,10 @@
 
 <header class="site-wrapper row xbetween wfull">
 	<a class="sitelogo" href="/">
-		<Logo height={32} width={153}/>
+		<Logo/>
 	</a>
-	<div class="hud-right grow row">
-	<nav class="nav" aria-label="Primary">
+	<div class="hud-right grow row gap-sm">
+	<nav class="nav row gap-sm" aria-label="Primary">
 		{#each links as link (link.href)}
 			<a
 				href={link.href}
@@ -99,7 +99,7 @@
 			</a>
 		{/each}
 	</nav>
-		<div class="row gap-xs" role="radiogroup" aria-label="Accent">
+		<div class="row gap-sm" role="radiogroup" aria-label="Accent">
 			{#each dots as accent (accent.accent)}
 				<button
 					type="button"
@@ -143,7 +143,6 @@
 
 	.nav {
 		display: flex;
-		gap: 0.1rem;
 	}
 
 	.nav a {
@@ -160,7 +159,6 @@
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		gap: 0.75rem;
 		min-width: 0;
 	}
 

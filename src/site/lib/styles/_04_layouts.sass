@@ -24,6 +24,8 @@ $lg: map.get($breakpoints, lg)
 	grid-template-columns: repeat(1, minmax(0, 1fr))
 	@media #{string.unquote('(min-width: #{$md})')}
 		grid-template-columns: repeat(2, minmax(0, 1fr))
+		&.left-short
+			grid-template-columns: 25% 1fr
 
 .grid-3
 	display: grid

@@ -7,9 +7,13 @@
 	import { setTheme, getTheme, themes, initPresets, getPresetScript } from 'fractalstyler2/presets';
 	import favicon from '$lib/assets/favicon.svg';
 	import { SITE_DESCRIPTION, SITE_URL } from '$site/lib/site';
+	import { enableNavWipe } from '$site/lib/navwipe';
 	import type { Snippet } from 'svelte';
 
 	let { children }: { children: Snippet } = $props();
+
+	// Bottom-to-top wipe on every navigation, matching the mode swipe.
+	enableNavWipe();
 </script>
 
 <svelte:head>

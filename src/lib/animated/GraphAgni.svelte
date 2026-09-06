@@ -1,9 +1,11 @@
 <script module lang="ts">
 	export interface GraphAgniProps {
 		/** Caption drawn on the top edge as `[ TITLE ]`. Uppercase, 1–2 words. */
-		title: string;
+		title?: string;
 		/** Animate the burn. Default true. Reduced motion freezes a mid-burn frame. */
 		animated?: boolean;
+		/** Show the playback controls. Default true. */
+		showControls?: boolean;
 		/** Width of the scene in characters. Default 56. */
 		cols?: number;
 		/** Height of the scene in rows. Default 16. */
@@ -51,10 +53,28 @@
 		age: number;
 	}
 
+	/**
+	 * Knob ranges. ROW_MAX doubles as the height the viewport reserves, so the
+	 * two can never drift apart and leave the rows slider shifting the page.
+	 */
+	const COL_MIN = 24;
+	const COL_MAX = 96;
+	const ROW_MIN = 10;
+	const ROW_MAX = 32;
+	const SPEED_MIN = 30;
+	const SPEED_MAX = 300;
+	const COOL_MIN = 0.1;
+	const COOL_MAX = 1.2;
+
 	const HOT = 0.75;
 	const MID = 0.5;
 	const LOW = 0.3;
 	const EMBER = 0.12;
+
+	/** Slider position as a percentage, for painting the filled part of the track. */
+	function fill(value: number, min: number, max: number): string {
+		return `${((value - min) / (max - min)) * 100}%`;
+	}
 
 	/** Run-length encode one row of heat into classed segments, never per-cell spans. */
 	function heatSegs(row: number[]): Seg[] {
@@ -106,29 +126,38 @@
 	let {
 		title,
 		animated = true,
+		showControls = true,
 		cols = 56,
 		rows = 16,
 		speedMs = 90,
 		cooling = 0.6,
 		seedNum = 3,
-		label = 'the carrier of offerings',
 		class: className = ''
 	}: GraphAgniProps = $props();
 
+	// Live knobs. The props seed them; the controls own them from then on.
+	// svelte-ignore state_referenced_locally
+	let colsIn = $state(cols);
+	// svelte-ignore state_referenced_locally
+	let rowsIn = $state(rows);
+	// svelte-ignore state_referenced_locally
+	let speedIn = $state(speedMs);
+	// svelte-ignore state_referenced_locally
+	let coolIn = $state(cooling);
+
 	// svelte-ignore state_referenced_locally
 	const rand = mulberry32(seedNum);
-	// svelte-ignore state_referenced_locally
-	const width = Math.max(24, cols);
-	// svelte-ignore state_referenced_locally
-	const height = Math.max(10, rows);
+
+	const width = $derived(Math.max(24, colsIn));
+	const height = $derived(Math.max(10, rowsIn));
 
 	// The havan kund: a shallow pit at the bottom center. Fire rises from the
 	// mouth between the slanted walls; everything above is flame column.
-	const mouth = Math.max(7, Math.round(width * 0.24));
-	const centerX = Math.floor(width / 2);
-	const pitLeft = centerX - Math.floor(mouth / 2);
-	const pitRight = pitLeft + mouth - 1;
-	const pitRow = height - 2;
+	const mouth = $derived(Math.max(7, Math.round(width * 0.24)));
+	const centerX = $derived(Math.floor(width / 2));
+	const pitLeft = $derived(centerX - Math.floor(mouth / 2));
+	const pitRight = $derived(pitLeft + mouth - 1);
+	const pitRow = $derived(height - 2);
 
 	// Flame column narrows toward the top so the burn reads as a tongue, not a wall.
 	function coneMask(y: number, x: number): number {
@@ -168,14 +197,16 @@
 			next.push(new Array<number>(width).fill(0));
 		}
 
+		// Optional reads: a knob can resize the scene a frame before the grid
+		// is re-seeded, so the row below may be a different width, or absent.
 		for (let y = 0; y < pitRow - 1; y++) {
 			for (let x = pitLeft - 1; x <= pitRight + 1; x++) {
-				const below =
-					(grid[y + 1][x - 1] + grid[y + 1][x] + grid[y + 1][x + 1]) / 3;
+				const row = grid[y + 1];
+				const below = ((row?.[x - 1] ?? 0) + (row?.[x] ?? 0) + (row?.[x + 1] ?? 0)) / 3;
 
 				next[y][x] = Math.max(
 					0,
-					below * (1 - rand() * cooling * breath * 0.5) * coneMask(y, x)
+					below * (1 - rand() * coolIn * breath * 0.5) * coneMask(y, x)
 				);
 			}
 		}
@@ -204,7 +235,7 @@
 			const x = pitLeft + Math.floor(rand() * mouth);
 			const y = pitRow - 2;
 
-			if (grid[pitRow - 1][x] >= 1) {
+			if ((grid[pitRow - 1]?.[x] ?? 0) >= 1) {
 				alive.push({ x, y, age: 0 });
 			}
 		}
@@ -212,11 +243,17 @@
 		return alive;
 	}
 
-	const moving = $derived(
-		animated &&
-			(typeof window === 'undefined' ||
-				!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-	);
+	// Starts from `animated`; the button owns it from the first press onwards.
+	// svelte-ignore state_referenced_locally
+	let playing = $state(animated);
+
+	// Reduced motion sets the *opening* state only. Pressing play is explicit
+	// consent, so it still runs the burn.
+	$effect(() => {
+		if (prefersReduced()) {
+			playing = false;
+		}
+	});
 
 	let sim = initialGrid();
 	let embers: Spark[] = [];
@@ -237,8 +274,36 @@
 	// svelte-ignore state_referenced_locally
 	let sparks = $state<Spark[]>(embers);
 
+	// Resizing invalidates every cell, so the scene is re-lit and warmed to a
+	// developed burn — otherwise a drag of the cols knob shows an empty pit.
+	// svelte-ignore state_referenced_locally
+	let lastGeometry = `${width}x${height}`;
+
 	$effect(() => {
-		if (!moving) {
+		const geometry = `${width}x${height}`;
+
+		if (geometry === lastGeometry) {
+			return;
+		}
+
+		lastGeometry = geometry;
+
+		let next = initialGrid();
+		let motes: Spark[] = [];
+		const warm = pitRow * 2 + 6;
+
+		for (let i = 0; i < warm; i++) {
+			next = stepFlame(next, i);
+			motes = stepSparks(motes, next);
+		}
+
+		grid = next;
+		sparks = motes;
+		tick = warm;
+	});
+
+	$effect(() => {
+		if (!playing) {
 			return;
 		}
 
@@ -246,7 +311,7 @@
 			grid = stepFlame(grid, tick);
 			sparks = stepSparks(sparks, grid);
 			tick += 1;
-		}, speedMs);
+		}, speedIn);
 
 		return () => window.clearInterval(timer);
 	});
@@ -374,11 +439,68 @@
 <Graph {title} class={className}>
 	<GraphBody>
 		<div class="agni">
-			<div class="viewport">
+			<div class="viewport" style="--agni-reserve:{showControls ? ROW_MAX : rowsIn}">
 				<pre class="art" aria-hidden="true"><code>{#each view as line, i (i)}{#each line as seg, j (j)}{#if seg.cls}<span class={seg.cls}>{seg.text}</span>{:else}{seg.text}{/if}{/each}{#if i < view.length - 1}{'\n'}{/if}{/each}</code></pre>
 			</div>
-			{#if label}
-				<p class="caption">{label}</p>
+			{#if showControls}
+				<div class="box controls">
+					<div class="buttons">
+						<button
+							class="button ghost"
+							type="button"
+							onclick={() => (playing = !playing)}
+							aria-label={playing ? 'Pause the flame' : 'Play the flame'}
+						>
+							<span class="accented">[ </span> {playing ? 'pause' : 'play'} <span class="accented"> ]</span>
+						</button>
+					</div>
+					<div class="knobs">
+						<label class="knob box">
+							<span class="text-xs tt-u text-muted">cols</span>
+							<input
+								type="range"
+								min={COL_MIN}
+								max={COL_MAX}
+								step="2"
+								style="--fill:{fill(colsIn, COL_MIN, COL_MAX)}"
+								bind:value={colsIn}
+							/>
+						</label>
+						<label class="knob box">
+							<span class="text-xs tt-u text-muted">rows</span>
+							<input
+								type="range"
+								min={ROW_MIN}
+								max={ROW_MAX}
+								step="1"
+								style="--fill:{fill(rowsIn, ROW_MIN, ROW_MAX)}"
+								bind:value={rowsIn}
+							/>
+						</label>
+						<label class="knob box">
+							<span class="text-xs tt-u text-muted">speed</span>
+							<input
+								type="range"
+								min={SPEED_MIN}
+								max={SPEED_MAX}
+								step="10"
+								style="--fill:{fill(speedIn, SPEED_MIN, SPEED_MAX)}"
+								bind:value={speedIn}
+							/>
+						</label>
+						<label class="knob box">
+							<span class="text-xs tt-u text-muted">cooling</span>
+							<input
+								type="range"
+								min={COOL_MIN}
+								max={COOL_MAX}
+								step="0.05"
+								style="--fill:{fill(coolIn, COOL_MIN, COOL_MAX)}"
+								bind:value={coolIn}
+							/>
+						</label>
+					</div>
+				</div>
 			{/if}
 		</div>
 	</GraphBody>
@@ -388,12 +510,25 @@
 	.agni {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 		gap: 1rem;
 		min-width: 0;
 		font-size: 0.875rem;
 	}
 
+	/*
+	 * The scene is bottom-anchored inside a box tall enough for the tallest
+	 * row count the knob allows. The pit then sits on a fixed baseline: raising
+	 * `rows` fills in sky above the fire instead of pushing the controls — and
+	 * the page below them — down. Without controls there is nothing to resize
+	 * it, so the box reserves only the rows actually drawn.
+	 */
 	.viewport {
+		/* One rendered row: the art's font-size times its line-height. */
+		--agni-line: calc(0.85rem * 1.15);
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
 		overflow-x: auto;
 	}
 
@@ -420,6 +555,124 @@
 
 	.pit {
 		color: var(--graph-muted, oklch(0.62 0 0));
+	}
+
+	.controls {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 1rem;
+		align-self: stretch;
+		padding-top: 0.875rem;
+		border-top: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+	}
+
+	.buttons {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.ctrl {
+		padding: 0.25rem 0.6rem;
+		font-size: 0.75rem;
+		color: var(--graph-muted, oklch(0.62 0 0));
+		background: none;
+		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-radius: 0;
+		cursor: pointer;
+	}
+
+	.ctrl:hover {
+		color: var(--graph-foreground, oklch(0.93 0 0));
+		border-color: var(--graph-muted, oklch(0.62 0 0));
+	}
+
+	.knobs {
+		--knob-track: 0.375rem;
+		--knob-thumb: 0.85rem;
+		/* Unfilled remainder of the track, and the filled part plus thumb. */
+		--knob-bg: var(--graph-faint, oklch(0.85 0 0));
+		--knob-fg: var(--graph-accent, oklch(0.78 0.17 155));
+		display: grid;
+		grid-template-columns: repeat(2, auto);
+		gap: 0.35rem 1rem;
+	}
+
+	.key {
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.val {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+		color: var(--graph-foreground, oklch(0.93 0 0));
+	}
+
+	/*
+	 * Fully custom track: `accent-color` alone leaves the UA's own bordered
+	 * track behind. Going bare means painting the filled portion by hand —
+	 * WebKit has no equivalent of ::-moz-range-progress — so `--fill` carries
+	 * the value as a percentage and both engines share one gradient.
+	 */
+	.knob input {
+		appearance: none;
+		-webkit-appearance: none;
+		width: 100%;
+		min-width: 0;
+		height: 1rem;
+		border: 0;
+		background: none;
+		cursor: pointer;
+	}
+
+	.knob input::-webkit-slider-runnable-track {
+		height: var(--knob-track);
+		border: 0;
+		border-radius: 999px;
+		background: var(--knob-bg);
+		background-image: linear-gradient(to right, var(--knob-fg) 0 var(--fill), transparent var(--fill) 100%);
+	}
+
+	.knob input::-webkit-slider-thumb {
+		appearance: none;
+		-webkit-appearance: none;
+		width: var(--knob-thumb);
+		height: var(--knob-thumb);
+		/* Centre the thumb on the thinner track. */
+		margin-top: calc((var(--knob-track) - var(--knob-thumb)) / 2);
+		border: 0;
+		border-radius: 999px;
+		background: var(--knob-fg);
+	}
+
+	.knob input::-moz-range-track {
+		height: var(--knob-track);
+		border: 0;
+		border-radius: 999px;
+		background: var(--knob-bg);
+		background-image: linear-gradient(to right, var(--knob-fg) 0 var(--fill), transparent var(--fill) 100%);
+	}
+
+	/* The gradient above already draws the fill; don't paint it twice. */
+	.knob input::-moz-range-progress {
+		background: transparent;
+	}
+
+	.knob input::-moz-range-thumb {
+		width: var(--knob-thumb);
+		height: var(--knob-thumb);
+		border: 0;
+		border-radius: 999px;
+		background: var(--knob-fg);
+	}
+
+	.primary {
+		color: var(--graph-accent, oklch(0.78 0.17 155));
+		border-color: var(--graph-accent, oklch(0.78 0.17 155));
+		font-weight: 600;
 	}
 
 	.caption {

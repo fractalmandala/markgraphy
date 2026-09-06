@@ -16,15 +16,15 @@
 :root,
 [data-graph-theme='dark'] {
 	--graph-font: 'Google Sans Code', ui-monospace, monospace;
-	--graph-background: #101010;
-	--graph-foreground: #f1f1f1;
+	--graph-background: var(--bg);
+	--graph-foreground: var(--text-primary);
 	--graph-accent: #ff3e00;
 	--graph-accent-2: #e08a48;
 	--graph-accent-3: #0046e9;
-	--graph-frame: #373737;
+	--graph-frame: #a7a7a7;
 	--graph-framer: var(--graph-frame) 0 4px, transparent 4px 8px;
-	--graph-muted: #878787;
-	--graph-faint: #474747;
+	--graph-muted: var(--border-subtle);
+	--graph-faint: var(--text-muted);
 }
 
 [data-graph-theme='light'] {
@@ -33,10 +33,10 @@
 	--graph-accent: oklch(0.6 0.22 35);
 	--graph-accent-2: oklch(0.58 0.14 70);
 	--graph-accent-3: oklch(0.5 0.16 262);
-	--graph-frame: oklch(0.205 0 0 / 0.28);
+	--graph-frame: #d7d7d7;
 	--graph-framer: var(--graph-frame) 0 4px, transparent 4px 8px;
-	--graph-muted: oklch(0.45 0 0);
-	--graph-faint: oklch(0.85 0 0);
+	--graph-muted: var(--border-subtle);
+	--graph-faint: var(--text-muted);
 }
 
 @media (prefers-color-scheme: light) {
@@ -46,9 +46,9 @@
 		--graph-accent: oklch(0.6 0.22 35);
 		--graph-accent-2: oklch(0.58 0.14 70);
 		--graph-accent-3: oklch(0.5 0.16 262);
-		--graph-frame: oklch(0.205 0 0 / 0.28);
+		--graph-frame: #d7d7d7;
 		--graph-framer: var(--graph-frame) 0 4px, transparent 4px 8px;
-		--graph-muted: oklch(0.45 0 0);
-		--graph-faint: oklch(0.85 0 0);
+		--graph-muted: var(--border-subtle);
+		--graph-faint: var(--text-muted);
 	}
 }

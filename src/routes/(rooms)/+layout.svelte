@@ -49,7 +49,7 @@
 <div class="shell widefull">
 	<header class="row xbetween full" style="good">
 		<div class="brand">
-			<a class="brand-mark" href="/stage">fractal<em>graphy</em></a>
+			<a class="brand-mark" href="/stage">mark<em>graphy</em></a>
 			<span class="brand-ver">v{SITE_VERSION} · mit</span>
 		</div>
 		<nav class="nav" aria-label="Primary">

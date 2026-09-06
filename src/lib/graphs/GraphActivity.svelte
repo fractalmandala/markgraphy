@@ -29,6 +29,7 @@
 	import { intensityRole } from '../frame/tone';
 	import type { ToneRole } from '../frame/tone';
 	import { reveal, stagger } from '../frame/motion';
+	import { type GraphPad } from '$lib/types'
 
 	const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	const DAY_MS = 86_400_000;
@@ -153,28 +154,25 @@
 
 <Graph {title} {corner} class={className}>
 	<GraphBody>
-		<div class="act">
-			<div class="wrap">
-				<div class="months">
-					<span class="gutter"></span>
+		<div class="box">
+			<div class="box gap-sm">
+				<div class="row xevenly">
 					{#each months as month, index (`m-${index}`)}
-						<span class="mslot">
 							{#if month}
-								<span class="mlabel muted">{month}</span>
+								<span class="text-muted">{month}</span>
 							{/if}
-						</span>
 					{/each}
 				</div>
-				<div class="body-row">
-					<div class="days">
+				<div class="row">
+					<div class="box yevenly pad-right-2xs">
 						{#each labels as label, index (`d-${index}`)}
-							<span class="dlabel muted">{label}</span>
+							<span class="text-muted">{label}</span>
 						{/each}
 					</div>
-					<div class="grid">
+					<div class="row xevenly wfull">
 						{#each view as week, weekIndex (week.key || weekIndex)}
 							<div
-								class="wcol"
+								class="box"
 								use:reveal={{ delay: stagger(weekIndex, 10), amount: 0.2 }}
 							>
 								{#each week.cells as cell (cell.date)}
@@ -196,35 +194,7 @@
 					</div>
 				</div>
 			</div>
-			{#if caption !== false || legend}
-				<div class="foot" class:end={caption === false}>
-					{#if caption !== false}
-						<p class="muted">{caption ?? summary}</p>
-					{/if}
-					{#if legend}
-						<p class="legend">
-							<span>Less</span>
-							<span class="scale" aria-hidden="true">
-								{#each scale as entry (entry.key)}
-									<span
-										class="sglyph"
-										class:c-frame={entry.role === 'empty'}
-										class:c-muted={entry.role === 'muted'}
-										class:c-fg={entry.role === 'foreground'}
-										class:c-accent={entry.role === 'accent'}
-										class:c-accent2={entry.role === 'accent2'}
-										class:c-accent3={entry.role === 'accent3'}
-									>
-										{entry.glyph}
-									</span>
-								{/each}
-							</span>
-							<span>More</span>
-						</p>
-					{/if}
-				</div>
-			{/if}
-			<span class="sr-only">
+			<span class="text-muted">
 				{total} contributions across {days.length} days{caption ? `. ${caption}` : ''}
 			</span>
 		</div>
@@ -232,74 +202,6 @@
 </Graph>
 
 <style>
-	.act {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.wrap {
-		display: flex;
-		width: 100%;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	.months {
-		display: flex;
-		width: 100%;
-		height: 1.25em;
-	}
-
-	.gutter {
-		width: 2ch;
-		flex-shrink: 0;
-	}
-
-	.mslot {
-		position: relative;
-		min-width: 1ch;
-		flex: 1;
-	}
-
-	.mlabel {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		white-space: nowrap;
-	}
-
-	.body-row {
-		display: flex;
-		width: 100%;
-	}
-
-	.days {
-		display: flex;
-		width: 2ch;
-		flex-shrink: 0;
-		flex-direction: column;
-	}
-
-	.dlabel {
-		display: flex;
-		height: 1.15em;
-		align-items: center;
-	}
-
-	.grid {
-		display: flex;
-		min-width: 0;
-		flex: 1;
-	}
-
-	.wcol {
-		display: flex;
-		min-width: 1ch;
-		flex: 1;
-		flex-direction: column;
-	}
-
 	.dcell {
 		display: flex;
 		width: 100%;
@@ -308,41 +210,6 @@
 		justify-content: center;
 		line-height: 1;
 		user-select: none;
-	}
-
-	.foot {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
-	}
-
-	.foot.end {
-		justify-content: flex-end;
-	}
-
-	.legend {
-		margin: 0;
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
-	}
-
-	.scale {
-		display: flex;
-		user-select: none;
-	}
-
-	.sglyph {
-		width: 1ch;
-		text-align: center;
-	}
-
-	.muted {
-		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
 	}
 
 	.ghost {
@@ -373,15 +240,4 @@
 		color: var(--graph-muted, oklch(0.62 0 0));
 	}
 
-	.sr-only {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
-		border-width: 0;
-	}
 </style>

@@ -4,6 +4,7 @@
 		animatedComponents,
 		components,
 		getStarted,
+		rooms,
 		staticComponents
 	} from '$site/docs/catalog';
 
@@ -32,6 +33,12 @@
 					.map((item) => ({ href: item.href, label: item.label, fam: '' }))
 			},
 			{
+				label: 'rooms',
+				items: rooms
+					.filter((item) => match(item.label, item.href))
+					.map((item) => ({ href: item.href, label: item.label, fam: 'room' }))
+			},
+			{
 				label: 'graphs',
 				items: graphs
 					.filter((item) => match(item.title, item.slug))
@@ -57,6 +64,7 @@
 
 	const stripLinks = $derived([
 		...getStarted.map((item) => ({ href: item.href, label: item.label })),
+		...rooms.map((item) => ({ href: item.href, label: item.label })),
 		{ href: '/docs/animations', label: 'Animations' },
 		...components.map((item) => ({ href: `/docs/${item.slug}`, label: item.title }))
 	]);

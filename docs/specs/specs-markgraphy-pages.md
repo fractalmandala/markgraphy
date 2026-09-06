@@ -94,10 +94,16 @@ The route tree was moved (not copied) from the staging folder into
 `lib/colorize.ts`; no duplicate remains to drift. `pnpm check` reports
 0 errors / 0 warnings and `pnpm build` completes with the new routes.
 
-Still open, when wanted:
+`src/site/` styling was not modified; existing components keep their styles
+untouched.
 
-1. Add nav entries wherever the old chrome should link the rooms
-   (`/stage`, `/set`, `/rules`, `/install`).
-2. Delete or replace the old home sections the rooms supersede.
+## Docs list (added 2026-09-06)
 
-`src/site/` was not modified; existing components keep their styles untouched.
+The four rooms are listed in the site's docs navigation, driven by a new
+`rooms: NavLink[]` export in `src/site/docs/catalog.ts`:
+
+- Docs rail (≥1024px): a `[ rooms ]` group between *get started* and
+  *graphs* — Stage, Set, Rules, Install (`/stage`, `/set`, `/rules`,
+  `/install`), each tagged `room`.
+- Mobile strip: the four room chips follow the get-started chips.
+- No existing `getStarted` entries, docs pages, or styles were changed.

@@ -161,7 +161,6 @@
 <style>
 	.variable-proximity {
 		display: inline;
-		font-family: 'Roboto Flex', sans-serif;
 	}
 	.vp-word {
 		display: inline-block;

@@ -199,7 +199,7 @@
 		line-height: 1.45;
 		color: var(--graph-foreground, oklch(0.93 0 0));
 		white-space: pre;
-		font-family: var(--graph-font, ui-monospace, monospace);
+		font-family: var(--font-sans);
 	}
 
 	.prompt {

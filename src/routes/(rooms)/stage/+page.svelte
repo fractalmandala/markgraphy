@@ -198,8 +198,6 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		min-height: calc(100svh - 3.4rem);
-		padding-bottom: 1.1rem;
 	}
 
 	.stage {

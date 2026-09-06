@@ -4,6 +4,7 @@
 
 // Frame primitives
 export { default as Graph } from './frame/Graph.svelte';
+export type { GraphProps, GraphDash, GraphMotion, GraphPad } from './frame/Graph.svelte';
 export { default as GraphBody } from './frame/GraphBody.svelte';
 export { default as GraphRule } from './frame/GraphRule.svelte';
 export { default as GraphTrack } from './frame/GraphTrack.svelte';

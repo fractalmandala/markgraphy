@@ -32,6 +32,14 @@ export const getStarted: NavLink[] = [
 	{ href: '/docs/skill', label: 'Skill' }
 ];
 
+/** The rooms — the four-page site front at src/routes/(rooms)/. */
+export const rooms: NavLink[] = [
+	{ href: '/stage', label: 'Stage' },
+	{ href: '/set', label: 'Set' },
+	{ href: '/rules', label: 'Rules' },
+	{ href: '/install', label: 'Install' }
+];
+
 const TITLE: PropRow = {
 	name: 'title',
 	type: 'string',

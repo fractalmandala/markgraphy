@@ -1,27 +1,139 @@
 /*
  * Markgraphy motion.
- * Transform + opacity only, 220ms, ease-out cubic. No loops.
- * prefers-reduced-motion: reduce disables everything.
+ *
+ * Transform and opacity only, never layout. Every duration, delay and easing
+ * is a custom property, so an action can set one inline and a host can retune
+ * the whole language from one place:
+ *
+ *   .docs { --graph-ease: cubic-bezier(0.16, 1, 0.3, 1); }
+ *
+ * prefers-reduced-motion: reduce disables all of it.
  */
 
+.fg-motion,
+.fg-draw,
+.fg-sweep,
+.fg-type {
+	--fg-duration: 220ms;
+	--fg-delay: 0ms;
+	--fg-ease: var(--graph-ease, cubic-bezier(0.215, 0.61, 0.355, 1));
+}
+
+/* Fade in from an offset, an optional scale, or a straight dissolve. */
 .fg-motion {
+	--fg-x: 0px;
+	--fg-y: 8px;
+	--fg-scale: 1;
 	opacity: 0;
-	transform: translateY(var(--fg-y, 8px));
+	transform: translate3d(var(--fg-x), var(--fg-y), 0) scale(var(--fg-scale));
 	transition:
-		opacity 220ms cubic-bezier(0.215, 0.61, 0.355, 1),
-		transform 220ms cubic-bezier(0.215, 0.61, 0.355, 1);
-	transition-delay: var(--fg-delay, 0ms);
+		opacity var(--fg-duration) var(--fg-ease) var(--fg-delay),
+		transform var(--fg-duration) var(--fg-ease) var(--fg-delay);
 }
 
 .fg-motion.is-revealed {
 	opacity: 1;
-	transform: translateY(0);
+	transform: none;
+}
+
+/*
+ * `slide` arrives opaque, clipped to its own edge, so it reads as emerging from
+ * under the layout rather than floating in. Clipping is the whole effect here,
+ * so it joins the transition and opacity stays out of it.
+ */
+.fg-motion.fg-slide {
+	opacity: 1;
+	clip-path: var(--fg-clip, inset(0 0 0 0));
+	transition:
+		transform var(--fg-duration) var(--fg-ease) var(--fg-delay),
+		clip-path var(--fg-duration) var(--fg-ease) var(--fg-delay);
+}
+
+.fg-motion.fg-slide.is-revealed {
+	clip-path: inset(0 0 0 0);
+}
+
+/* Scale a rule, bar or track in from one edge. */
+.fg-draw {
+	--fg-sx: 0;
+	--fg-sy: 1;
+	transform: scale(var(--fg-sx), var(--fg-sy));
+	transform-origin: var(--fg-origin, left center);
+	transition: transform var(--fg-duration) var(--fg-ease) var(--fg-delay);
+}
+
+.fg-draw.is-revealed {
+	transform: none;
+}
+
+/*
+ * A band of light crossing the element. It is drawn on ::after and clipped to
+ * the box, so the host element must be able to hide its overflow.
+ */
+.fg-sweep {
+	position: relative;
+	overflow: hidden;
+}
+
+.fg-sweep::after {
+	content: '';
+	position: absolute;
+	z-index: 1;
+	inset: 0;
+	pointer-events: none;
+	opacity: 0;
+	background-image: linear-gradient(
+		to right,
+		transparent,
+		var(--fg-sweep-ink, var(--graph-accent, oklch(0.78 0.17 155))),
+		transparent
+	);
+}
+
+.fg-sweep.is-sweeping::after {
+	animation: fg-sweep var(--fg-duration) var(--fg-ease) var(--fg-delay) var(--fg-repeat, 1);
+}
+
+@keyframes fg-sweep {
+	from {
+		opacity: var(--fg-sweep-opacity, 0.2);
+		transform: translateX(-100%);
+	}
+	to {
+		opacity: var(--fg-sweep-opacity, 0.2);
+		transform: translateX(100%);
+	}
+}
+
+/* Block caret for `typewriter`, dropped once the line finishes. */
+.fg-type[data-caret]::after {
+	content: '▌';
+	color: var(--graph-accent, oklch(0.78 0.17 155));
+	animation: fg-caret 1s steps(1, end) infinite;
+}
+
+@keyframes fg-caret {
+	0%,
+	50% {
+		opacity: 1;
+	}
+	50.01%,
+	100% {
+		opacity: 0;
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.fg-motion {
+	.fg-motion,
+	.fg-draw {
 		opacity: 1;
 		transform: none;
+		clip-path: none;
 		transition: none;
+	}
+
+	.fg-sweep.is-sweeping::after,
+	.fg-type[data-caret]::after {
+		animation: none;
 	}
 }

@@ -132,7 +132,7 @@
 
 	.corner {
 		color: var(--graph-accent, oklch(0.78 0.17 155));
-		font-weight: 600;
+		font-weight: 400;
 	}
 
 	.arrow {

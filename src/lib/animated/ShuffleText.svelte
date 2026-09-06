@@ -510,7 +510,7 @@
 		will-change: transform;
 		line-height: 1;
 		font-size: 4rem;
-		font-family: 'Press Start 2P', sans-serif;
+		font-family: var(--font-sans);
 		text-transform: uppercase;
 		visibility: hidden;
 	}

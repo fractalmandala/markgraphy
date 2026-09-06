@@ -1,4 +1,10 @@
 <script module lang="ts">
+	import type { GraphProps } from "../frame/Graph.svelte";
+	import Typed from '$site/components/texttyping.svelte'
+
+	/** The frame's own props, minus the ones this component owns. */
+	export type FrameProps = Omit<GraphProps, "title" | "children" | "class">;
+
 	/** One ordered step of a process. */
 	export interface FlowStep {
 		/** Short name shown beside the marker. */
@@ -22,13 +28,20 @@
 		animated?: boolean;
 		/** Character at each corner of the frame. Default '+'. */
 		corner?: string;
+		/**
+		 * Anything the frame itself takes — dash, motion, speed, easing, pad,
+		 * pauseOnHover, cornerBlink, ink, accent. Forwarded straight to `Graph`,
+		 * so the frame's whole vocabulary is reachable without this component
+		 * having to restate every prop.
+		 */
+		frame?: FrameProps;
 		class?: string;
 	}
 </script>
 
 <script lang="ts">
-	import Graph from '../frame/Graph.svelte';
-	import GraphBody from '../frame/GraphBody.svelte';
+	import Graph from "../frame/Graph.svelte";
+	import GraphBody from "../frame/GraphBody.svelte";
 
 	let {
 		title,
@@ -38,7 +51,8 @@
 		showControls = true,
 		animated = true,
 		corner,
-		class: className = ''
+		frame,
+		class: className = "",
 	}: GraphFlowPlayerProps = $props();
 
 	const uid = $props.id();
@@ -59,8 +73,8 @@
 
 	const motionAllowed = $derived(
 		animated &&
-			(typeof window === 'undefined' ||
-				!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+			(typeof window === "undefined" ||
+				!window.matchMedia("(prefers-reduced-motion: reduce)").matches),
 	);
 
 	// Autoplay only when motion is allowed; the controls can always start playback.
@@ -75,9 +89,12 @@
 			return;
 		}
 
-		const timer = window.setInterval(() => {
-			step = (active + 1) % count;
-		}, Math.max(100, intervalTime));
+		const timer = window.setInterval(
+			() => {
+				step = (active + 1) % count;
+			},
+			Math.max(100, intervalTime),
+		);
 
 		return () => window.clearInterval(timer);
 	});
@@ -106,84 +123,73 @@
 		step = (active - 1 + count) % count;
 	}
 
-	/** Column of the `│` spine, under the digit of a `[ 1 ]` marker. */
-	const SPINE_COL = 2;
+	/** One entry per step — not per rendered line, so each is its own box. */
+	interface Item {
+		num: string;
+		label: string;
+		detail?: string;
+		state: "todo" | "active" | "done";
+	}
 
-	const art = $derived.by((): Seg[][] => {
-		if (count === 0) {
-			return [[{ text: '( no steps )', cls: 'detail' }]];
-		}
+	const items = $derived.by((): Item[] =>
+		steps.map((s, i) => ({
+			num: String(i + 1).padStart(digits, " "),
+			label: s.label,
+			detail: s.detail,
+			state: i === active ? "active" : i < active ? "done" : "todo",
+		})),
+	);
 
-		const lines: Seg[][] = [];
-		const labelCol = digits + 5;
+	// The detail sits on one shared line under the row, so a long one cannot
+	// stretch its own column and shove the other steps sideways.
+	const detail = $derived(items[active]?.detail ?? "");
 
-		steps.forEach((s, i) => {
-			if (i > 0) {
-				lines.push([
-					{
-						text: ' '.repeat(SPINE_COL) + '│',
-						cls: i <= active ? 'spine done' : 'spine'
-					}
-				]);
-			}
-
-			const isActive = i === active;
-			const isDone = i < active;
-			const num = String(i + 1).padStart(digits, ' ');
-
-			lines.push([
-				{
-					text: `[ ${num} ]`,
-					cls: isActive ? 'marker active' : isDone ? 'marker done' : 'marker'
-				},
-				{ text: ` ${s.label}`, cls: isActive ? 'label active' : isDone ? 'label done' : 'label' }
-			]);
-
-			if (isActive && s.detail) {
-				lines.push([{ text: ' '.repeat(labelCol) }, { text: s.detail, cls: 'detail' }]);
-			}
-		});
-
-		return lines;
-	});
 </script>
 
-<Graph {title} {corner} class={className}>
+<Graph {title} {corner} {...frame} class={className}>
 	<GraphBody>
 		<div class="player" class:anim={animated} class:playing>
-			<div class="viewport">
-				<pre class="art"><code>{#each art as line, i (i)}{#each line as seg, j (j)}{#if seg.cls}<span class={seg.cls}>{seg.text}</span>{:else}{seg.text}{/if}{/each}{#if i < art.length - 1}{'\n'}{/if}{/each}</code></pre>
-			</div>
-
+			{#if count === 0}
+				<p class="empty">( no steps )</p>
+			{:else}
+				<div class="viewport box gap-lg pad-md">
+					<ol class="steps pad-xl gap-xs">
+						{#each items as item, i (i)}
+							<Graph pad="sm" class="grow ta-c panel" corner="">
+							<li class="step" data-state={item.state}>
+								<p class="marker text-bs">[ {item.num} ]</p>
+								<div class="label"><Typed textToAnimate={item.label} active={item.state === 'active'} /></div>
+							</li>
+							</Graph>
+						{/each}
+					</ol>
+					<p class="detail ta-c text-xl" aria-live="polite">{detail}</p><!-- Height is reserved even when empty, so advancing never reflows. -->
+				</div>
+			{/if}
 			{#if showControls}
 				<div class="controls">
 					<div class="buttons">
-						<button class="ctrl" type="button" onclick={handlePrev} aria-label="Previous step">◀</button>
-						<button class="ctrl primary" type="button" onclick={handleTogglePlay}>
-							{playing ? '❚❚ pause' : '▶ play'}
+						<button
+							class="ctrl"
+							type="button"
+							onclick={handlePrev}
+							aria-label="Previous step">[ ◀ ]</button
+						>
+						<button
+							class="button ghost"
+							type="button"
+							onclick={() => (playing = !playing)}
+							aria-label={playing ? 'Pause the flame' : 'Play the flame'}
+						>
+							<span class="accented">[ </span> {playing ? 'pause' : 'play'} <span class="accented"> ]</span>
 						</button>
-						<button class="ctrl" type="button" onclick={handleNext} aria-label="Next step">▶</button>
+						<button
+							class="ctrl"
+							type="button"
+							onclick={handleNext}
+							aria-label="Next step">[ ▶ ]</button
+						>
 					</div>
-
-					<div class="dots">
-						{#each steps as _step, i (i)}
-							<button
-								class="dot"
-								class:on={active === i}
-								type="button"
-								onclick={() => {
-									step = i;
-									playing = false;
-								}}
-								aria-label="Step {i + 1}"
-							></button>
-						{/each}
-					</div>
-
-					<label class="speed" for="{uid}-speed">
-						Speed {(intervalTime / 1000).toFixed(1)}s
-						<input id="{uid}-speed" type="range" min="400" max="2500" step="100" bind:value={intervalTime} />
-					</label>
 				</div>
 			{/if}
 		</div>
@@ -191,6 +197,7 @@
 </Graph>
 
 <style>
+
 	.player {
 		display: flex;
 		flex-direction: column;
@@ -202,61 +209,67 @@
 		overflow-x: auto;
 	}
 
-	.art {
+	/*
+	 * Steps sit in a row; each step is a column so its marker and label stack.
+	 * Equal flex basis means the row never re-proportions as the active step
+	 * moves along it.
+	 */
+	.steps {
+		display: flex;
 		margin: 0;
-		font-size: 0.85rem;
-		line-height: 1.35;
-		color: var(--graph-muted, oklch(0.62 0 0));
-		white-space: pre;
+		padding: 0;
+		list-style: none;
+		min-width: 0;
 	}
 
-	.marker {
-		color: var(--graph-muted, oklch(0.62 0 0));
+	.step {
+		flex: 1 1 0;
+		min-width: 7rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		padding: 0 1rem;
 	}
 
-	.marker.active {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		font-weight: 600;
+	.step:first-child {
+		padding-left: 0;
 	}
 
-	.marker.done {
-		color: var(--graph-accent, oklch(0.78 0.17 155));
-	}
-
+	.marker,
 	.label {
 		color: var(--graph-muted, oklch(0.62 0 0));
 	}
 
-	.label.active {
+	.step[data-state='active'] .marker,
+	.step[data-state='active'] .label {
 		color: var(--graph-foreground, oklch(0.93 0 0));
 		font-weight: 600;
 	}
 
-	.label.done {
+	.step[data-state='done'] .marker,
+	.step[data-state='done'] .label {
 		color: var(--graph-accent, oklch(0.78 0.17 155));
 	}
 
-	.detail {
+	.detail,
+	.empty {
+		margin: 0;
+		/* One line always reserved: the text changes, the layout does not. */
+		min-height: 1.4em;
 		color: var(--graph-faint, oklch(0.3 0 0));
-	}
-
-	.spine {
-		color: var(--graph-faint, oklch(0.3 0 0));
-	}
-
-	.spine.done {
-		color: var(--graph-accent, oklch(0.78 0.17 155));
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
 		.anim .marker,
 		.anim .label,
 		.anim .detail,
-		.anim .spine {
-			transition: color 0.25s ease;
+		.anim .step {
+			transition:
+				color 0.25s ease,
+				border-color 0.25s ease;
 		}
 
-		.anim.playing .marker.active {
+		.anim.playing .step[data-state='active'] .marker {
 			animation: pulse 1s infinite alternate;
 		}
 
@@ -274,7 +287,7 @@
 	.controls {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: center;
 		flex-wrap: wrap;
 		gap: 1rem;
 		padding-top: 0.875rem;
@@ -288,11 +301,11 @@
 	}
 
 	.ctrl {
-		padding: 0.25rem 0.6rem;
-		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		padding: 0;
+		font-size: 0.9rem;
 		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: none;
+		color: var(--text-muted);
 		border-radius: 0;
 		cursor: pointer;
 	}
@@ -302,45 +315,4 @@
 		border-color: var(--graph-muted, oklch(0.62 0 0));
 	}
 
-	.primary {
-		color: var(--graph-accent, oklch(0.78 0.17 155));
-		border-color: var(--graph-accent, oklch(0.78 0.17 155));
-		font-weight: 600;
-	}
-
-	.dots {
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-	}
-
-	.dot {
-		width: 8px;
-		height: 8px;
-		padding: 0;
-		background: var(--graph-faint, oklch(0.3 0 0));
-		border: none;
-		border-radius: 50%;
-		cursor: pointer;
-	}
-
-	.dot.on {
-		background: var(--graph-accent, oklch(0.78 0.17 155));
-	}
-
-	.speed {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
-		white-space: nowrap;
-	}
-
-	.speed input {
-		width: 80px;
-		height: 4px;
-		accent-color: var(--graph-accent, oklch(0.78 0.17 155));
-		cursor: pointer;
-	}
 </style>
