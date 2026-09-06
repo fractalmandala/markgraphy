@@ -37,8 +37,8 @@
 		display: flex;
 		flex-direction: column;
 		min-width: 0;
-		border-left: 1px dashed var(--site-rail);
-		border-right: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
+		border-right: 1px dashed var(--border);
 	}
 
 	@media (min-width: 1024px) {

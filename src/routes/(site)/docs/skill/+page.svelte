@@ -271,19 +271,19 @@
 	}
 
 	.section a {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		text-decoration: underline;
-		text-decoration-color: var(--site-rail);
+		text-decoration-color: var(--border);
 		text-underline-offset: 4px;
 	}
 
 	.section a:hover {
-		text-decoration-color: var(--site-fg);
+		text-decoration-color: var(--text-primary);
 	}
 
 	.agents {
 		display: grid;
-		border-block: 1px dashed var(--site-rail);
+		border-block: 1px dashed var(--border);
 	}
 
 	@media (min-width: 640px) {
@@ -298,7 +298,7 @@
 		gap: 0.25rem;
 		padding: 1rem 1rem;
 		border: 0;
-		border-top: 1px dashed var(--site-rail);
+		border-top: 1px dashed var(--border);
 		background: transparent;
 		color: var(--site-muted);
 		font: inherit;
@@ -308,22 +308,22 @@
 
 	@media (min-width: 640px) {
 		.agent:nth-child(n + 3) {
-			border-top: 1px dashed var(--site-rail);
+			border-top: 1px dashed var(--border);
 		}
 
 		.agent:nth-child(2n) {
-			border-left: 1px dashed var(--site-rail);
+			border-left: 1px dashed var(--border);
 		}
 	}
 
 	.agent:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		background: var(--site-faint);
 	}
 
 	.agent.selected {
 		background: var(--site-faint);
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.agent-name {
@@ -337,7 +337,7 @@
 	.block {
 		display: flex;
 		flex-direction: column;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: #0c0c0c;
 	}
 
@@ -368,7 +368,7 @@
 	}
 
 	.copy:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.copy.done {
@@ -416,14 +416,14 @@
 
 	.table th {
 		padding: 0.75rem;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 		font-weight: 500;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.table td {
 		padding: 0.75rem;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 		color: var(--site-muted);
 	}
 
@@ -432,7 +432,7 @@
 	}
 
 	.table a {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		text-decoration: none;
 	}
 

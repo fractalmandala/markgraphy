@@ -46,6 +46,7 @@
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/package": "^2.5.8",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
+		"fractalstyler2": "^0.8.0",
 		"mdsvex": "^0.12.8",
 		"sass": "^1.103.1",
 		"shiki": "4.4.3",

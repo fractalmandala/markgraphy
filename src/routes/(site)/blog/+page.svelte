@@ -53,7 +53,7 @@
 	}
 
 	.post + .post {
-		border-top: 1px dashed var(--site-rail);
+		border-top: 1px dashed var(--border);
 	}
 
 	.card {
@@ -65,7 +65,7 @@
 
 	.card:hover .title {
 		text-decoration: underline;
-		text-decoration-color: var(--site-fg);
+		text-decoration-color: var(--text-primary);
 		text-underline-offset: 4px;
 	}
 
@@ -81,7 +81,7 @@
 		letter-spacing: -0.04em;
 		font-weight: 600;
 		letter-spacing: -0.025em;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.teaser {

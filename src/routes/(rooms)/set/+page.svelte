@@ -176,13 +176,13 @@
 		flex: 1;
 		display: grid;
 		grid-template-columns: 17rem minmax(0, 1fr);
-		border-left: 1px dashed var(--site-rail);
-		border-right: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
+		border-right: 1px dashed var(--border);
 		min-height: 0;
 	}
 
 	.index {
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 		padding: 0.9rem 0.85rem 1.2rem;
 		overflow: auto;
 		max-height: calc(100svh - 14rem);
@@ -198,9 +198,9 @@
 		width: 100%;
 		background: transparent;
 		border: 0;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 		padding: 0.55rem 0;
-		color: var(--site-fg);
+		color: var(--text-primary);
 		min-height: 44px;
 	}
 
@@ -221,19 +221,19 @@
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		font-size: 0.62rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: transparent;
 	}
 
 	.tab:hover {
-		color: var(--site-fg);
-		border-color: var(--site-fg);
+		color: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.tab[aria-pressed='true'] {
 		color: var(--site-bg);
-		background: var(--site-fg);
-		border-color: var(--site-fg);
+		background: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.index-list {
@@ -255,7 +255,7 @@
 	}
 
 	.spec-btn:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.spec-btn[aria-selected='true'] {
@@ -283,10 +283,10 @@
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		min-height: 320px;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		display: grid;
 		align-items: center;
 	}
@@ -306,7 +306,7 @@
 		.index {
 			max-height: 14rem;
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 	}
 </style>

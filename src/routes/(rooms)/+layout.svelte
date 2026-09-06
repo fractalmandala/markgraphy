@@ -125,7 +125,7 @@
 		padding: 0.7rem var(--pad);
 		background: color-mix(in oklab, var(--site-bg) 88%, transparent);
 		backdrop-filter: blur(14px);
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 	}
 
 	.brand {
@@ -140,7 +140,7 @@
 		font-weight: 600;
 		font-size: 1.05rem;
 		letter-spacing: -0.04em;
-		color: var(--site-fg);
+		color: var(--text-primary);
 		text-decoration: none;
 	}
 
@@ -176,7 +176,7 @@
 	}
 
 	.nav a:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.nav a[aria-current='page'] {
@@ -202,12 +202,12 @@
 		height: 16px;
 		padding: 0;
 		border-radius: 99px;
-		border: 1px solid color-mix(in oklab, var(--site-fg) 20%, transparent);
+		border: 1px solid color-mix(in oklab, var(--text-primary) 20%, transparent);
 		background: var(--swatch);
 	}
 
 	.accent-dot[aria-pressed='true'] {
-		outline: 1px solid var(--site-fg);
+		outline: 1px solid var(--text-primary);
 		outline-offset: 2px;
 	}
 
@@ -217,7 +217,7 @@
 		gap: 0.65rem;
 		min-height: 36px;
 		padding: 0.28rem 0.35rem 0.28rem 0.8rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: var(--site-surface);
 	}
 
@@ -264,7 +264,7 @@
 		display: flex;
 		justify-content: space-between;
 		padding: 1rem var(--pad) 1.4rem;
-		border-top: 1px dashed var(--site-rail);
+		border-top: 1px dashed var(--border);
 		color: var(--site-muted);
 		font-size: 0.7rem;
 		letter-spacing: 0.08em;
@@ -288,7 +288,7 @@
 		align-items: flex-end;
 		gap: 2rem;
 		padding: 1.5rem 0 1.1rem;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 	}
 
 	.room :global(.page-head .lede) {
@@ -304,7 +304,7 @@
 	}
 
 	.room :global(.lede strong) {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		font-weight: 500;
 	}
 
@@ -322,7 +322,7 @@
 
 	.room :global(.rule) {
 		border: 0;
-		border-top: 1px dotted var(--site-rail);
+		border-top: 1px dotted var(--border);
 		margin: 0.7rem 0;
 	}
 
@@ -335,7 +335,7 @@
 	}
 
 	.room :global(.import-box) {
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: #0c0c0c;
 		padding: 0.85rem 0.9rem 0.95rem;
 	}
@@ -357,7 +357,7 @@
 		word-break: break-word;
 		font-size: 0.78rem;
 		line-height: 1.55;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.room :global(.cta-row) {

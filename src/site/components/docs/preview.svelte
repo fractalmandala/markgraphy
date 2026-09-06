@@ -32,10 +32,10 @@
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		min-width: 0;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 	}
 
 	.live {

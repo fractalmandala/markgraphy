@@ -7,16 +7,16 @@
 	height: 16px
 	padding: 0
 	border-radius: 99px
-	border: 1px solid color-mix(in oklab, var(--site-fg) 20%, transparent)
+	border: 1px solid color-mix(in oklab, var(--text-primary) 20%, transparent)
 	background: var(--swatch)
 .accent-dot[aria-pressed='true']
-	outline: 1px solid var(--site-fg)
+	outline: 1px solid var(--text-primary)
 	outline-offset: 2px
 
 .site-wrapper
 	position: relative
 	width: 100%
-	max-width: 92rem
+	max-width: 1600px
 	margin-inline: auto
 	padding: 0 var(--pad) 1.4rem
 
@@ -24,8 +24,8 @@
 	display: flex
 	flex-direction: column
 	min-width: 0
-	border-left: 1px dashed var(--site-rail)
-	border-right: 1px dashed var(--site-rail)
+	border-left: 1px dashed var(--border)
+	border-right: 1px dashed var(--border)
 
 @media (min-width: 1024px)
 	.cabinet
@@ -55,3 +55,20 @@ select
 	&,
 	&::picker(select)
 		appearance: base-select
+
+::view-transition-group(root)
+	animation: none
+
+::view-transition-old(root), ::view-transition-new(root)
+	animation: none
+	mix-blend-mode: normal
+	width: 100vw
+	height: 100vh
+	object-fit: cover
+	object-position: top left
+
+::view-transition-old(root)
+	z-index: 0
+
+::view-transition-new(root)
+	z-index: 1

@@ -44,7 +44,7 @@
 		align-items: flex-end;
 		gap: 2rem;
 		padding: 0.2rem 0 1.2rem;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 	}
 
 	.left {
@@ -86,7 +86,7 @@
 	}
 
 	.right :global(a) {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		text-decoration: none;
 		border-bottom: 1px dotted var(--site-faint);
 	}

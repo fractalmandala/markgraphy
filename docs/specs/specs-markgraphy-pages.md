@@ -44,8 +44,8 @@ including the new routes.
   animated, else graphs); props tables render via `$site/components/docs/props-table.svelte`.
 - **Mockup tokens → site tokens.** `--bg/--surface/--fg/--muted/--faint/
   --border/--accent/--accent-2/--graph-bg/--font-display` map to
-  `--site-bg/--site-surface/--site-fg/--site-muted/--site-faint/--site-rail/
-  --graph-accent/--graph-accent-2/--site-plate/--font-sans`. Accent dots call
+  `--site-bg/--site-surface/--text-primary/--site-muted/--site-faint/--border/
+  --graph-accent/--graph-accent-2/--bg-raised/--font-sans`. Accent dots call
   `$site/lib/accents` `setAccent` (the mockup's inline `--accent` mutation is
   gone); the four dots map to the `fractal/green/cyan/orange` accents.
 - **Buttons.** Mockup `.primo`/`.ghost-btn` are the global `.primo`/`.ghost`

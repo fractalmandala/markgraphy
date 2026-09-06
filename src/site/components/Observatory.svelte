@@ -5,6 +5,9 @@
 	import CopyCode from '$site/components/docs/copy-code.svelte';
 	import { staticComponents, animatedComponents } from '$site/docs/catalog';
 	import { instrumentPreview, instruments } from '$site/lib/instruments';
+	import Logo from '$site/icons/markgraphy.svelte'
+	import Markgraphy from '$site/icons/markgraphy.svelte';
+	import Agni from '$lib/animated/GraphAgni.svelte'
 
 	let { codeHtml }: { codeHtml: Record<string, string> } = $props();
 
@@ -45,21 +48,23 @@
 
 <svelte:window {onkeydown} />
 
-<section class="observatory" id="stage">
-	<div class="stage-head">
+<section class="observatory pad-top-xl" id="stage">
+	<div class="box xleft ta-l">
 		<div>
-			<p class="kicker">[ monospace charts · svelte 5 · mdsvex ]</p>
-			<h1 class="display">markgraphy</h1>
+			<p class="text-muted text-sm">[ graphs | charts | svelte 5 | mdsvex ]</p>
+			<h1 class="display">
+				<Logo height={128} width={612}/>
+			</h1>
 		</div>
-		<div class="lede-wrap">
-			<p class="lede">
-				Charts and diagrams that read like part of the writing. Block glyphs,
-				dashed frames, one accent. <strong>No SVG. No canvas. No chart.js.</strong>
+		<div class="box">
+			<p class="text-3xl weight-300">
+				Graphs, charts and animated diagrams for a novel render and aesthetic to markdown notes.<br>
+				Block glyphs, dashed frames, one accent, thousands of iconsets.
 			</p>
-			<p class="proof">
+			<p class="text-xl text-secondary lh15">
 				{components.static} graphs, {components.animated} animations, {components.diagram} diagrams
 				— same frame, same accent, same vocabulary.
-				<span class="proof-pill">Svelte 5 only · 0 dependencies</span>
+				<button></button><span class="proof-pill">Svelte 5 only · 0 dependencies</span>
 			</p>
 			<div class="cta-row">
 				<a class="cta primary" href="/docs">Read the docs →</a>
@@ -135,11 +140,7 @@
 		align-items: flex-end;
 		gap: 2rem;
 		padding: 1.6rem 0 1.1rem;
-		border-bottom: 1px dashed var(--site-rail);
-	}
-
-	.kicker {
-		margin: 0 0 0.55rem;
+		border-bottom: 1px dashed var(--border);
 	}
 
 	h1 {
@@ -158,7 +159,7 @@
 
 	.lede {
 		margin: 0;
-		color: var(--site-fg);
+		color: var(--text-primary);
 		font-size: 0.98rem;
 		line-height: 1.45;
 		text-align: right;
@@ -181,11 +182,11 @@
 		display: inline-block;
 		margin-top: 0.35rem;
 		padding: 0.18rem 0.5rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		font-family: var(--font-mono);
 		font-size: 0.66rem;
 		letter-spacing: 0.08em;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.cta-row {
@@ -201,7 +202,7 @@
 		letter-spacing: 0.06em;
 		text-decoration: none;
 		padding: 0.55rem 0.9rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		transition:
 			border-color 0.18s ease,
 			color 0.18s ease,
@@ -221,7 +222,7 @@
 
 	.cta.ghost {
 		background: transparent;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.cta.ghost:hover {
@@ -234,8 +235,8 @@
 		display: grid;
 		grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.7fr);
 		min-height: 0;
-		border-left: 1px dashed var(--site-rail);
-		border-right: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
+		border-right: 1px dashed var(--border);
 	}
 
 	.vitrine {
@@ -250,10 +251,10 @@
 	}
 
 	.live {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		min-width: 0;
 		padding: 1.6rem 1rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 	}
 
 	/* The active instrument marches its frame. Reduced motion leaves it still. */
@@ -275,7 +276,7 @@
 
 	.dossier {
 		min-width: 0;
-		border-left: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
 		padding: 1.6rem 1.3rem 1.4rem;
 		display: flex;
 		flex-direction: column;
@@ -293,7 +294,7 @@
 	}
 
 	.meta-row b {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		font-weight: 500;
 	}
 
@@ -319,12 +320,12 @@
 
 	dd {
 		margin: 0;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.import-box {
 		margin-top: auto;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: #0c0c0c;
 		padding: 0.85rem 0.9rem 0.95rem;
 		display: flex;
@@ -399,11 +400,11 @@
 		scroll-snap-type: x mandatory;
 		padding: 0.55rem 0.15rem 0.75rem;
 		scrollbar-width: thin;
-		scrollbar-color: var(--site-rail) transparent;
+		scrollbar-color: var(--border) transparent;
 	}
 
 	.clip {
-		--dash: var(--site-rail) 0 4px, transparent 4px 8px;
+		--dash: var(--border) 0 4px, transparent 4px 8px;
 		position: relative;
 		flex: 0 0 11.5rem;
 		scroll-snap-align: start;
@@ -433,7 +434,7 @@
 	}
 
 	.clip:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.clip.active {
@@ -494,7 +495,7 @@
 
 		.dossier {
 			border-left: 0;
-			border-top: 1px dashed var(--site-rail);
+			border-top: 1px dashed var(--border);
 		}
 
 		.vitrine {

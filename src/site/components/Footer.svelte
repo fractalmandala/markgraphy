@@ -22,7 +22,7 @@
 		gap: 1rem;
 		flex-wrap: wrap;
 		padding: 1rem var(--pad) 1.4rem;
-		border-top: 1px dashed var(--site-rail);
+		border-top: 1px dashed var(--border);
 		color: var(--site-muted);
 		font-size: 0.7rem;
 		letter-spacing: 0.08em;
@@ -41,6 +41,6 @@
 	}
 
 	a:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 </style>

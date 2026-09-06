@@ -39,7 +39,7 @@
 		position: relative;
 		z-index: 1;
 		padding: 3.2rem var(--pad) 4rem;
-		border-top: 1px dashed var(--site-rail);
+		border-top: 1px dashed var(--border);
 	}
 
 	.section-head {
@@ -68,12 +68,12 @@
 		margin: 0 auto;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		border: 1px dashed var(--site-rail);
+		border: 1px dashed var(--border);
 	}
 
 	.principle {
 		padding: 1.6rem 1.3rem 1.5rem;
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 	}
 
 	.principle:last-child {
@@ -113,7 +113,7 @@
 
 		.principle {
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 
 		.principle:last-child {

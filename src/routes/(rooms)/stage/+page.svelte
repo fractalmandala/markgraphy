@@ -207,8 +207,8 @@
 		display: grid;
 		grid-template-columns: minmax(0, 1.4fr) minmax(18rem, 0.7fr);
 		min-height: 0;
-		border-left: 1px dashed var(--site-rail);
-		border-right: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
+		border-right: 1px dashed var(--border);
 	}
 
 	.vitrine {
@@ -244,7 +244,7 @@
 
 	.dossier {
 		min-width: 0;
-		border-left: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
 		padding: 1.6rem 1.3rem 1.4rem;
 		display: flex;
 		flex-direction: column;
@@ -266,7 +266,7 @@
 	}
 
 	.meta-row b {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		font-weight: 500;
 	}
 
@@ -292,7 +292,7 @@
 
 	dd {
 		margin: 0;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.film {
@@ -322,11 +322,11 @@
 		scroll-snap-type: x mandatory;
 		padding: 0.55rem 0.15rem 0.75rem;
 		scrollbar-width: thin;
-		scrollbar-color: var(--site-rail) transparent;
+		scrollbar-color: var(--border) transparent;
 	}
 
 	.clip {
-		--dash: var(--site-rail) 0 4px, transparent 4px 8px;
+		--dash: var(--border) 0 4px, transparent 4px 8px;
 		position: relative;
 		flex: 0 0 11.5rem;
 		scroll-snap-align: start;
@@ -356,7 +356,7 @@
 	}
 
 	.clip:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.clip.active,
@@ -393,7 +393,7 @@
 
 	.section {
 		padding: 3.2rem 0 4rem;
-		border-top: 1px dashed var(--site-rail);
+		border-top: 1px dashed var(--border);
 	}
 
 	.section-head {
@@ -421,7 +421,7 @@
 	}
 
 	.section-head a {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		border-bottom: 1px dotted var(--site-faint);
 		text-decoration: none;
 	}
@@ -440,12 +440,12 @@
 	}
 
 	.tile {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		position: relative;
 		min-width: 0;
 		display: flex;
 		flex-direction: column;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		text-decoration: none;
 		color: inherit;
 	}
@@ -469,7 +469,7 @@
 		bottom: 0.45rem;
 		z-index: 11;
 		padding: 0 0.4rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		color: var(--site-faint);
 		font-size: 0.62rem;
 		letter-spacing: 0.14em;
@@ -486,12 +486,12 @@
 		margin: 0 auto;
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		border: 1px dashed var(--site-rail);
+		border: 1px dashed var(--border);
 	}
 
 	.principle {
 		padding: 1.6rem 1.3rem 1.5rem;
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 	}
 
 	.principle:last-child {
@@ -549,7 +549,7 @@
 
 		.dossier {
 			border-left: 0;
-			border-top: 1px dashed var(--site-rail);
+			border-top: 1px dashed var(--border);
 		}
 
 		.wall {
@@ -562,7 +562,7 @@
 
 		.principle {
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 
 		.principle:last-child {

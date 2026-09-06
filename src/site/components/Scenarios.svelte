@@ -74,13 +74,13 @@
 	}
 
 	.more a {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		text-decoration: underline;
-		text-decoration-color: var(--site-rail);
+		text-decoration-color: var(--border);
 		text-underline-offset: 4px;
 	}
 
 	.more a:hover {
-		text-decoration-color: var(--site-fg);
+		text-decoration-color: var(--text-primary);
 	}
 </style>

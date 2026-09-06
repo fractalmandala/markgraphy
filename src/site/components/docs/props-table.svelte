@@ -63,7 +63,7 @@
 
 	th {
 		padding: 0.5rem 0.6rem;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 		font-weight: 400;
 		font-size: 0.62rem;
 		letter-spacing: 0.14em;
@@ -81,7 +81,7 @@
 	}
 
 	.name {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		white-space: nowrap;
 	}
 

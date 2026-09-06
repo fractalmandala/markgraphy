@@ -35,7 +35,7 @@ published step-by-step guides for SvelteKit + mdsvex):
   the site needs).
 - Custom theme `markgraphy` built on the site's CSS variables so code re-themes with the
   accent picker at runtime: transparent background, base `var(--site-muted)`, strings/constants
-  `var(--graph-accent, oklch(0.78 0.17 155))`, keywords/tags/functions/headings `var(--site-fg)`,
+  `var(--graph-accent, oklch(0.78 0.17 155))`, keywords/tags/functions/headings `var(--text-primary)`,
   comments `color-mix(in oklab, var(--site-muted) 65%, transparent)`.
 - `highlight(code, lang)` → shiki HTML (falls back to `text` on unknown lang).
 - `mdsvexHighlighter(code, lang)` for mdsvex: returns `` `{@html `${escapeSvelte(html)}`}` `` —

@@ -54,6 +54,6 @@
 		overflow: visible;
 		clip-path: none;
 		background: var(--site-bg);
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 </style>

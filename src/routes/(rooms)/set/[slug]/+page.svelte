@@ -111,8 +111,8 @@
 		flex: 1;
 		display: grid;
 		grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
-		border-left: 1px dashed var(--site-rail);
-		border-right: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
+		border-right: 1px dashed var(--border);
 		min-height: 0;
 	}
 
@@ -125,10 +125,10 @@
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		min-height: 320px;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		display: grid;
 		align-items: center;
 	}
@@ -147,11 +147,11 @@
 	}
 
 	.file-path code {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.comp-side {
-		border-left: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
 		padding: 1.6rem 1.3rem 1.4rem;
 		display: flex;
 		flex-direction: column;
@@ -175,7 +175,7 @@
 
 		.comp-side {
 			border-left: 0;
-			border-top: 1px dashed var(--site-rail);
+			border-top: 1px dashed var(--border);
 			background: none;
 		}
 	}

@@ -179,7 +179,7 @@
 	}
 
 	.rule-plate {
-		--dash: var(--site-rail) 0 4px, transparent 4px 8px;
+		--dash: var(--border) 0 4px, transparent 4px 8px;
 		display: grid;
 		grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 1.2fr);
 		min-height: 280px;
@@ -203,7 +203,7 @@
 
 	.copy {
 		padding: 2rem 1.5rem 1.6rem;
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 	}
 
 	.idx {
@@ -229,7 +229,7 @@
 	}
 
 	.copy code {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.tok {
@@ -237,14 +237,14 @@
 	}
 
 	.demo {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		gap: 1.2rem;
 		min-width: 0;
 		padding: 1.8rem 1.3rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 	}
 
 	.controls {
@@ -258,13 +258,13 @@
 		width: 1px;
 		height: 20px;
 		margin-inline: 0.3rem;
-		background: var(--site-rail);
+		background: var(--border);
 	}
 
 	.mark {
 		min-height: 32px;
 		padding: 0 0.7rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: transparent;
 		color: var(--site-muted);
 		font: inherit;
@@ -274,14 +274,14 @@
 	}
 
 	.mark:hover {
-		color: var(--site-fg);
-		border-color: var(--site-fg);
+		color: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.mark[aria-pressed='true'] {
 		color: var(--site-bg);
-		background: var(--site-fg);
-		border-color: var(--site-fg);
+		background: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.line {
@@ -299,7 +299,7 @@
 	.dont {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		border: 1px dashed var(--site-rail);
+		border: 1px dashed var(--border);
 	}
 
 	.dont article {
@@ -307,7 +307,7 @@
 	}
 
 	.dont article:first-child {
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 	}
 
 	.dont .eyebrow {
@@ -337,12 +337,12 @@
 
 		.copy {
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 
 		.dont article:first-child {
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 	}
 </style>

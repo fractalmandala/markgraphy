@@ -37,7 +37,7 @@
 		gap: 0.65rem;
 		min-width: 0;
 		padding: 0.85rem 0.9rem 0.95rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: #0c0c0c;
 	}
 

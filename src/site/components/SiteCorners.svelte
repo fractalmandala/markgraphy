@@ -46,7 +46,7 @@
 	}
 
 	.rail {
-		color: var(--site-rail);
+		color: var(--border);
 	}
 
 	.frame {

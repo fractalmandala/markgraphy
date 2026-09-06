@@ -48,7 +48,7 @@
 		position: relative;
 		z-index: 1;
 		padding: 3.2rem var(--pad) 4rem;
-		border-top: 1px dashed var(--site-rail);
+		border-top: 1px dashed var(--border);
 	}
 
 	.section-head {
@@ -81,12 +81,12 @@
 	}
 
 	.tile {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		position: relative;
 		min-width: 0;
 		display: flex;
 		flex-direction: column;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 	}
 
 	.tile :global(.graph) {
@@ -108,7 +108,7 @@
 		bottom: 0.45rem;
 		z-index: 11;
 		padding: 0 0.4rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		color: var(--site-faint);
 		font-size: 0.62rem;
 		letter-spacing: 0.14em;

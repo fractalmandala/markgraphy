@@ -109,7 +109,7 @@
 		flex-direction: column;
 		gap: 0.6rem;
 		padding-bottom: 0.9rem;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 	}
 
 	@media (min-width: 640px) {
@@ -133,7 +133,7 @@
 		font-size: 1.45rem;
 		font-weight: 600;
 		letter-spacing: -0.04em;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.story {
@@ -174,10 +174,10 @@
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		flex: 1;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		overflow-x: auto;
 	}
 
@@ -200,7 +200,7 @@
 		gap: 0.65rem;
 		min-width: 0;
 		padding: 0.85rem 0.9rem 0.95rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: #0c0c0c;
 	}
 

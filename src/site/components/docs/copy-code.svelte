@@ -61,7 +61,7 @@
 	}
 
 	.copy:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.state {
@@ -74,7 +74,7 @@
 		width: 100%;
 		justify-content: space-between;
 		padding: 0.625rem 0.75rem;
-		box-shadow: inset 0 0 0 1px var(--site-rail);
+		box-shadow: inset 0 0 0 1px var(--border);
 		text-align: left;
 	}
 

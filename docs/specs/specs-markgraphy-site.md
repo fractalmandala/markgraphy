@@ -45,10 +45,10 @@ itself (`src/lib/`) is FROZEN — never edit it, only import from it.
 | Token | Use |
 | --- | --- |
 | `--site-bg` | page background (oklch 0.11) |
-| `--site-fg` | primary text (oklch 0.86) |
+| `--text-primary` | primary text (oklch 0.86) |
 | `--site-muted` | secondary text (oklch 0.62) |
 | `--site-faint` | subtle fill (selected swatch, hover chips) |
-| `--site-rail` | dashed rules, hairlines, inset borders |
+| `--border` | dashed rules, hairlines, inset borders |
 | `--site-max` | 72rem content max-width |
 | `--graph-accent` / `-2` / `-3` | accent trio — driven by the accent picker |
 | `--graph-frame` | graph frame dashes |

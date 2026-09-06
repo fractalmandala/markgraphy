@@ -184,12 +184,12 @@
 		display: grid;
 		grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 1.2fr);
 		min-height: 280px;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 	}
 
 	.rule-copy {
 		padding: 2rem 1.5rem 1.6rem;
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 		background: var(--site-bg);
 	}
 
@@ -222,7 +222,7 @@
 		flex-direction: column;
 		gap: 1rem;
 		justify-content: center;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		min-width: 0;
 	}
 
@@ -239,19 +239,19 @@
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		font-size: 0.62rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: transparent;
 	}
 
 	.mark-btn:hover {
-		color: var(--site-fg);
-		border-color: var(--site-fg);
+		color: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.mark-btn[aria-pressed='true'] {
 		color: var(--site-bg);
-		background: var(--site-fg);
-		border-color: var(--site-fg);
+		background: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.demo-art {
@@ -262,7 +262,7 @@
 	.dont {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		border: 1px dashed var(--site-rail);
+		border: 1px dashed var(--border);
 		max-width: var(--site-max);
 		margin: 0 auto;
 		width: 100%;
@@ -273,7 +273,7 @@
 	}
 
 	.dont article:first-child {
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 	}
 
 	.dont h3 {
@@ -297,7 +297,7 @@
 
 		.rule-copy {
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 
 		.dont {
@@ -306,7 +306,7 @@
 
 		.dont article:first-child {
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 	}
 </style>

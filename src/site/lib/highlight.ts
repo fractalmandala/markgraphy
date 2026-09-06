@@ -10,7 +10,7 @@ import { createHighlighter, type Highlighter, type ThemeRegistrationRaw } from '
 
 const ACCENT = 'var(--graph-accent, oklch(0.78 0.17 155))';
 const MUTED = 'var(--site-muted)';
-const FG = 'var(--site-fg)';
+const FG = 'var(--text-primary)';
 
 export const codeTheme: ThemeRegistrationRaw = {
 	name: 'markgraphy',

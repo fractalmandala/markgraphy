@@ -126,7 +126,7 @@
 			position: sticky;
 			top: 3.6rem;
 			align-self: start;
-			border-right: 1px dashed var(--site-rail);
+			border-right: 1px dashed var(--border);
 		}
 	}
 
@@ -135,7 +135,7 @@
 		overflow-y: auto;
 		padding: 0.9rem 0.85rem 1.2rem;
 		scrollbar-width: thin;
-		scrollbar-color: var(--site-rail) transparent;
+		scrollbar-color: var(--border) transparent;
 	}
 
 	.find {
@@ -144,8 +144,8 @@
 		padding: 0.45rem 0;
 		background: transparent;
 		border: 0;
-		border-bottom: 1px dashed var(--site-rail);
-		color: var(--site-fg);
+		border-bottom: 1px dashed var(--border);
+		color: var(--text-primary);
 		font: inherit;
 	}
 
@@ -198,7 +198,7 @@
 	}
 
 	.spec:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.spec.active {
@@ -227,7 +227,7 @@
 
 	.strip {
 		position: relative;
-		border-bottom: 1px dashed var(--site-rail);
+		border-bottom: 1px dashed var(--border);
 	}
 
 	@media (min-width: 1024px) {
@@ -243,7 +243,7 @@
 		overflow-x: auto;
 		white-space: nowrap;
 		scrollbar-width: thin;
-		scrollbar-color: var(--site-rail) transparent;
+		scrollbar-color: var(--border) transparent;
 	}
 
 	.chip {
@@ -257,7 +257,7 @@
 	}
 
 	.chip:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.chip.active {

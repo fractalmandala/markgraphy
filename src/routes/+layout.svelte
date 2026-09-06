@@ -4,6 +4,7 @@
 	import '$site/appglobal.sass';
 	import '$site/global.sass'
 	import '$site/lib/styles/index.sass'
+	import { setTheme, getTheme, themes, initPresets, getPresetScript } from 'fractalstyler2/presets';
 	import favicon from '$lib/assets/favicon.svg';
 	import { SITE_DESCRIPTION, SITE_URL } from '$site/lib/site';
 	import type { Snippet } from 'svelte';
@@ -12,6 +13,7 @@
 </script>
 
 <svelte:head>
+	{@html `<script>${getPresetScript()}<\/script>`}
 	<link rel="icon" href={favicon} />
 	<meta name="description" content={SITE_DESCRIPTION} />
 	<meta property="og:title" content="Markgraphy — Svelte graphs for markdown" />

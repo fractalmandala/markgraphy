@@ -47,7 +47,7 @@
 		padding: 0.125rem 0.375rem;
 		background: var(--site-faint);
 		font-size: 0.875rem;
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.fg-prose {

@@ -314,10 +314,10 @@
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		flex: 1;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 	}
 
 	.demo {
@@ -335,7 +335,7 @@
 
 	.name {
 		flex-shrink: 0;
-		color: var(--site-fg);
+		color: var(--text-primary);
 		font-size: 0.68rem;
 		letter-spacing: 0.1em;
 		text-transform: uppercase;

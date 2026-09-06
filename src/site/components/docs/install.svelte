@@ -58,7 +58,7 @@
 	.tab {
 		min-height: 32px;
 		padding: 0 0.7rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: transparent;
 		color: var(--site-muted);
 		font: inherit;
@@ -68,14 +68,14 @@
 	}
 
 	.tab:hover {
-		color: var(--site-fg);
-		border-color: var(--site-fg);
+		color: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.tab[aria-pressed='true'] {
 		color: var(--site-bg);
-		background: var(--site-fg);
-		border-color: var(--site-fg);
+		background: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.cmd {
@@ -84,7 +84,7 @@
 		align-items: center;
 		gap: 0.8rem;
 		padding: 0.85rem 0.9rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: #0c0c0c;
 	}
 

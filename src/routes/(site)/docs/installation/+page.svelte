@@ -122,8 +122,8 @@
 	.bench {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		border-left: 1px dashed var(--site-rail);
-		border-right: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
+		border-right: 1px dashed var(--border);
 	}
 
 	.station {
@@ -133,7 +133,7 @@
 		min-width: 0;
 		min-height: 280px;
 		padding: 1.5rem 1.2rem 1.4rem;
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 	}
 
 	.station:last-child {
@@ -165,7 +165,7 @@
 
 	.station code,
 	.block code {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.live-row {
@@ -175,12 +175,12 @@
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		display: grid;
 		align-items: center;
 		min-width: 0;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 	}
 
 	.svx {
@@ -189,7 +189,7 @@
 		gap: 0.5rem;
 		min-width: 0;
 		padding: 1.3rem 1.2rem;
-		border: 1px dashed var(--site-rail);
+		border: 1px dashed var(--border);
 	}
 
 	.svx .eyebrow {
@@ -224,13 +224,13 @@
 	.token-bay {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		border: 1px dashed var(--site-rail);
+		border: 1px dashed var(--border);
 	}
 
 	.token {
 		padding: 0.9rem 1rem;
-		border-right: 1px dashed var(--site-rail);
-		border-bottom: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
+		border-bottom: 1px dashed var(--border);
 	}
 
 	.token:nth-child(3n) {
@@ -242,7 +242,7 @@
 	}
 
 	.token code {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		font-size: 0.78rem;
 	}
 
@@ -267,7 +267,7 @@
 	}
 
 	.block a {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		text-decoration: none;
 		border-bottom: 1px dotted var(--site-faint);
 	}
@@ -280,7 +280,7 @@
 
 		.station {
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 
 		.station:last-child {
@@ -292,7 +292,7 @@
 		}
 
 		.token:nth-child(3n) {
-			border-right: 1px dashed var(--site-rail);
+			border-right: 1px dashed var(--border);
 		}
 
 		.token:nth-child(2n) {
@@ -300,7 +300,7 @@
 		}
 
 		.token:nth-last-child(-n + 3) {
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 	}
 </style>

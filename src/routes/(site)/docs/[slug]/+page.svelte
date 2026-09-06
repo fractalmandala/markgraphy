@@ -111,13 +111,13 @@
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		display: grid;
 		align-items: center;
 		min-width: 0;
 		min-height: 220px;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 	}
 
 	.art {
@@ -146,7 +146,7 @@
 	}
 
 	.file-path code {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.side {
@@ -155,7 +155,7 @@
 		gap: 1.1rem;
 		min-width: 0;
 		padding: 1.6rem 0 1.4rem 1.3rem;
-		border-left: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
 		background: linear-gradient(180deg, #141414 0%, var(--site-bg) 100%);
 	}
 
@@ -177,7 +177,7 @@
 		.side {
 			padding-left: 0;
 			border-left: 0;
-			border-top: 1px dashed var(--site-rail);
+			border-top: 1px dashed var(--border);
 			background: none;
 		}
 	}

@@ -27,7 +27,7 @@
 		position: relative;
 		z-index: 1;
 		padding: 3.2rem var(--pad) 4rem;
-		border-top: 1px dashed var(--site-rail);
+		border-top: 1px dashed var(--border);
 	}
 
 	.close {
@@ -61,7 +61,7 @@
 	}
 
 	.close-meta a {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		text-decoration: none;
 		border-bottom: 1px dotted var(--site-faint);
 	}

@@ -165,12 +165,12 @@
 	}
 
 	.index {
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 		padding: 0.9rem 0.85rem 1.2rem 0;
 		overflow: auto;
 		max-height: calc(100svh - 14rem);
 		scrollbar-width: thin;
-		scrollbar-color: var(--site-rail) transparent;
+		scrollbar-color: var(--border) transparent;
 	}
 
 	.tools {
@@ -185,8 +185,8 @@
 		padding: 0.55rem 0;
 		background: transparent;
 		border: 0;
-		border-bottom: 1px dashed var(--site-rail);
-		color: var(--site-fg);
+		border-bottom: 1px dashed var(--border);
+		color: var(--text-primary);
 		font: inherit;
 	}
 
@@ -208,7 +208,7 @@
 	.tab {
 		min-height: 32px;
 		padding: 0 0.6rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: transparent;
 		color: var(--site-muted);
 		font: inherit;
@@ -218,14 +218,14 @@
 	}
 
 	.tab:hover {
-		color: var(--site-fg);
-		border-color: var(--site-fg);
+		color: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.tab[aria-pressed='true'] {
 		color: var(--site-bg);
-		background: var(--site-fg);
-		border-color: var(--site-fg);
+		background: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.list {
@@ -255,7 +255,7 @@
 	}
 
 	.spec:hover {
-		color: var(--site-fg);
+		color: var(--text-primary);
 	}
 
 	.spec[aria-selected='true'] {
@@ -285,10 +285,10 @@
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		min-height: 320px;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		display: grid;
 		align-items: center;
 	}
@@ -306,7 +306,7 @@
 		gap: 0.65rem;
 		min-width: 0;
 		padding: 0.85rem 0.9rem 0.95rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: #0c0c0c;
 	}
 
@@ -357,7 +357,7 @@
 			max-height: 14rem;
 			padding-right: 0;
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 
 		.plate-wrap {

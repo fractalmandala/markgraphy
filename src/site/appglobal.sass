@@ -21,8 +21,8 @@ html
 	box-sizing: border-box
 body
 	margin: 0
-	background-color: var(--site-bg)
-	color: var(--site-fg)
+	background-color: var(--bg)
+	color: var(--text-primary)
 	font-family: var(--font-mono)
 	font-size: 14px
 	line-height: 1.45
@@ -151,7 +151,7 @@ html.accent-shimmer::after
 .fg-prose p
 	margin: 1rem 0
 	line-height: 1.7
-	color: var(--site-fg)
+	color: var(--text-primary)
 .fg-prose ul,
 .fg-prose ol
 	margin: 1rem 0
@@ -175,22 +175,22 @@ html.accent-shimmer::after
 .fg-prose blockquote
 	margin: 1rem 0
 	padding-left: 1rem
-	border-left: 2px dashed var(--site-rail)
+	border-left: 2px dashed var(--border)
 	color: var(--site-muted)
 .fg-prose a
-	color: var(--site-fg)
+	color: var(--text-primary)
 	text-decoration: underline
-	text-decoration-color: var(--site-rail)
+	text-decoration-color: var(--border)
 	text-underline-offset: 3px
 .fg-prose a:hover
-	text-decoration-color: var(--site-fg)
+	text-decoration-color: var(--text-primary)
 .fg-prose hr
 	height: 1px
 	margin: 2.5rem 0
 	border: 0
 	background-image: repeating-linear-gradient(
 	to right,
-	var(--site-rail) 0 2px,
+	var(--border) 0 2px,
 	transparent 2px 7px
 	)
 .lede

@@ -32,7 +32,7 @@
 		height: 1px;
 		background-image: repeating-linear-gradient(
 			to right,
-			var(--site-rail) 0 2px,
+			var(--border) 0 2px,
 			transparent 2px 7px
 		);
 	}
@@ -43,7 +43,7 @@
 		width: 1px;
 		background-image: repeating-linear-gradient(
 			to bottom,
-			var(--site-rail) 0 2px,
+			var(--border) 0 2px,
 			transparent 2px 7px
 		);
 	}

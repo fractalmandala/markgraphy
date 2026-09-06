@@ -135,13 +135,13 @@ let &#123; children &#125; = $props();</pre>
 	.bench {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		border-left: 1px dashed var(--site-rail);
-		border-right: 1px dashed var(--site-rail);
+		border-left: 1px dashed var(--border);
+		border-right: 1px dashed var(--border);
 	}
 
 	.station {
 		padding: 1.5rem 1.2rem 1.4rem;
-		border-right: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
 		display: flex;
 		flex-direction: column;
 		gap: 0.85rem;
@@ -192,23 +192,23 @@ let &#123; children &#125; = $props();</pre>
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		font-size: 0.62rem;
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: transparent;
 	}
 
 	.tab:hover {
-		color: var(--site-fg);
-		border-color: var(--site-fg);
+		color: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.tab[aria-pressed='true'] {
 		color: var(--site-bg);
-		background: var(--site-fg);
-		border-color: var(--site-fg);
+		background: var(--text-primary);
+		border-color: var(--text-primary);
 	}
 
 	.cmd {
-		border: 1px solid var(--site-rail);
+		border: 1px solid var(--border);
 		background: #0c0c0c;
 		padding: 0.85rem 0.9rem;
 		display: flex;
@@ -233,16 +233,16 @@ let &#123; children &#125; = $props();</pre>
 	}
 
 	.plate {
-		--graph-background: var(--site-plate);
+		--graph-background: var(--bg-raised);
 		min-height: 220px;
 		padding: 1.8rem 1.3rem 1.2rem;
-		background: var(--site-plate);
+		background: var(--bg-raised);
 		display: grid;
 		align-items: center;
 	}
 
 	.svx {
-		border: 1px dashed var(--site-rail);
+		border: 1px dashed var(--border);
 		padding: 1.3rem 1.2rem;
 		min-width: 0;
 	}
@@ -256,7 +256,7 @@ let &#123; children &#125; = $props();</pre>
 
 	.svx pre {
 		margin: 0.7rem 0 0;
-		color: var(--site-fg);
+		color: var(--text-primary);
 		font-size: 0.8rem;
 		line-height: 1.55;
 		white-space: pre-wrap;
@@ -275,13 +275,13 @@ let &#123; children &#125; = $props();</pre>
 	.token-bay {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
-		border: 1px dashed var(--site-rail);
+		border: 1px dashed var(--border);
 	}
 
 	.token {
 		padding: 0.9rem 1rem;
-		border-right: 1px dashed var(--site-rail);
-		border-bottom: 1px dashed var(--site-rail);
+		border-right: 1px dashed var(--border);
+		border-bottom: 1px dashed var(--border);
 	}
 
 	.token:nth-child(3n) {
@@ -289,7 +289,7 @@ let &#123; children &#125; = $props();</pre>
 	}
 
 	.token code {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		font-size: 0.78rem;
 	}
 
@@ -306,7 +306,7 @@ let &#123; children &#125; = $props();</pre>
 
 		.station {
 			border-right: 0;
-			border-bottom: 1px dashed var(--site-rail);
+			border-bottom: 1px dashed var(--border);
 		}
 
 		.station:last-child {
@@ -322,7 +322,7 @@ let &#123; children &#125; = $props();</pre>
 		}
 
 		.token:nth-child(3n) {
-			border-right: 1px dashed var(--site-rail);
+			border-right: 1px dashed var(--border);
 		}
 
 		.token:nth-child(2n) {

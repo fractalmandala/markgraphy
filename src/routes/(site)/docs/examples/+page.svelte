@@ -87,7 +87,7 @@
 	}
 
 	.outro a {
-		color: var(--site-fg);
+		color: var(--text-primary);
 		text-decoration: none;
 		border-bottom: 1px dotted var(--site-faint);
 	}
