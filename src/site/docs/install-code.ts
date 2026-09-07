@@ -1,8 +1,9 @@
 // Code snippets shown on the installation page. Kept out of the page so its
 // +page.server.ts can highlight them with shiki at build time.
 
-export const LAYOUT_CODE = `// +layout.svelte — import the theme once, at the root
-import 'markgraphy/themes.css';
+export const LAYOUT_CODE = `// +layout.svelte — import the base design tokens at the root
+import 'fractalstyler2/styles';
+import 'markgraphy/styles/index.sass';
 
 let { children } = $props();`;
 

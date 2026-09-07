@@ -19,7 +19,7 @@ Status: implemented — pending user evaluation (2026-09-06)
 character-cell scene inside the standard `Graph` frame, driven by the same house recipe as
 GraphFire/GraphRain/GraphMandala** (deterministic tick, `$effect` + `setInterval` tick, derived
 view via `overlayRow`, SSR/reduced-motion frozen developed frames, glyph whitelist
-U+2500–259F + `·` only, `on`/`arrow`/`<domain>` classes over `--graph-accent/--graph-muted/--graph-frame`).
+U+2500–259F + `·` only, `on`/`arrow`/`<domain>` classes over `--graph-accent/--text-secondary/--border`).
 
 These are *the* figures technical readers expect to see after a code block. Flowcharts
 already live in `GraphFlow` and `GraphFlowPlayer`; the missing trio is the next layer down
@@ -37,7 +37,7 @@ its endpoints light up.
   centered on each lifeline never collide with the side borders. The columns are
   computed once from `cols` (≥ 40).
 - **Header row 1**: participant name only — no `│` punched through the label.
-- **Lifelines** (rows 2..N): drawn as `│` glyph (`--graph-frame` at 0.5 opacity) on every
+- **Lifelines** (rows 2..N): drawn as `│` glyph (`--border` at 0.5 opacity) on every
   non-header row, in every column.
 - **Activations**: when a participant is "busy", its lifeline becomes a `█` filled bar
   in the same column. Hardcoded for the request→DB→Worker→DB→Server→Browser path:

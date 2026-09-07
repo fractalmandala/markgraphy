@@ -133,7 +133,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.4;
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 		white-space: pre;
 	}
 
@@ -143,7 +143,7 @@
 	}
 
 	.taste {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.chip {
@@ -157,7 +157,7 @@
 	}
 
 	.muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.controls {
@@ -166,7 +166,7 @@
 		justify-content: space-between;
 		gap: 1rem;
 		padding-top: 0.875rem;
-		border-top: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-top: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.gain {
@@ -175,7 +175,7 @@
 		max-width: 20rem;
 		align-items: center;
 		gap: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		white-space: nowrap;
 	}
 
@@ -197,7 +197,7 @@
 	.hint {
 		margin: 0;
 		font-size: 0.8rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.hint code {

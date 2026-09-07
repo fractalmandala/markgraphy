@@ -9,7 +9,7 @@ import { escapeSvelte } from 'mdsvex';
 import { createHighlighter, type Highlighter, type ThemeRegistrationRaw } from 'shiki';
 
 const ACCENT = 'var(--graph-accent, oklch(0.78 0.17 155))';
-const MUTED = 'var(--site-muted)';
+const MUTED = 'var(--text-secondary)';
 const FG = 'var(--text-primary)';
 
 export const codeTheme: ThemeRegistrationRaw = {
@@ -22,7 +22,7 @@ export const codeTheme: ThemeRegistrationRaw = {
 	settings: [
 		{
 			scope: ['comment'],
-			settings: { foreground: 'color-mix(in oklab, var(--site-muted) 65%, transparent)' }
+			settings: { foreground: 'color-mix(in oklab, var(--text-secondary) 65%, transparent)' }
 		},
 		{
 			scope: ['string', 'constant.numeric', 'constant.language', 'constant.character.escape'],
@@ -59,9 +59,36 @@ export async function highlight(code: string, lang = 'svelte'): Promise<string> 
 	}
 }
 
+/** Escape a string for safe embedding inside a double-quoted HTML attribute. */
+function escapeAttr(s: string): string {
+	return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/**
+ * Wrap Shiki output with a copyable box styled like the examples page:
+ * a header row showing the language and a "copy" button that writes the
+ * raw code (not the highlighted HTML) to the clipboard. The button uses
+ * event delegation (wired up once in docs/+layout.svelte) — no inline JS,
+ * no CSP headaches.
+ */
+function wrapWithCopy(shikiHtml: string, code: string, lang: string): string {
+	const label = lang === 'svelte' ? 'copy svelte' : `copy ${lang}`;
+	return (
+		`<div class="code-block" data-code="${escapeAttr(code)}">` +
+		`<header class="code-block-head">` +
+		`<span class="code-block-lang">${escapeAttr(lang || 'text')}</span>` +
+		`<button type="button" class="code-block-copy" data-label="${escapeAttr(label)}" aria-label="${escapeAttr(label)}">` +
+		`<span class="code-block-copy-state">${escapeAttr(label)}</span>` +
+		`</button></header>` +
+		`<div class="code-block-body">${shikiHtml}</div>` +
+		`</div>`
+	);
+}
+
 /** mdsvex `highlight.highlighter`: returns the string injected into the document. */
 export async function mdsvexHighlighter(code: string, lang: string | null = ''): Promise<string> {
 	const language = lang?.trim() ? lang.trim().toLowerCase() : 'text';
 	const html = await highlight(code, language);
-	return `{@html \`${escapeSvelte(html)}\`}`;
+	const wrapped = wrapWithCopy(html, code, language);
+	return `{@html \`${escapeSvelte(wrapped)}\`}`;
 }

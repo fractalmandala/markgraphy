@@ -204,7 +204,7 @@
 		padding: 1px 0;
 		height: calc(var(--plot-h, 8) * 1em);
 		text-align: right;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.spacer {
@@ -276,7 +276,7 @@
 		display: flex;
 		flex: 1;
 		justify-content: space-between;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.stats {
@@ -295,7 +295,7 @@
 
 	.stat dt {
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.stat dd {
@@ -311,7 +311,7 @@
 	}
 
 	.c-p95m {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.c-p99 {
@@ -319,7 +319,7 @@
 	}
 
 	.c-p99m {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.accent {

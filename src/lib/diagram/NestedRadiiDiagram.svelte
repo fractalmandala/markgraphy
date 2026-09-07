@@ -121,13 +121,8 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.35;
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 		white-space: pre;
-	}
-
-	.title {
-		color: var(--graph-accent, oklch(0.78 0.17 155));
-		font-weight: 600;
 	}
 
 	.corner {
@@ -141,12 +136,12 @@
 	}
 
 	.val {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		font-weight: 500;
 	}
 
 	.muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.controls {
@@ -154,7 +149,7 @@
 		flex-direction: column;
 		gap: 0.75rem;
 		padding-top: 0.875rem;
-		border-top: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-top: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.row {
@@ -162,7 +157,7 @@
 		align-items: center;
 		justify-content: space-between;
 		gap: 1rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		white-space: nowrap;
 	}
 
@@ -207,12 +202,12 @@
 		align-items: center;
 		justify-content: center;
 		font-size: 0.7rem;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.hint {
 		margin: 0;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 </style>

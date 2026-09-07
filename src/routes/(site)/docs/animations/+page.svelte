@@ -314,7 +314,6 @@
 	}
 
 	.plate {
-		--graph-background: var(--bg-raised);
 		flex: 1;
 		padding: 1.8rem 1.3rem 1.2rem;
 		background: var(--bg-raised);
@@ -361,7 +360,7 @@
 	}
 
 	.desc {
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.78rem;
 		text-align: right;
 		text-wrap: pretty;

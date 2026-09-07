@@ -229,12 +229,12 @@
 			const chars = Array.from(txt);
 			for (const ch of chars) {
 				const span = document.createElement('span');
-				span.className = 'shuffle-char';
+				span.className = 'mg-shuffle-char';
 				span.textContent = ch;
 				root.appendChild(span);
 			}
 
-			const charEls = root.querySelectorAll<HTMLElement>('.shuffle-char');
+			const charEls = root.querySelectorAll<HTMLElement>('.mg-shuffle-char');
 			wrappers = [];
 			strips = [];
 
@@ -496,14 +496,14 @@
 <svelte:element
 	this={tag}
 	bind:this={el}
-	class="shuffle-parent {ready ? 'is-ready' : ''} {className}"
+	class="mg-shuffle-parent {ready ? 'is-ready' : ''} {className}"
 	style="text-align:{textAlign};{style}"
 >
 	{text}
 </svelte:element>
 
 <style>
-	:global(.shuffle-parent) {
+	:global(.mg-shuffle-parent) {
 		display: inline-block;
 		white-space: normal;
 		word-wrap: break-word;
@@ -515,11 +515,11 @@
 		visibility: hidden;
 	}
 
-	:global(.shuffle-parent.is-ready) {
+	:global(.mg-shuffle-parent.is-ready) {
 		visibility: visible;
 	}
 
-	:global(.shuffle-char) {
+	:global(.mg-shuffle-char) {
 		line-height: 1;
 		display: inline-block;
 		text-align: center;

@@ -67,7 +67,7 @@
 	const halo = radius + 1.1;
 
 	// svelte-ignore state_referenced_locally
-	const rand = mulberry32(seedNum);
+	const rand = $derived(mulberry32(seedNum));
 	// svelte-ignore state_referenced_locally
 	const rayLens = Array.from({ length: Math.max(3, rays) }, () => 2.5 + 2 * rand());
 
@@ -243,7 +243,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.15;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 	}
 
@@ -253,16 +253,16 @@
 	}
 
 	.mid {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.faint {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 
 	.caption {
 		margin: 0;
 		font-size: 0.8rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 </style>

@@ -62,7 +62,7 @@
 	.chips a {
 		display: inline-block;
 		padding: 0.3rem 0.2rem;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.68rem;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
@@ -82,13 +82,13 @@
 	.outro {
 		max-width: 56ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 	}
 
 	.outro a {
 		color: var(--text-primary);
 		text-decoration: none;
-		border-bottom: 1px dotted var(--site-faint);
+		border-bottom: 1px dotted var(--text-muted);
 	}
 </style>

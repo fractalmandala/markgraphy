@@ -176,7 +176,7 @@
 		text-align: center;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.rows {
@@ -200,7 +200,7 @@
 		flex: 0 0 auto;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.cells {
@@ -231,7 +231,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.scale {
@@ -246,7 +246,7 @@
 
 	.muted {
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.c-accent {
@@ -258,19 +258,19 @@
 	}
 
 	.c-accent3 {
-		color: var(--graph-accent-3, oklch(0.75 0.1 200));
+		color: var(--graph-accent-3, oklch(0.72 0.13 30));
 	}
 
 	.c-frame {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.c-fg {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.c-muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.sr-only {

@@ -57,7 +57,7 @@
 		background: transparent;
 		border: none;
 		font-size: 0.75rem;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 
 	.copy:hover {
@@ -79,8 +79,8 @@
 	}
 
 	.box:hover {
-		background: var(--site-faint);
-		color: var(--site-muted);
+		background: var(--text-muted);
+		color: var(--text-secondary);
 	}
 
 	.done {

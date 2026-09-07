@@ -10,28 +10,28 @@
  * prefers-reduced-motion: reduce disables all of it.
  */
 
-.fg-motion,
-.fg-draw,
-.fg-sweep,
-.fg-type {
-	--fg-duration: 220ms;
-	--fg-delay: 0ms;
-	--fg-ease: var(--graph-ease, cubic-bezier(0.215, 0.61, 0.355, 1));
+.mg-motion,
+.mg-draw,
+.mg-sweep,
+.mg-type {
+	--mg-duration: 220ms;
+	--mg-delay: 0ms;
+	--mg-ease: var(--graph-ease, cubic-bezier(0.215, 0.61, 0.355, 1));
 }
 
 /* Fade in from an offset, an optional scale, or a straight dissolve. */
-.fg-motion {
-	--fg-x: 0px;
-	--fg-y: 8px;
-	--fg-scale: 1;
+.mg-motion {
+	--mg-x: 0px;
+	--mg-y: 8px;
+	--mg-scale: 1;
 	opacity: 0;
-	transform: translate3d(var(--fg-x), var(--fg-y), 0) scale(var(--fg-scale));
+	transform: translate3d(var(--mg-x), var(--mg-y), 0) scale(var(--mg-scale));
 	transition:
-		opacity var(--fg-duration) var(--fg-ease) var(--fg-delay),
-		transform var(--fg-duration) var(--fg-ease) var(--fg-delay);
+		opacity var(--mg-duration) var(--mg-ease) var(--mg-delay),
+		transform var(--mg-duration) var(--mg-ease) var(--mg-delay);
 }
 
-.fg-motion.is-revealed {
+.mg-motion.is-revealed {
 	opacity: 1;
 	transform: none;
 }
@@ -41,28 +41,28 @@
  * under the layout rather than floating in. Clipping is the whole effect here,
  * so it joins the transition and opacity stays out of it.
  */
-.fg-motion.fg-slide {
+.mg-motion.mg-slide {
 	opacity: 1;
-	clip-path: var(--fg-clip, inset(0 0 0 0));
+	clip-path: var(--mg-clip, inset(0 0 0 0));
 	transition:
-		transform var(--fg-duration) var(--fg-ease) var(--fg-delay),
-		clip-path var(--fg-duration) var(--fg-ease) var(--fg-delay);
+		transform var(--mg-duration) var(--mg-ease) var(--mg-delay),
+		clip-path var(--mg-duration) var(--mg-ease) var(--mg-delay);
 }
 
-.fg-motion.fg-slide.is-revealed {
+.mg-motion.mg-slide.is-revealed {
 	clip-path: inset(0 0 0 0);
 }
 
 /* Scale a rule, bar or track in from one edge. */
-.fg-draw {
-	--fg-sx: 0;
-	--fg-sy: 1;
-	transform: scale(var(--fg-sx), var(--fg-sy));
-	transform-origin: var(--fg-origin, left center);
-	transition: transform var(--fg-duration) var(--fg-ease) var(--fg-delay);
+.mg-draw {
+	--mg-sx: 0;
+	--mg-sy: 1;
+	transform: scale(var(--mg-sx), var(--mg-sy));
+	transform-origin: var(--mg-origin, left center);
+	transition: transform var(--mg-duration) var(--mg-ease) var(--mg-delay);
 }
 
-.fg-draw.is-revealed {
+.mg-draw.is-revealed {
 	transform: none;
 }
 
@@ -70,12 +70,12 @@
  * A band of light crossing the element. It is drawn on ::after and clipped to
  * the box, so the host element must be able to hide its overflow.
  */
-.fg-sweep {
+.mg-sweep {
 	position: relative;
 	overflow: hidden;
 }
 
-.fg-sweep::after {
+.mg-sweep::after {
 	content: '';
 	position: absolute;
 	z-index: 1;
@@ -85,34 +85,34 @@
 	background-image: linear-gradient(
 		to right,
 		transparent,
-		var(--fg-sweep-ink, var(--graph-accent, oklch(0.78 0.17 155))),
+		var(--mg-sweep-ink, var(--graph-accent, oklch(0.78 0.17 155))),
 		transparent
 	);
 }
 
-.fg-sweep.is-sweeping::after {
-	animation: fg-sweep var(--fg-duration) var(--fg-ease) var(--fg-delay) var(--fg-repeat, 1);
+.mg-sweep.is-sweeping::after {
+	animation: mg-sweep var(--mg-duration) var(--mg-ease) var(--mg-delay) var(--mg-repeat, 1);
 }
 
-@keyframes fg-sweep {
+@keyframes mg-sweep {
 	from {
-		opacity: var(--fg-sweep-opacity, 0.2);
+		opacity: var(--mg-sweep-opacity, 0.2);
 		transform: translateX(-100%);
 	}
 	to {
-		opacity: var(--fg-sweep-opacity, 0.2);
+		opacity: var(--mg-sweep-opacity, 0.2);
 		transform: translateX(100%);
 	}
 }
 
 /* Block caret for `typewriter`, dropped once the line finishes. */
-.fg-type[data-caret]::after {
+.mg-type[data-caret]::after {
 	content: '▌';
 	color: var(--graph-accent, oklch(0.78 0.17 155));
-	animation: fg-caret 1s steps(1, end) infinite;
+	animation: mg-caret 1s steps(1, end) infinite;
 }
 
-@keyframes fg-caret {
+@keyframes mg-caret {
 	0%,
 	50% {
 		opacity: 1;
@@ -124,16 +124,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.fg-motion,
-	.fg-draw {
+	.mg-motion,
+	.mg-draw {
 		opacity: 1;
 		transform: none;
 		clip-path: none;
 		transition: none;
 	}
 
-	.fg-sweep.is-sweeping::after,
-	.fg-type[data-caret]::after {
+	.mg-sweep.is-sweeping::after,
+	.mg-type[data-caret]::after {
 		animation: none;
 	}
 }

@@ -22,7 +22,7 @@ then:
 character-cell scene inside the standard `Graph` frame, driven by the same house recipe as
 GraphFire/GraphRain** (deterministic mulberry32 seed, `$effect` + `setInterval` tick, derived
 run-length-encoded view, SSR/reduced-motion frozen developed frames, glyph whitelist
-U+2500–259F + `·` only, `hot`/`mid`/`faint` classes over `--graph-accent/--graph-muted/--graph-faint`).
+U+2500–259F + `·` only, `hot`/`mid`/`faint` classes over `--graph-accent/--text-secondary/--text-muted`).
 
 ## What was implemented
 
@@ -86,7 +86,7 @@ Five new animations that revolve around circles, lamps, beads, and rivers —
 each kept inside the same `Graph` frame, each driven by the same `mulberry32` seed,
 `$effect` + `setInterval` tick, derived run-length-encoded view, SSR/reduced-motion
 frozen developed frames, glyph whitelist U+2500–259F + `·` only, and
-`hot`/`mid`/`faint` classes over `--graph-accent/--graph-muted/--graph-faint`.
+`hot`/`mid`/`faint` classes over `--graph-accent/--text-secondary/--text-muted`.
 
 ### 4. `src/lib/animated/GraphMandala.svelte` — the blooming circle
 

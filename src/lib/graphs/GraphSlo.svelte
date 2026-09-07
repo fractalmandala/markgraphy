@@ -229,7 +229,7 @@
 	}
 
 	.daily-label {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.daily-spark {
@@ -241,7 +241,7 @@
 	.cell {
 		min-width: 1ch;
 		text-align: center;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.bar {
@@ -254,11 +254,11 @@
 
 	.brace {
 		user-select: none;
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.g {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.g.fill {
@@ -293,7 +293,7 @@
 
 	.row dt {
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.row dd {
@@ -308,7 +308,7 @@
 
 	.muted {
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.sr-only {

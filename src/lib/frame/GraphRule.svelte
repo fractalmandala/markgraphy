@@ -14,7 +14,7 @@
 		height: 1px;
 		background-image: repeating-linear-gradient(
 			to right,
-			var(--graph-frame, oklch(0.6 0 0 / 0.5)) 0 2px,
+			var(--border, oklch(0.6 0 0 / 0.5)) 0 2px,
 			transparent 2px 7px
 		);
 	}

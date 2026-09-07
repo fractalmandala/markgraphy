@@ -63,6 +63,16 @@
 		padding: 2rem 0;
 	}
 
+	@media (max-width: 1024px) {
+		.card {
+			padding: 1.4rem 0;
+		}
+
+		.title {
+			font-size: 1.35rem;
+		}
+	}
+
 	.card:hover .title {
 		text-decoration: underline;
 		text-decoration-color: var(--text-primary);
@@ -71,7 +81,7 @@
 
 	.date {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 
 	.title {
@@ -88,7 +98,7 @@
 		max-width: 60ch;
 		margin: 0;
 		line-height: 1.7;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 
 	.more {

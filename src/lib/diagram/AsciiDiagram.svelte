@@ -73,7 +73,7 @@
 				<span class="label">{title}</span>
 			{/if}
 			{#if showCopy && content}
-				<button class="copy" type="button" onclick={handleCopy}>
+				<button class="copy" type="button" onclick={handleCopy} aria-label={copied ? 'Copied diagram code' : 'Copy diagram code'}>
 					{copied ? '✓ copied' : 'copy'}
 				</button>
 			{/if}
@@ -100,7 +100,7 @@
 	}
 
 	.bordered {
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.bordered .header + .viewport,
@@ -117,29 +117,29 @@
 
 	.bordered .header {
 		padding: 0.5rem 1.5rem;
-		border-bottom: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-bottom: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.label {
 		font-size: 0.75rem;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.copy {
 		padding: 0.15rem 0.5rem;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 		border-radius: 0;
 		cursor: pointer;
 	}
 
 	.copy:hover {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		border-color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
+		border-color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.viewport {
@@ -159,7 +159,7 @@
 		margin: 0;
 		font-size: var(--diag-font-size, 0.85rem);
 		line-height: var(--diag-line-height, 1.35);
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		tab-size: 2;
 		white-space: pre;
 	}
@@ -186,7 +186,7 @@
 	}
 
 	.diagram :global(.diag-box) {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.diagram :global(.diag-glyph) {

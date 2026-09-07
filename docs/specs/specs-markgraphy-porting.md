@@ -67,12 +67,12 @@ No Tailwind. No utility imports. No global styles. No `class={someDynamicString}
    | Ref class | Use |
    | --- | --- |
    | `text-foreground` | `color: var(--graph-foreground, oklch(0.93 0 0))` |
-   | `text-muted-foreground` / `text-graph-muted` | `color: var(--graph-muted, oklch(0.62 0 0))` |
+   | `text-muted-foreground` / `text-graph-muted` | `color: var(--text-secondary, oklch(0.62 0 0))` |
    | `text-graph-accent` | `color: var(--graph-accent, oklch(0.78 0.17 155))` |
    | `text-graph-accent-2` | `color: var(--graph-accent-2, oklch(0.78 0.12 70))` |
    | `text-graph-accent-3` | `color: var(--graph-accent-3, oklch(0.75 0.1 200))` |
-   | `text-graph-frame` | `color: var(--graph-frame, oklch(0.6 0 0 / 0.5))` |
-   | `text-graph-faint` | `color: var(--graph-faint, oklch(0.3 0 0))` |
+   | `text-graph-frame` | `color: var(--border, oklch(0.6 0 0 / 0.5))` |
+   | `text-graph-faint` | `color: var(--text-muted, oklch(0.3 0 0))` |
    | `opacity-40` / dim rows | `.dim { opacity: 0.4; }` + `class:dim` (or `isDim()` from tone.ts) |
 
 3. **Inline styles**: none. The ONLY permitted runtime styling is a data-driven geometry custom property consumed by scoped CSS, e.g. `style:--offset="{pct}%"` then `margin-left: var(--offset)` (needed by Waterfall/Plot-style layout math). Nothing else.
@@ -81,8 +81,8 @@ No Tailwind. No utility imports. No global styles. No `class={someDynamicString}
    .c-accent  { color: var(--graph-accent, oklch(0.78 0.17 155)); }
    .c-accent2 { color: var(--graph-accent-2, oklch(0.78 0.12 70)); }
    .c-accent3 { color: var(--graph-accent-3, oklch(0.75 0.1 200)); }
-   .c-muted   { color: var(--graph-muted, oklch(0.62 0 0)); }
-   .c-frame   { color: var(--graph-frame, oklch(0.6 0 0 / 0.5)); }
+   .c-muted   { color: var(--text-secondary, oklch(0.62 0 0)); }
+   .c-frame   { color: var(--border, oklch(0.6 0 0 / 0.5)); }
    .c-fg      { color: var(--graph-foreground, oklch(0.93 0 0)); }
    .dim       { opacity: 0.4; }
    .sr-only   { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border-width: 0; }

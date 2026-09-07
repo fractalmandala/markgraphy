@@ -53,7 +53,7 @@
 		margin: 0;
 		overflow: visible;
 		clip-path: none;
-		background: var(--site-bg);
+		background: var(--bg);
 		color: var(--text-primary);
 	}
 </style>

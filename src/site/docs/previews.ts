@@ -72,7 +72,8 @@ import {
 	GraphWorkflow,
 	MetricsTableDiagram,
 	NestedRadiiDiagram,
-	PromptLoopDiagram
+	PromptLoopDiagram,
+	ShuffleText
 } from '$lib';
 
 export type PreviewEntry = {
@@ -1587,6 +1588,22 @@ const edges: WorkflowEdge[] = [
 ];
 
 <GraphWorkflow title="CI DIAMOND" autoPlay {nodes} {edges} />`
+		}
+	],
+	'shuffle-text': [
+		{
+			Comp: ShuffleText,
+			props: {
+				text: 'MARKGRAPHY',
+				shuffleDirection: 'right',
+				duration: 0.4,
+				stagger: 0.03,
+				tag: 'h2',
+				textAlign: 'center'
+			},
+			code: `import { ShuffleText } from 'markgraphy';
+
+<ShuffleText text="MARKGRAPHY" tag="h2" />`
 		}
 	]
 };

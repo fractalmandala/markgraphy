@@ -72,7 +72,7 @@
 	.lead,
 	.note {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.88rem;
 		text-wrap: pretty;
 	}
@@ -88,7 +88,7 @@
 	.right :global(a) {
 		color: var(--text-primary);
 		text-decoration: none;
-		border-bottom: 1px dotted var(--site-faint);
+		border-bottom: 1px dotted var(--text-muted);
 	}
 
 	@media (max-width: 980px) {

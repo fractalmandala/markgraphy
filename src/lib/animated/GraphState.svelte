@@ -244,13 +244,13 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.2;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 	}
 
 	/* Per-class styling for the spans inside <pre>. */
 	:global(.state span.state) {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	:global(.state span.on) {
@@ -259,12 +259,12 @@
 	}
 
 	:global(.state span.arrow) {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.caption {
 		margin: 0;
 		font-size: 0.8rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 </style>

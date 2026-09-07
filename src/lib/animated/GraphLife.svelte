@@ -255,7 +255,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.2;
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 		white-space: pre;
 	}
 
@@ -264,13 +264,13 @@
 	}
 
 	.trail {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 
 	.caption {
 		margin: 0;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.controls {
@@ -280,7 +280,7 @@
 		flex-wrap: wrap;
 		gap: 1rem;
 		padding-top: 0.875rem;
-		border-top: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-top: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.buttons {
@@ -292,16 +292,16 @@
 	.ctrl {
 		padding: 0.25rem 0.6rem;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 		border-radius: 0;
 		cursor: pointer;
 	}
 
 	.ctrl:hover {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		border-color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
+		border-color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.primary {

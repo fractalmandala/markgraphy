@@ -125,7 +125,6 @@
 	}
 
 	.plate {
-		--graph-background: var(--bg-raised);
 		min-height: 320px;
 		padding: 1.8rem 1.3rem 1.2rem;
 		background: var(--bg-raised);
@@ -142,7 +141,7 @@
 
 	.file-path {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.75rem;
 	}
 

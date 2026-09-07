@@ -173,7 +173,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.4;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 		user-select: none;
 	}

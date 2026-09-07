@@ -1,6 +1,5 @@
 <script module lang="ts">
 	import type { Glyphs } from '../frame/glyphs';
-	import type { GraphPalette } from '../frame/tone';
 
 	/** Share grid of ~100 cells; filled cells carry the accent. */
 	export interface GraphWaffleProps {
@@ -10,7 +9,6 @@
 		columns?: number;
 		caption?: string;
 		glyphs?: Glyphs;
-		palette?: GraphPalette;
 		corner?: string;
 		class?: string;
 	}
@@ -106,7 +104,7 @@
 
 	.muted {
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.c-accent {
@@ -114,7 +112,7 @@
 	}
 
 	.c-frame {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.sr-only {

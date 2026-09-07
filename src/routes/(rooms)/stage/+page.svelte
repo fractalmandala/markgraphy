@@ -66,16 +66,6 @@
 </svelte:head>
 
 <section class="observatory">
-	<div class="page-head">
-		<div>
-			<p class="kicker">[ observatory ]</p>
-			<h1>Charts drawn<br />with characters.</h1>
-		</div>
-		<p class="lede">
-			A Svelte library that renders tables, charts, and diagrams as
-			<strong>glyphs inside a dashed frame</strong>. No SVG. No canvas. One accent, on purpose.
-		</p>
-	</div>
 
 	<div class="stage">
 		<div class="vitrine">
@@ -125,71 +115,6 @@
 				</button>
 			{/each}
 		</div>
-	</div>
-</section>
-
-<section class="section">
-	<div class="section-head">
-		<h2>The set.</h2>
-		<p>
-			{graphs} graphs, {diagrams} diagrams and {animated} animations — all sharing one frame.
-			<a href="/set">Open the cabinet</a>
-		</p>
-	</div>
-	<div class="wall">
-		{#each tiles as tile (tile.slug)}
-			<a class="tile" href={`/set/${tile.slug}`}>
-				<tile.entry.Comp {...tile.entry.props} />
-				<span class="open">[ open ]</span>
-			</a>
-		{/each}
-		<a class="tile span" href="/set/graph-activity">
-			<div class="scroll">
-				<GraphActivity title="COMMITS" palette="multi" days={commits} />
-			</div>
-			<span class="open">[ open ]</span>
-		</a>
-	</div>
-</section>
-
-<section class="section">
-	<div class="section-head">
-		<h2>Three rules.</h2>
-		<p>
-			The library is a taste system disguised as a chart kit.
-			<a href="/rules">Operate the grammar</a>
-		</p>
-	</div>
-	<div class="principles">
-		<article class="principle">
-			<p class="idx">[ 01 ]</p>
-			<h3>Glyphs do the drawing.</h3>
-			<p>█ ▓ ▒ ░ · = + | ├ └ — the chart is the text. Anything monospace will host it.</p>
-		</article>
-		<article class="principle">
-			<p class="idx">[ 02 ]</p>
-			<h3>The frame is the brand.</h3>
-			<p>Every graph sits in a dashed edge with a <span class="tok">[ TITLE ]</span> and + corners.</p>
-		</article>
-		<article class="principle">
-			<p class="idx">[ 03 ]</p>
-			<h3>One accent, on purpose.</h3>
-			<p>Unused rows recede. Color is a decision. <code>palette="duo"</code> when a second series earns it.</p>
-		</article>
-	</div>
-</section>
-
-<section class="section">
-	<div class="close">
-		<div>
-			<p class="kicker">[ install ]</p>
-			<h2>Put a graph<br />next to the prose.</h2>
-			<div class="cta-row">
-				<a class="primo" href="/install">Install</a>
-				<a class="ghost" href={GITHUB_URL} rel="noreferrer">GitHub</a>
-			</div>
-		</div>
-		<p class="close-meta">Svelte 5 is the only peer. Theming is six CSS variables.</p>
 	</div>
 </section>
 
@@ -249,7 +174,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1.15rem;
-		background: linear-gradient(180deg, #141414 0%, var(--site-bg) 100%);
+		background: linear-gradient(180deg, #141414 0%, var(--bg) 100%);
 	}
 
 	.dossier :global(.import-box) {
@@ -259,7 +184,7 @@
 	.meta-row {
 		display: flex;
 		justify-content: space-between;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.68rem;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
@@ -274,7 +199,7 @@
 		display: grid;
 		gap: 0.55rem;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.8rem;
 	}
 
@@ -287,7 +212,7 @@
 	}
 
 	dt {
-		color: var(--site-faint);
+		color: var(--text-muted);
 	}
 
 	dd {
@@ -306,7 +231,7 @@
 	.film-label {
 		writing-mode: vertical-rl;
 		transform: rotate(180deg);
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		letter-spacing: 0.18em;
 		font-size: 0.62rem;
 		text-transform: uppercase;
@@ -326,7 +251,6 @@
 	}
 
 	.clip {
-		--dash: var(--border) 0 4px, transparent 4px 8px;
 		position: relative;
 		flex: 0 0 11.5rem;
 		scroll-snap-align: start;
@@ -334,10 +258,10 @@
 		border: 0;
 		background-color: transparent;
 		background-image:
-			repeating-linear-gradient(to right, var(--dash)),
-			repeating-linear-gradient(to bottom, var(--dash)),
-			repeating-linear-gradient(to right, var(--dash)),
-			repeating-linear-gradient(to bottom, var(--dash));
+			repeating-linear-gradient(to right, var(--graph-framer)),
+			repeating-linear-gradient(to bottom, var(--graph-framer)),
+			repeating-linear-gradient(to right, var(--graph-framer)),
+			repeating-linear-gradient(to bottom, var(--graph-framer));
 		background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
 		background-position:
 			0 0,
@@ -351,7 +275,7 @@
 			1px 100%;
 		padding: 0.85rem 0.7rem 0.7rem;
 		min-height: 96px;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-family: var(--font-mono);
 	}
 
@@ -378,7 +302,7 @@
 		line-height: 1.15;
 		letter-spacing: 0.02em;
 		white-space: pre;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 
 	.clip.active .mini {
@@ -416,13 +340,13 @@
 	.section-head p {
 		max-width: 42ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 	}
 
 	.section-head a {
 		color: var(--text-primary);
-		border-bottom: 1px dotted var(--site-faint);
+		border-bottom: 1px dotted var(--text-muted);
 		text-decoration: none;
 	}
 
@@ -440,7 +364,6 @@
 	}
 
 	.tile {
-		--graph-background: var(--bg-raised);
 		position: relative;
 		min-width: 0;
 		display: flex;
@@ -470,7 +393,7 @@
 		z-index: 11;
 		padding: 0 0.4rem;
 		background: var(--bg-raised);
-		color: var(--site-faint);
+		color: var(--text-muted);
 		font-size: 0.62rem;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
@@ -514,7 +437,7 @@
 
 	.principle p {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 		max-width: 34ch;
 	}
@@ -538,7 +461,7 @@
 
 	.close-meta {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.8rem;
 	}
 

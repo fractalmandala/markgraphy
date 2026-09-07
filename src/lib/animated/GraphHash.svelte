@@ -203,7 +203,7 @@
 		margin: 0;
 		font-size: 0.95rem;
 		line-height: 1.1;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 		font-variant-numeric: tabular-nums;
 		letter-spacing: 0.05em;
@@ -211,13 +211,13 @@
 
 	/* Tier colors */
 	.faint {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 	.low {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 	.mid {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 	.high {
 		color: var(--graph-accent, oklch(0.78 0.17 155));
@@ -225,10 +225,10 @@
 
 	/* Scan-line accent: same tier, but brightened */
 	.faint-on {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 	.low-on {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 	.mid-on {
 		color: var(--graph-accent, oklch(0.78 0.17 155));
@@ -246,6 +246,6 @@
 	.caption {
 		margin: 0;
 		font-size: 0.8rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 </style>

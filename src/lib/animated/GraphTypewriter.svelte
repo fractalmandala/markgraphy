@@ -108,7 +108,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.4;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		white-space: pre;
 	}
 

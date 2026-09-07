@@ -7,10 +7,9 @@
 	 * - `reverse` marching ants, counter-clockwise
 	 * - `pulse`   dashes drift out and back
 	 * - `scan`    a sweep of light travels around the frame
-	 * - `beacon`  the dash colour pulses to the accent
 	 * - `draw`    frame draws itself in on hover (no loop)
 	 */
-	export type GraphMotion = 'none' | 'march' | 'reverse' | 'pulse' | 'scan' | 'beacon' | 'draw';
+	export type GraphMotion = 'none' | 'march' | 'reverse' | 'pulse' | 'scan' | 'draw';
 
 	/** Inner padding. */
 	export type GraphPad = 'none' | 'sm' | 'md' | 'lg';
@@ -30,7 +29,7 @@
 		/** Frame motion. Every loop is off under `prefers-reduced-motion`. Default 'none'. */
 		motion?: GraphMotion;
 		/** Seconds per motion cycle — for `draw`, the hover duration.
-		 * Defaults per motion (draw 0.3, march 0.7, pulse 2, beacon 1.8, scan 3). */
+		 * Defaults per motion (draw 0.3, march 0.7, pulse 2, scan 3). */
 		speed?: number;
 		/** Curve the motion runs on — an `EASINGS` name or a raw timing function. */
 		easing?: Easing;
@@ -40,7 +39,7 @@
 		cornerBlink?: boolean;
 		/** Inner padding. Default 'none'. */
 		pad?: GraphPad;
-		/** Frame colour override. Defaults to `--graph-frame`. */
+		/** Frame colour override. Defaults to `--text-primary`. */
 		ink?: string;
 		/** Corner + title colour override. Defaults to `--graph-accent`. */
 		accent?: string;
@@ -71,7 +70,7 @@
 			speed !== undefined ? `--fg-speed:${speed}s` : '',
 			easing ? `--fg-timing:${easingValue(easing)}` : '',
 			ink ? `--fg-ink:${ink}` : '',
-			accent ? `--fg-accent:${accent}` : ''
+			accent ? `--graph-accent:${accent}` : ''
 		]
 			.filter(Boolean)
 			.join(';') || undefined
@@ -111,16 +110,11 @@
 	 */
 	.graph {
 		--fg-ink: var(--text-primary);
-		--fg-accent: var(--graph-accent, oklch(0.78 0.17 155));
-		--fg-on: 4px;
-		--fg-period: 8px;
-		--fg-speed: 0.7s;
-		--fg-dash: var(--fg-ink) 0 var(--fg-on), transparent var(--fg-on) var(--fg-period);
 		position: relative;
 		min-width: 0;
 		margin: 0;
 		font-family: var(--font-mono);
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		font-variant-numeric: tabular-nums;
 	}
 
@@ -175,6 +169,11 @@
 		--fg-period: 8px;
 	}
 
+	.graph[data-dash='std'] {
+		--fg-on: 8px;
+		--fg-period: 16px;
+	}
+
 	/* Morse: short-long. Four stops, so it composes --fg-dash itself. */
 	.graph[data-dash='alt'] {
 		--fg-period: 16px;
@@ -203,17 +202,6 @@
 	}
 
 	/* ── motion ───────────────────────────────────────────────────── */
-
-	/*
-	 * `beacon` interpolates the dash colour, so it always uses the composed
-	 * pattern — including under dash="token", whose value is opaque to us.
-	 * Declared after the dash block to win the specificity tie.
-	 */
-	.graph[data-motion='beacon'] {
-		--fg-ink: var(--text-primary);
-		--fg-dash: var(--fg-ink) 0 var(--fg-on), transparent var(--fg-on) var(--fg-period);
-		--fg-speed: 1.8s;
-	}
 
 	.graph[data-motion='pulse'],
 	.graph[data-motion='reverse'] {
@@ -278,10 +266,6 @@
 			mask-size: 200% 200%;
 		}
 
-		.graph[data-motion='beacon'] {
-			animation: fg-beacon var(--fg-speed) var(--fg-timing, cubic-bezier(0.4, 0, 0.2, 1)) infinite;
-		}
-
 		.graph[data-pause]:hover,
 		.graph[data-pause]:hover::before {
 			animation-play-state: paused;
@@ -290,12 +274,6 @@
 		.graph[data-blink] .corner {
 			animation: fg-blink 2s linear infinite;
 		}
-	}
-
-	@property --graph-fg-glow {
-		syntax: '<color>';
-		inherits: true;
-		initial-value: transparent;
 	}
 
 	@keyframes fg-march {
@@ -315,16 +293,6 @@
 		}
 		50% {
 			mask-position: 100% 100%;
-		}
-	}
-
-	@keyframes fg-beacon {
-		0%,
-		100% {
-			--graph-fg-glow: var(--graph-frame, oklch(0.6 0 0 / 0.5));
-		}
-		50% {
-			--graph-fg-glow: var(--fg-accent);
 		}
 	}
 
@@ -352,7 +320,7 @@
 		justify-content: center;
 		font-size: 1.4rem;
 		line-height: 1;
-		color: var(--fg-accent);
+		color: var(--graph-accent, oklch(0.78 0.17 155));
 		user-select: none;
 		pointer-events: none;
 	}
@@ -387,7 +355,7 @@
 		left: 50%;
 		z-index: 10;
 		transform: translate(-50%, -50%);
-		background: var(--bg);
+		background: var(--bg, var(--bg-surface, #101010));
 		padding: 0 0.625rem;
 		letter-spacing: 0.05em;
 		white-space: nowrap;
@@ -395,6 +363,6 @@
 	}
 
 	.ink {
-		color: var(--fg-accent);
+		color: var(--graph-accent, oklch(0.78 0.17 155));
 	}
 </style>

@@ -34,17 +34,6 @@
 		cls?: string;
 	}
 
-	/** Deterministic mulberry32 PRNG so a given seed always shows the same dots. */
-	function mulberry32(seed: number): () => number {
-		let a = seed >>> 0;
-		return () => {
-			a = (a + 0x6d2b79f5) | 0;
-			let t = Math.imul(a ^ (a >>> 15), 1 | a);
-			t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-			return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-		};
-	}
-
 	/** Find the linear regression line (slope, intercept) for a set of points. */
 	function regression(points: { x: number; y: number }[]): { slope: number; intercept: number } {
 		const n = points.length;
@@ -82,8 +71,7 @@
 		data: ScatterPoint[],
 		plotCols: number,
 		plotRows: number,
-		trend: boolean,
-		rand: () => number
+		trend: boolean
 	): Seg[][] {
 		const totalCols = plotCols;
 		const totalRows = plotRows + (trend ? 1 : 0);
@@ -148,7 +136,6 @@
 
 		// Y-axis tick lines: a `|` at col -1 (we use a separator column in the
 		// caller) — but here we just leave the plot area clean.
-		void rand;
 		return grid.map((row) => runLength(row));
 	}
 
@@ -200,13 +187,9 @@
 	// row at the bottom; the trend strip is one row below that.
 	const Y_GUTTER = 5;
 	const X_AXIS_ROWS = 1;
-	// svelte-ignore state_referenced_locally
-	const TREND_ROWS = trend ? 1 : 0;
+	const TREND_ROWS = $derived(trend ? 1 : 0);
 	const plotCols = $derived(Math.max(8, cols - Y_GUTTER));
 	const plotRows = $derived(Math.max(3, rows - X_AXIS_ROWS - TREND_ROWS));
-
-	// svelte-ignore state_referenced_locally
-	const rand = mulberry32(7);
 
 	// Compute extents for axis labels.
 	const extent = $derived.by(() => {
@@ -231,8 +214,7 @@
 
 	let revealed = $state(0);
 
-	// svelte-ignore state_referenced_locally
-	const preRevealed = moving ? 0 : data.length;
+	const preRevealed = $derived(moving ? 0 : data.length);
 
 	$effect(() => {
 		revealed = preRevealed;
@@ -247,7 +229,7 @@
 	});
 
 	// The full grid is built once; the reveal mask determines which points show.
-	const fullView = $derived.by((): Seg[][] => buildView(data, plotCols, plotRows, trend, rand));
+	const fullView = $derived.by((): Seg[][] => buildView(data, plotCols, plotRows, trend));
 
 	// Apply reveal: only the first `revealed` data points are drawn.
 	const view = $derived.by((): Seg[][] => {
@@ -328,7 +310,7 @@
 		<div class="viewport">
 			<pre class="art" aria-hidden="true"><code>{#each view as row, r (r)}{#each yAxisLabel[r] as seg, j (j)}{#if seg.cls}<span class={seg.cls}>{seg.text}</span>{:else}{seg.text}{/if}{/each} │ {#each row as seg, j (j)}{#if seg.cls}<span class={seg.cls}>{seg.text}</span>{:else}{seg.text}{/if}{/each}{#if r < view.length - 1}{'\n'}{/if}{/each}
 {#each xAxisLabel as seg, j (j)}{#if seg.cls}<span class={seg.cls}>{seg.text}</span>{:else}{seg.text}{/if}{/each}{#if trend}
-{#each view[view.length - 1] ?? [] as seg, j (j)}{#each [''] as _}{''}{/each}{/each}{/if}</code></pre>
+{#each view[view.length - 1] ?? [] as seg, j (j)}{#if seg.cls}<span class="trend {seg.cls}">{seg.text}</span>{:else}<span class="trend">{seg.text}</span>{/if}{/each}{/if}</code></pre>
 			{#if label}
 				<p class="caption">{label}</p>
 			{/if}
@@ -349,7 +331,7 @@
 		margin: 0;
 		font-size: 0.78rem;
 		line-height: 1.2;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 		font-variant-numeric: tabular-nums;
 	}
@@ -360,11 +342,11 @@
 	}
 
 	.mid {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.faint {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 
 	.trend {
@@ -372,13 +354,13 @@
 	}
 
 	.ax {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.caption {
 		margin: 0.4rem 0 0;
 		font-size: 0.78rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.sr-only {

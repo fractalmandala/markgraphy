@@ -470,32 +470,32 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.35;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 	}
 
 	.caption {
 		margin: 0.5rem 0 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		font-size: 0.75rem;
 		letter-spacing: 0.04em;
 	}
 
-	.node { color: var(--graph-foreground, oklch(0.93 0 0)); }
-	.node.active { color: var(--graph-foreground, oklch(0.93 0 0)); font-weight: 600; }
+	.node { color: var(--text-primary, oklch(0.93 0 0)); }
+	.node.active { color: var(--text-primary, oklch(0.93 0 0)); font-weight: 600; }
 	.node.done { color: var(--graph-accent, oklch(0.78 0.17 155)); }
-	.node.pending { color: var(--graph-muted, oklch(0.62 0 0)); }
+	.node.pending { color: var(--text-secondary, oklch(0.62 0 0)); }
 	.node.explicit-accent { color: var(--graph-accent, oklch(0.78 0.17 155)); }
-	.node.explicit-muted { color: var(--graph-faint, oklch(0.3 0 0)); }
+	.node.explicit-muted { color: var(--text-muted, oklch(0.3 0 0)); }
 
-	.edge { color: var(--graph-frame, oklch(0.6 0 0 / 0.5)); }
+	.edge { color: var(--border, oklch(0.6 0 0 / 0.5)); }
 	.edge.active { color: var(--graph-accent, oklch(0.78 0.17 155)); }
 	.edge.done { color: var(--graph-accent, oklch(0.78 0.17 155)); }
-	.edge.pending { color: var(--graph-faint, oklch(0.3 0 0)); }
+	.edge.pending { color: var(--text-muted, oklch(0.3 0 0)); }
 	.edge.explicit-accent { color: var(--graph-accent, oklch(0.78 0.17 155)); }
-	.edge.explicit-muted { color: var(--graph-faint, oklch(0.3 0 0)); }
+	.edge.explicit-muted { color: var(--text-muted, oklch(0.3 0 0)); }
 
-	.detail { color: var(--graph-muted, oklch(0.62 0 0)); }
+	.detail { color: var(--text-secondary, oklch(0.62 0 0)); }
 
 	@media (prefers-reduced-motion: no-preference) {
 		.anim .node,
@@ -515,7 +515,7 @@
 		flex-wrap: wrap;
 		gap: 1rem;
 		padding-top: 0.875rem;
-		border-top: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-top: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.buttons { display: flex; align-items: center; gap: 0.35rem; }
@@ -523,15 +523,15 @@
 	.ctrl {
 		padding: 0.25rem 0.6rem;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 		border-radius: 0;
 		cursor: pointer;
 	}
 	.ctrl:hover {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		border-color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
+		border-color: var(--text-secondary, oklch(0.62 0 0));
 	}
 	.primary {
 		color: var(--graph-accent, oklch(0.78 0.17 155));
@@ -545,7 +545,7 @@
 		width: 8px;
 		height: 8px;
 		padding: 0;
-		background: var(--graph-faint, oklch(0.3 0 0));
+		background: var(--text-muted, oklch(0.3 0 0));
 		border: none;
 		border-radius: 50%;
 		cursor: pointer;
@@ -557,7 +557,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		white-space: nowrap;
 	}
 

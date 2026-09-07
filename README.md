@@ -85,13 +85,13 @@ Set CSS variables on any container — the components pick them up wherever they
 | Variable             | Fallback                 | Use                                  |
 | -------------------- | ------------------------ | ------------------------------------ |
 | `--graph-foreground` | `oklch(0.93 0 0)`        | primary text                         |
-| `--graph-muted`      | `oklch(0.62 0 0)`        | secondary text                       |
+| `--text-secondary`      | `oklch(0.62 0 0)`        | secondary text                       |
 | `--graph-accent`     | `oklch(0.78 0.17 155)`   | the one highlight                    |
 | `--graph-accent-2`   | `oklch(0.78 0.12 70)`    | second series (`palette="duo"`)      |
 | `--graph-accent-3`   | `oklch(0.75 0.1 200)`    | third series (`palette="multi"`)     |
-| `--graph-frame`      | `oklch(0.6 0 0 / 0.5)`   | frame dashes and corner marks        |
-| `--graph-faint`      | `oklch(0.3 0 0)`         | empty cells and tracks               |
-| `--graph-font`       | mono stack               | the font — anything monospace works  |
+| `--border`      | `oklch(0.6 0 0 / 0.5)`   | frame dashes and corner marks        |
+| `--text-muted`      | `oklch(0.3 0 0)`         | empty cells and tracks               |
+| `--font-mono`       | mono stack               | the font — anything monospace works  |
 
 ```css
 :root {

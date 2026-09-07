@@ -1967,6 +1967,115 @@ const catalog: ComponentDoc[] = [
 			CORNER,
 			CLASS
 		]
+	},
+	{
+		slug: 'shuffle-text',
+		title: 'Shuffle Text',
+		name: 'ShuffleText',
+		description:
+			'Per-character shuffle animation with intersection-observer trigger, easing, colour interpolation, and loop support. Frozen as plain text under reduced motion.',
+		props: [
+			{
+				name: 'text',
+				type: 'string',
+				description: 'The text to animate, one character at a time.'
+			},
+			{
+				name: 'shuffleDirection',
+				type: '"left" | "right" | "up" | "down"',
+				default: '"right"',
+				description: 'Direction the characters slide in from.'
+			},
+			{
+				name: 'duration',
+				type: 'number',
+				default: '0.35',
+				description: 'Seconds per character tween.'
+			},
+			{
+				name: 'maxDelay',
+				type: 'number',
+				default: '0',
+				description: 'Maximum random delay per character in random mode.'
+			},
+			{
+				name: 'ease',
+				type: 'string | EasingFunction',
+				default: '"power3.out"',
+				description: 'Easing curve. Named preset or custom function.'
+			},
+			{
+				name: 'shuffleTimes',
+				type: 'number',
+				default: '1',
+				description: 'Number of scramble clones before the real character lands.'
+			},
+			{
+				name: 'animationMode',
+				type: '"evenodd" | "random"',
+				default: '"evenodd"',
+				description: 'Stagger pattern across characters.'
+			},
+			{
+				name: 'stagger',
+				type: 'number',
+				default: '0.03',
+				description: 'Seconds between character starts in evenodd mode.'
+			},
+			{
+				name: 'loop',
+				type: 'boolean',
+				default: 'false',
+				description: 'Re-play the animation after it finishes.'
+			},
+			{
+				name: 'loopDelay',
+				type: 'number',
+				default: '0',
+				description: 'Seconds to wait between loops.'
+			},
+			{
+				name: 'tag',
+				type: 'TagName',
+				default: '"p"',
+				description: 'HTML element to render.'
+			},
+			{
+				name: 'scrambleCharset',
+				type: 'string',
+				default: '""',
+				description: 'Characters used for scramble clones. Empty uses the original text.'
+			},
+			{
+				name: 'colorFrom',
+				type: 'string',
+				description: 'Start colour for the interpolation.'
+			},
+			{
+				name: 'colorTo',
+				type: 'string',
+				description: 'End colour for the interpolation.'
+			},
+			{
+				name: 'triggerOnce',
+				type: 'boolean',
+				default: 'true',
+				description: 'Disconnect the observer after the first reveal.'
+			},
+			{
+				name: 'respectReducedMotion',
+				type: 'boolean',
+				default: 'true',
+				description: 'Show plain text immediately under prefers-reduced-motion.'
+			},
+			{
+				name: 'triggerOnHover',
+				type: 'boolean',
+				default: 'true',
+				description: 'Re-play the animation on mouseenter.'
+			},
+			CLASS
+		]
 	}
 ];
 
@@ -2003,7 +2112,8 @@ const ANIMATED_SLUGS = new Set([
 	'graph-flame',
 	'graph-sequence',
 	'graph-state',
-	'graph-workflow'
+	'graph-workflow',
+	'shuffle-text'
 ]);
 
 export const staticComponents: ComponentDoc[] = components.filter(

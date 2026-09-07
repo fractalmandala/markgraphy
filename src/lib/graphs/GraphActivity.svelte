@@ -29,7 +29,6 @@
 	import { intensityRole } from '../frame/tone';
 	import type { ToneRole } from '../frame/tone';
 	import { reveal, stagger } from '../frame/motion';
-	import { type GraphPad } from '$lib/types'
 
 	const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 	const DAY_MS = 86_400_000;
@@ -225,19 +224,19 @@
 	}
 
 	.c-accent3 {
-		color: var(--graph-accent-3, oklch(0.75 0.1 200));
+		color: var(--graph-accent-3, oklch(0.72 0.13 30));
 	}
 
 	.c-frame {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.c-fg {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.c-muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 </style>

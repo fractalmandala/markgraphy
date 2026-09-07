@@ -48,7 +48,6 @@
 		cls?: string;
 	}
 
-	// svelte-ignore state_referenced_locally
 	const script: TerminalLine[] = lines.length > 0
 		? lines
 		: [
@@ -57,15 +56,11 @@
 			];
 
 	// Per-character durations for each line, in ticks (1 char = 1 tick).
-	// svelte-ignore state_referenced_locally
 	const charMs: number[] = script.map((l) => (l.kind === 'prompt' ? typeMs : streamMs));
-	// svelte-ignore state_referenced_locally
 	const totalChars: number = script.reduce((sum, l) => sum + l.text.length, 0);
 
-	// svelte-ignore state_referenced_locally
 	const initialChar = animated ? Math.floor(totalChars * 0.55) : totalChars;
 
-	// svelte-ignore state_referenced_locally
 	let char = $state(initialChar);
 
 	const moving = $derived(
@@ -118,6 +113,7 @@
 		const totalReveal = moving ? char : Number.POSITIVE_INFINITY;
 		let remaining = totalReveal;
 		let lastActiveIndex = -1;
+		let cursorInsertAt = -1;
 
 		for (let i = 0; i < script.length; i++) {
 			const line = script[i]!;
@@ -133,6 +129,12 @@
 
 			if (take > 0) {
 				lastActiveIndex = i;
+			}
+
+			// Remember position right after the last prompt line's text
+			// (before the \n separator) so we can insert the cursor inline.
+			if (line.kind === 'prompt' && lastActiveIndex === i) {
+				cursorInsertAt = out.length;
 			}
 
 			if (i < script.length - 1) {
@@ -156,13 +158,12 @@
 				}
 			}
 
-			if (promptLine >= 0) {
-				// Tag the cursor on the next push (after the line's text); we
-				// instead render a blinking cursor below all lines as a new
-				// segment so the line above stays simple.
-				out.push({ text: '\n' });
-				out.push({ text: '$ ', cls: 'prompt' });
-				out.push({ text: '█', cls: 'cursor blinking' });
+			const cursor: Seg = { text: '█', cls: 'cursor blinking' };
+			if (promptLine >= 0 && cursorInsertAt >= 0) {
+				// Insert inline after the prompt line's text (before any \n).
+				out.splice(cursorInsertAt, 0, cursor);
+			} else {
+				out.push(cursor);
 			}
 		}
 
@@ -197,7 +198,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.45;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 		font-family: var(--font-sans);
 	}
@@ -207,11 +208,11 @@
 	}
 
 	.cmd {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.out {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.cursor {
@@ -233,6 +234,6 @@
 	.caption {
 		margin: 0;
 		font-size: 0.8rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 </style>

@@ -146,7 +146,7 @@
 	let coolIn = $state(cooling);
 
 	// svelte-ignore state_referenced_locally
-	const rand = mulberry32(seedNum);
+	const rand = $derived(mulberry32(seedNum));
 
 	const width = $derived(Math.max(24, colsIn));
 	const height = $derived(Math.max(10, rowsIn));
@@ -250,9 +250,11 @@
 	// Reduced motion sets the *opening* state only. Pressing play is explicit
 	// consent, so it still runs the burn.
 	$effect(() => {
-		if (prefersReduced()) {
-			playing = false;
-		}
+		const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+		if (query.matches) playing = false;
+		const onChange = (e: MediaQueryListEvent) => { if (e.matches) playing = false; };
+		query.addEventListener('change', onChange);
+		return () => query.removeEventListener('change', onChange);
 	});
 
 	let sim = initialGrid();
@@ -524,8 +526,6 @@
 	 * it, so the box reserves only the rows actually drawn.
 	 */
 	.viewport {
-		/* One rendered row: the art's font-size times its line-height. */
-		--agni-line: calc(0.85rem * 1.15);
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
@@ -539,7 +539,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.15;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 	}
 
@@ -549,15 +549,15 @@
 	}
 
 	.mid {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.faint {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 
 	.pit {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.controls {
@@ -568,7 +568,7 @@
 		gap: 1rem;
 		align-self: stretch;
 		padding-top: 0.875rem;
-		border-top: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-top: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.buttons {
@@ -577,41 +577,10 @@
 		gap: 0.35rem;
 	}
 
-	.ctrl {
-		padding: 0.25rem 0.6rem;
-		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
-		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
-		border-radius: 0;
-		cursor: pointer;
-	}
-
-	.ctrl:hover {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		border-color: var(--graph-muted, oklch(0.62 0 0));
-	}
-
 	.knobs {
-		--knob-track: 0.375rem;
-		--knob-thumb: 0.85rem;
-		/* Unfilled remainder of the track, and the filled part plus thumb. */
-		--knob-bg: var(--graph-faint, oklch(0.85 0 0));
-		--knob-fg: var(--graph-accent, oklch(0.78 0.17 155));
 		display: grid;
 		grid-template-columns: repeat(2, auto);
 		gap: 0.35rem 1rem;
-	}
-
-	.key {
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
-
-	.val {
-		text-align: right;
-		font-variant-numeric: tabular-nums;
-		color: var(--graph-foreground, oklch(0.93 0 0));
 	}
 
 	/*
@@ -635,8 +604,8 @@
 		height: var(--knob-track);
 		border: 0;
 		border-radius: 999px;
-		background: var(--knob-bg);
-		background-image: linear-gradient(to right, var(--knob-fg) 0 var(--fill), transparent var(--fill) 100%);
+		background: var(--text-muted);
+		background-image: linear-gradient(to right, var(--graph-accent, oklch(0.78 0.17 155)) 0 var(--fill), transparent var(--fill) 100%);
 	}
 
 	.knob input::-webkit-slider-thumb {
@@ -648,15 +617,15 @@
 		margin-top: calc((var(--knob-track) - var(--knob-thumb)) / 2);
 		border: 0;
 		border-radius: 999px;
-		background: var(--knob-fg);
+		background: var(--graph-accent, oklch(0.78 0.17 155));
 	}
 
 	.knob input::-moz-range-track {
 		height: var(--knob-track);
 		border: 0;
 		border-radius: 999px;
-		background: var(--knob-bg);
-		background-image: linear-gradient(to right, var(--knob-fg) 0 var(--fill), transparent var(--fill) 100%);
+		background: var(--text-muted);
+		background-image: linear-gradient(to right, var(--graph-accent, oklch(0.78 0.17 155)) 0 var(--fill), transparent var(--fill) 100%);
 	}
 
 	/* The gradient above already draws the fill; don't paint it twice. */
@@ -669,18 +638,6 @@
 		height: var(--knob-thumb);
 		border: 0;
 		border-radius: 999px;
-		background: var(--knob-fg);
-	}
-
-	.primary {
-		color: var(--graph-accent, oklch(0.78 0.17 155));
-		border-color: var(--graph-accent, oklch(0.78 0.17 155));
-		font-weight: 600;
-	}
-
-	.caption {
-		margin: 0;
-		font-size: 0.8rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		background: var(--graph-accent, oklch(0.78 0.17 155));
 	}
 </style>

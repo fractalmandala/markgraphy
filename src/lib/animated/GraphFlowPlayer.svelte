@@ -1,6 +1,6 @@
 <script module lang="ts">
 	import type { GraphProps } from "../frame/Graph.svelte";
-	import Typed from '$site/components/texttyping.svelte'
+	import Typed from './TextTyping.svelte'
 
 	/** The frame's own props, minus the ones this component owns. */
 	export type FrameProps = Omit<GraphProps, "title" | "children" | "class">;
@@ -179,7 +179,7 @@
 							class="button ghost"
 							type="button"
 							onclick={() => (playing = !playing)}
-							aria-label={playing ? 'Pause the flame' : 'Play the flame'}
+							aria-label={playing ? 'Pause the flow' : 'Play the flow'}
 						>
 							<span class="accented">[ </span> {playing ? 'pause' : 'play'} <span class="accented"> ]</span>
 						</button>
@@ -237,12 +237,12 @@
 
 	.marker,
 	.label {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.step[data-state='active'] .marker,
 	.step[data-state='active'] .label {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		font-weight: 600;
 	}
 
@@ -256,7 +256,7 @@
 		margin: 0;
 		/* One line always reserved: the text changes, the layout does not. */
 		min-height: 1.4em;
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
@@ -291,7 +291,7 @@
 		flex-wrap: wrap;
 		gap: 1rem;
 		padding-top: 0.875rem;
-		border-top: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-top: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.buttons {
@@ -311,8 +311,8 @@
 	}
 
 	.ctrl:hover {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		border-color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
+		border-color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 </style>

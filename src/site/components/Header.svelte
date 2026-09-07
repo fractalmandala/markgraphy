@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { onMount, tick } from 'svelte';
+	import { onMount } from 'svelte';
 	import CopyCode from '$site/components/docs/copy-code.svelte';
 	import { ModeToggle, presets, toggleMode } from 'fractalstyler2'
 	import Sun from '$site/icons/sun.svelte'
@@ -8,6 +8,7 @@
 	import { ACCENT_EVENT, accents, currentAccentId, DEFAULT_ACCENT_ID, setAccent } from '$site/lib/accents';
 	import { GITHUB_URL, NPM_URL, SITE_VERSION } from '$site/lib/site';
 	import Logo from '$site/icons/markgraphy.svelte'
+	import ColorPicker from './ColorPicker.svelte'
 
 	const links = [
 		{ label: 'docs', href: '/docs' },
@@ -17,8 +18,6 @@
 		{ label: 'editor', href: '/docs/editor' }
 	];
 
-	const DOT_IDS = ['#ff3e00', '#2f9e44', '#1098ad', '#e67700', '#c92a2a'];
-	const dots = DOT_IDS.map((id) => accents.find((a) => a.id === id)).filter((a) => a != null);
 	let isDark = $state(false);
 	const path = $derived(page.url.pathname);
 
@@ -29,35 +28,38 @@
 
 	async function toggle() {
 		const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-		if (reduced || typeof document.startViewTransition !== 'function') {
+		if (reduced) {
 			applyMode();
 			return;
 		}
 
-		const transition = document.startViewTransition(async () => {
-			applyMode();
-			await tick();
-		});
+		const wasDark = isDark;
 
-		try {
-			await transition.ready;
-		} catch {
-			return;
-		}
+		// Create a full-screen overlay that captures the current theme
+		const overlay = document.createElement('div');
+		overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;pointer-events:none;';
+		// Use html2canvas-like approach: just use the current background color
+		const computedBg = getComputedStyle(document.body).backgroundColor;
+		overlay.style.background = computedBg;
+		document.body.appendChild(overlay);
 
-		// isDark is the mode we just swapped to. Going dark, the incoming
-		// snapshot starts as a band at the top and grows down; going light, it
-		// starts at the bottom and grows up.
-		const from = isDark ? 'inset(0 0 100% 0)' : 'inset(100% 0 0 0)';
+		// Apply the theme change
+		applyMode();
 
-		document.documentElement.animate(
-			{ clipPath: [from, 'inset(0 0 0 0)'] },
+		// Animate the overlay away to reveal the new theme
+		// Dark→Light: overlay shrinks downward (reveals from top)
+		// Light→Dark: overlay shrinks upward (reveals from bottom)
+		const to = wasDark ? 'inset(0 0 100% 0)' : 'inset(100% 0 0 0)';
+
+		const anim = overlay.animate(
+			{ clipPath: ['inset(0 0 0 0)', to] },
 			{
 				duration: 520,
-				easing: 'cubic-bezier(0.65, 0, 0.35, 1)',
-				pseudoElement: '::view-transition-new(root)'
+				easing: 'cubic-bezier(0.65, 0, 0.35, 1)'
 			}
 		);
+
+		anim.onfinish = () => overlay.remove();
 	}
 
 	function isCurrent(href: string) {
@@ -81,6 +83,39 @@
 	onMount(() => {
 		isDark = document.documentElement.getAttribute('data-mode') === 'dark';
 	});
+
+	// Accent dropdown
+	let accentOpen = $state(false);
+	let showPicker = $state(false);
+	let dropdownEl: HTMLElement | undefined;
+
+	function toggleAccentDropdown() {
+		accentOpen = !accentOpen;
+		if (accentOpen) showPicker = false;
+	}
+
+	function closeAccentDropdown() {
+		accentOpen = false;
+		showPicker = false;
+	}
+
+	function onDocClick(e: MouseEvent) {
+		if (!accentOpen) return;
+		if (dropdownEl && !dropdownEl.contains(e.target as Node)) {
+			closeAccentDropdown();
+		}
+	}
+
+	$effect(() => {
+		if (accentOpen) {
+			document.addEventListener('click', onDocClick);
+			return () => document.removeEventListener('click', onDocClick);
+		}
+	});
+
+	function onKeydown(e: KeyboardEvent) {
+		if (e.key === 'Escape' && accentOpen) closeAccentDropdown();
+	}
 </script>
 
 <header class="site-wrapper row xbetween wfull">
@@ -99,26 +134,74 @@
 			</a>
 		{/each}
 	</nav>
-		<div class="row gap-sm" role="radiogroup" aria-label="Accent">
-			{#each dots as accent (accent.accent)}
+		<div class="row gap-sm">
+			<!-- Accent dropdown -->
+			<div class="accent-dd" bind:this={dropdownEl} onkeydown={onKeydown}>
 				<button
 					type="button"
-					role="radio"
-					class="accent-dot"
-					style:--swatch={accent.accent}
-					aria-checked={accent.accent === current}
-					aria-label={accent.accent}
-					onclick={() => setAccent(accent.accent)}
-				></button>
-			{/each}
+					class="accent-trigger"
+					aria-label="Accent color"
+					aria-expanded={accentOpen}
+					onclick={toggleAccentDropdown}
+				>
+					<span class="accent-preview" style:background={current}></span>
+				</button>
+				{#if accentOpen}
+					<div class="accent-panel">
+						{#if !showPicker}
+							<div class="swatch-grid">
+								{#each accents as accent (accent.id)}
+									<button
+										type="button"
+										class="swatch-btn"
+										class:selected={accent.id === current}
+										style:--swatch={accent.accent}
+										aria-label={accent.accent}
+										onclick={(e) => {
+											e.stopPropagation();
+											setAccent(accent.accent);
+											closeAccentDropdown();
+										}}
+									>
+										<span class="swatch-dot"></span>
+									</button>
+								{/each}
+							</div>
+							<button
+								type="button"
+								class="custom-btn"
+								onclick={(e) => {
+									e.stopPropagation();
+									showPicker = true;
+								}}
+							>
+								<span class="custom-icon">+</span>
+								<span>Custom color</span>
+							</button>
+						{:else}
+							<ColorPicker value={current} />
+							<button
+								type="button"
+								class="back-btn"
+								onclick={(e) => {
+									e.stopPropagation();
+									showPicker = false;
+								}}
+							>
+								← Back to presets
+							</button>
+						{/if}
+					</div>
+				{/if}
+			</div>
+			<button class="button is-icon" onclick={toggle}>
+				{#if dark}
+					<Sun/>
+				{:else}
+					<Moon/>
+				{/if}
+			</button>
 		</div>
-		<button class="button is-icon" onclick={toggle}>
-			{#if dark}
-				<Sun/>
-			{:else}
-				<Moon/>
-			{/if}
-		</button>
 	</div>
 </header>
 
@@ -181,6 +264,129 @@
 			width: 118px;
 			height: auto;
 		}
+	}
+
+	/* ── Accent dropdown ─────────────────────────────────── */
+
+	.accent-dd {
+		position: relative;
+	}
+
+	.accent-trigger {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2rem;
+		height: 2rem;
+		padding: 0;
+		border: 0;
+		border-radius: 0.375rem;
+		background: transparent;
+		cursor: pointer;
+	}
+
+	.accent-trigger:hover {
+		background: var(--bg-surface, #1a1a1a);
+	}
+
+	.accent-preview {
+		display: block;
+		width: 1.25rem;
+		height: 1.25rem;
+		border-radius: 9999px;
+		border: 2px solid var(--border, #333);
+	}
+
+	.accent-panel {
+		position: absolute;
+		top: calc(100% + 0.5rem);
+		right: 0;
+		width: 16rem;
+		background: var(--bg-dialog, #1e1e1e);
+		border: 1px solid var(--border, #333);
+		border-radius: 0.75rem;
+		box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+		z-index: 50;
+		overflow: hidden;
+	}
+
+	.swatch-grid {
+		display: grid;
+		grid-template-columns: repeat(5, 1fr);
+		gap: 0.25rem;
+		padding: 0.6rem 0.6rem 0.4rem;
+	}
+
+	.swatch-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		aspect-ratio: 1;
+		padding: 0;
+		border: 0;
+		border-radius: 0.375rem;
+		background: transparent;
+		cursor: pointer;
+		position: relative;
+	}
+
+	.swatch-btn:hover {
+		background: var(--bg-surface, #2a2a2a);
+	}
+
+	.swatch-btn.selected {
+		background: var(--text-muted, #555);
+	}
+
+	.swatch-dot {
+		display: block;
+		width: 1.25rem;
+		height: 1.25rem;
+		border-radius: 9999px;
+		background: var(--swatch);
+	}
+
+	.custom-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		width: calc(100% - 1.2rem);
+		margin: 0 0.6rem 0.5rem;
+		padding: 0.4rem 0.6rem;
+		border: 1px dashed var(--border, #444);
+		border-radius: 0.5rem;
+		background: transparent;
+		color: var(--text-secondary, #999);
+		font-size: 0.8rem;
+		cursor: pointer;
+	}
+
+	.custom-btn:hover {
+		border-color: var(--text-muted, #666);
+		color: var(--text-primary, #ddd);
+	}
+
+	.custom-icon {
+		font-size: 1rem;
+		line-height: 1;
+	}
+
+	.back-btn {
+		display: block;
+		width: calc(100% - 1.2rem);
+		margin: 0 0.6rem 0.5rem;
+		padding: 0.35rem 0.6rem;
+		border: 0;
+		border-radius: 0.375rem;
+		background: var(--bg-surface, #2a2a2a);
+		color: var(--text-secondary, #999);
+		font-size: 0.75rem;
+		cursor: pointer;
+	}
+
+	.back-btn:hover {
+		color: var(--text-primary, #ddd);
 	}
 
 </style>

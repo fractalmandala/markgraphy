@@ -21,9 +21,9 @@
 		{ name: '--graph-accent', note: 'The one highlight.' },
 		{ name: '--graph-accent-2', note: 'Second series.' },
 		{ name: '--graph-accent-3', note: 'Third cycle.' },
-		{ name: '--graph-frame', note: 'Dashed edge color.' },
-		{ name: '--graph-foreground', note: 'Primary ink.' },
-		{ name: '--graph-background', note: 'Plain black. #000.' }
+		{ name: '--border', note: 'Dashed edge color.' },
+		{ name: '--text-primary', note: 'Primary ink.' },
+		{ name: '--bg', note: 'Plain black. #000.' }
 	];
 
 	const stats = [
@@ -39,13 +39,7 @@
 </svelte:head>
 
 <section class="install">
-	<div class="page-head">
-		<div>
-			<p class="kicker">[ install ]</p>
-			<h1>Put a graph<br />next to the prose.</h1>
-		</div>
-		<p class="lede">One npm package. Svelte 5 is the only peer. Theming is six CSS variables.</p>
-	</div>
+
 
 	<div class="bench">
 		<article class="station on">
@@ -72,11 +66,12 @@
 
 		<article class="station">
 			<p class="st-num">[ station 02 ]</p>
-			<h2>Import the theme once.</h2>
+			<h2>Import the base tokens.</h2>
 			<p>In the root <code>+layout.svelte</code>.</p>
 			<div class="import-box">
 				<header><span>+layout.svelte</span></header>
-				<pre><span class="tok">import</span> 'markgraphy/themes.css';
+				<pre><span class="tok">import</span> 'fractalstyler2/styles';
+<span class="tok">import</span> 'markgraphy/styles/index.sass';
 
 let &#123; children &#125; = $props();</pre>
 			</div>
@@ -96,9 +91,6 @@ let &#123; children &#125; = $props();</pre>
 	</div>
 
 	<div class="live-row">
-		<article class="plate">
-			<GraphStat title="THIS WEEK" items={stats} />
-		</article>
 		<div class="svx">
 			<p class="eyebrow">[ markdown ]</p>
 			<h3>Use in a .svx file</h3>
@@ -154,12 +146,12 @@ let &#123; children &#125; = $props();</pre>
 	}
 
 	.station.on {
-		background: color-mix(in oklab, var(--graph-accent) 6%, var(--site-bg));
+		background: color-mix(in oklab, var(--graph-accent) 6%, var(--bg));
 	}
 
 	.st-num {
 		margin: 0;
-		color: var(--site-faint);
+		color: var(--text-muted);
 		letter-spacing: 0.16em;
 		font-size: 0.66rem;
 		text-transform: uppercase;
@@ -174,7 +166,7 @@ let &#123; children &#125; = $props();</pre>
 
 	.station p {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 		max-width: 36ch;
 	}
@@ -186,7 +178,7 @@ let &#123; children &#125; = $props();</pre>
 	}
 
 	.tab {
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		padding: 0 0.7rem;
 		min-height: 36px;
 		letter-spacing: 0.1em;
@@ -202,14 +194,14 @@ let &#123; children &#125; = $props();</pre>
 	}
 
 	.tab[aria-pressed='true'] {
-		color: var(--site-bg);
+		color: var(--bg);
 		background: var(--text-primary);
 		border-color: var(--text-primary);
 	}
 
 	.cmd {
 		border: 1px solid var(--border);
-		background: #0c0c0c;
+		background: var(--bg-terminal, #0c0c0c);
 		padding: 0.85rem 0.9rem;
 		display: flex;
 		justify-content: space-between;
@@ -233,7 +225,6 @@ let &#123; children &#125; = $props();</pre>
 	}
 
 	.plate {
-		--graph-background: var(--bg-raised);
 		min-height: 220px;
 		padding: 1.8rem 1.3rem 1.2rem;
 		background: var(--bg-raised);
@@ -295,7 +286,7 @@ let &#123; children &#125; = $props();</pre>
 
 	.token p {
 		margin: 0.3rem 0 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.75rem;
 	}
 

@@ -179,15 +179,14 @@
 	}
 
 	.rule-plate {
-		--dash: var(--border) 0 4px, transparent 4px 8px;
 		display: grid;
 		grid-template-columns: minmax(16rem, 0.9fr) minmax(0, 1.2fr);
 		min-height: 280px;
 		background-image:
-			repeating-linear-gradient(to right, var(--dash)),
-			repeating-linear-gradient(to bottom, var(--dash)),
-			repeating-linear-gradient(to right, var(--dash)),
-			repeating-linear-gradient(to bottom, var(--dash));
+			repeating-linear-gradient(to right, var(--graph-framer)),
+			repeating-linear-gradient(to bottom, var(--graph-framer)),
+			repeating-linear-gradient(to right, var(--graph-framer)),
+			repeating-linear-gradient(to bottom, var(--graph-framer));
 		background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
 		background-position:
 			0 0,
@@ -213,7 +212,7 @@
 		font-weight: 600;
 		letter-spacing: -0.06em;
 		line-height: 0.8;
-		color: var(--site-faint);
+		color: var(--text-muted);
 	}
 
 	.copy h2 {
@@ -224,7 +223,7 @@
 	.copy p:not(.idx) {
 		max-width: 38ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.88rem;
 	}
 
@@ -237,7 +236,6 @@
 	}
 
 	.demo {
-		--graph-background: var(--bg-raised);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -266,7 +264,7 @@
 		padding: 0 0.7rem;
 		border: 1px solid var(--border);
 		background: transparent;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font: inherit;
 		font-size: 0.62rem;
 		letter-spacing: 0.1em;
@@ -279,7 +277,7 @@
 	}
 
 	.mark[aria-pressed='true'] {
-		color: var(--site-bg);
+		color: var(--bg);
 		background: var(--text-primary);
 		border-color: var(--text-primary);
 	}
@@ -293,7 +291,7 @@
 	}
 
 	.dim {
-		color: var(--graph-muted);
+		color: var(--text-secondary);
 	}
 
 	.dont {
@@ -325,7 +323,7 @@
 	.dont p:not(.eyebrow) {
 		max-width: 44ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 	}
 

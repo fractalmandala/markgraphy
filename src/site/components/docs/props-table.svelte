@@ -69,14 +69,14 @@
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		text-align: left;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		white-space: nowrap;
 	}
 
 	td {
 		padding: 0.6rem;
 		border-bottom: 1px dotted #2a2a2a;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		vertical-align: top;
 	}
 

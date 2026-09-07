@@ -5,7 +5,7 @@ import './motion.css';
 /**
  * The house easing vocabulary. Shared by the CSS-driven actions and the
  * frame-driven ones, so `easing: 'out-expo'` means the same curve whether it
- * is handed to a transition or solved per frame by `countUp`.
+ * is handed to a transition or the curve is solved per frame by `countUp`.
  */
 export const EASINGS = {
 	linear: 'linear',
@@ -212,11 +212,11 @@ function applyTiming(
 	delay: number,
 	easing: Easing | undefined
 ): void {
-	node.style.setProperty('--fg-duration', `${duration}ms`);
-	node.style.setProperty('--fg-delay', `${delay}ms`);
+	node.style.setProperty('--mg-duration', `${duration}ms`);
+	node.style.setProperty('--mg-delay', `${delay}ms`);
 
 	if (easing !== undefined) {
-		node.style.setProperty('--fg-ease', easingValue(easing));
+		node.style.setProperty('--mg-ease', easingValue(easing));
 	}
 }
 
@@ -337,26 +337,40 @@ export function reveal(node: HTMLElement, options: RevealOptions = {}): Action {
 	const x = from === 'left' ? back : from === 'right' ? forward : '0px';
 	const y = from === 'below' ? forward : from === 'above' ? back : '0px';
 
-	node.classList.add('fg-motion');
-	node.style.setProperty('--fg-x', moves ? x : '0px');
-	node.style.setProperty('--fg-y', moves ? y : '0px');
-	node.style.setProperty('--fg-scale', `${scale}`);
+	node.classList.add('mg-motion');
+	node.style.setProperty('--mg-x', moves ? x : '0px');
+	node.style.setProperty('--mg-y', moves ? y : '0px');
+	node.style.setProperty('--mg-scale', `${scale}`);
 
 	if (type === 'slide') {
 		// Opaque and clipped: it emerges from under the layout instead of
 		// floating in, so no fade is wanted.
-		node.classList.add('fg-slide');
-		node.style.setProperty('--fg-clip', SLIDE_CLIP[from]);
+		node.classList.add('mg-slide');
+		node.style.setProperty('--mg-clip', SLIDE_CLIP[from]);
 	}
 
 	applyTiming(node, duration, delay, easing);
 
-	return watch(
+	const watcher = watch(
 		node,
 		{ amount, once },
 		() => node.classList.add('is-revealed'),
 		() => node.classList.remove('is-revealed')
 	);
+
+	return {
+		destroy() {
+			watcher.destroy();
+			node.classList.remove('mg-motion', 'mg-slide', 'is-revealed');
+			node.style.removeProperty('--mg-x');
+			node.style.removeProperty('--mg-y');
+			node.style.removeProperty('--mg-scale');
+			node.style.removeProperty('--mg-clip');
+			node.style.removeProperty('--mg-duration');
+			node.style.removeProperty('--mg-delay');
+			node.style.removeProperty('--mg-ease');
+		}
+	};
 }
 
 export interface DrawInOptions {
@@ -393,18 +407,31 @@ export function drawIn(node: HTMLElement, options: DrawInOptions = {}): Action {
 		return NOOP;
 	}
 
-	node.classList.add('fg-draw');
-	node.style.setProperty('--fg-sx', axis === 'x' ? '0' : '1');
-	node.style.setProperty('--fg-sy', axis === 'y' ? '0' : '1');
-	node.style.setProperty('--fg-origin', origin);
+	node.classList.add('mg-draw');
+	node.style.setProperty('--mg-sx', axis === 'x' ? '0' : '1');
+	node.style.setProperty('--mg-sy', axis === 'y' ? '0' : '1');
+	node.style.setProperty('--mg-origin', origin);
 	applyTiming(node, duration, delay, easing);
 
-	return watch(
+	const watcher = watch(
 		node,
 		{ amount, once },
 		() => node.classList.add('is-revealed'),
 		() => node.classList.remove('is-revealed')
 	);
+
+	return {
+		destroy() {
+			watcher.destroy();
+			node.classList.remove('mg-draw', 'is-revealed');
+			node.style.removeProperty('--mg-sx');
+			node.style.removeProperty('--mg-sy');
+			node.style.removeProperty('--mg-origin');
+			node.style.removeProperty('--mg-duration');
+			node.style.removeProperty('--mg-delay');
+			node.style.removeProperty('--mg-ease');
+		}
+	};
 }
 
 export interface SweepOptions {
@@ -431,16 +458,27 @@ export function sweep(node: HTMLElement, options: SweepOptions = {}): Action {
 		return NOOP;
 	}
 
-	node.classList.add('fg-sweep');
-	node.style.setProperty('--fg-repeat', `${repeat}`);
+	node.classList.add('mg-sweep');
+	node.style.setProperty('--mg-repeat', `${repeat}`);
 	applyTiming(node, duration, delay, easing);
 
-	return watch(
+	const watcher = watch(
 		node,
 		{ amount, once },
 		() => node.classList.add('is-sweeping'),
 		() => node.classList.remove('is-sweeping')
 	);
+
+	return {
+		destroy() {
+			watcher.destroy();
+			node.classList.remove('mg-sweep', 'is-sweeping');
+			node.style.removeProperty('--mg-repeat');
+			node.style.removeProperty('--mg-duration');
+			node.style.removeProperty('--mg-delay');
+			node.style.removeProperty('--mg-ease');
+		}
+	};
 }
 
 export interface CountUpOptions {
@@ -586,7 +624,7 @@ export function typewriter(node: HTMLElement, options: TypewriterOptions = {}): 
 		}
 	};
 
-	node.classList.add('fg-type');
+	node.classList.add('mg-type');
 	node.textContent = '';
 
 	const watcher = watch(node, { amount, once }, () => {
@@ -619,6 +657,7 @@ export function typewriter(node: HTMLElement, options: TypewriterOptions = {}): 
 		destroy() {
 			stop();
 			watcher.destroy();
+			node.classList.remove('mg-type');
 			// Put the text back so the DOM matches the markup again.
 			node.textContent = text;
 		}

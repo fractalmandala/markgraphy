@@ -14,10 +14,10 @@ export default defineConfig({
 			},
 			// Treat .svx (mdsvex) files as Svelte components so imports of
 			// .svx pages are compiled by the same pipeline as .svelte files.
-			extensions: ['.svelte', '.svx'],
+			extensions: ['.svelte', '.svx', '.md'],
 			// vite-plugin-svelte options
 			// Build-time shiki highlighting for fenced code in .svx markdown.
-			preprocess: [mdsvex({ extensions: ['.svx'], highlight: { highlighter: mdsvexHighlighter } })],
+			preprocess: [mdsvex({ extensions: ['.svx', '.md'], highlight: { highlighter: mdsvexHighlighter } })],
 			compilerOptions: {
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
 				runes: ({ filename }) =>

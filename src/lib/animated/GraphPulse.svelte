@@ -62,7 +62,7 @@
 	}: GraphPulseProps = $props();
 
 	// svelte-ignore state_referenced_locally
-	const rand = mulberry32(seedNum);
+	const rand = $derived(mulberry32(seedNum));
 
 	function draw(): PulseStatus {
 		if (feed) {
@@ -183,7 +183,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.4;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 	}
 
@@ -192,11 +192,11 @@
 	}
 
 	.slow {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.down {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 
 	.meta {
@@ -211,7 +211,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		gap: 0.25rem 1rem;
 	}
 
@@ -231,7 +231,7 @@
 		gap: 1rem;
 		margin: 0;
 		font-size: 0.8rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.sr-only {

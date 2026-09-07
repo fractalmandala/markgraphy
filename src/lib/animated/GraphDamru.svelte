@@ -105,8 +105,7 @@
 		return { cells };
 	})();
 
-	// svelte-ignore state_referenced_locally
-	const initialTick = animated ? 0 : 0;
+	const initialTick = animated ? 0 : beatTicks * 4;
 
 	// svelte-ignore state_referenced_locally
 	let tick = $state(initialTick);
@@ -207,6 +206,10 @@
 		// Pre-fill cells: start blank.
 		const out: Seg[][] = [];
 
+		// Convert triangle cells to Maps for O(1) lookup
+		const upTriMap = new Map(upTri.cells.map(c => [`${c.x},${c.y}`, c]));
+		const downTriMap = new Map(downTri.cells.map(c => [`${c.x},${c.y}`, c]));
+
 		for (let y = 0; y < height; y++) {
 			const segs: Seg[] = [];
 			let buf = '';
@@ -239,7 +242,7 @@
 				// Triangles override ripples where they overlap.
 				if (y >= lineY - triH && y < lineY) {
 					// Up triangle region
-					const cell = upTri.cells.find((c) => c.x === x && c.y === y);
+					const cell = upTriMap.get(`${x},${y}`);
 					if (cell) {
 						const g = triGlyph(upI);
 						ch = g.ch;
@@ -247,7 +250,7 @@
 					}
 				} else if (y > lineY && y <= lineY + triH) {
 					// Down triangle region
-					const cell = downTri.cells.find((c) => c.x === x && c.y === y);
+					const cell = downTriMap.get(`${x},${y}`);
 					if (cell) {
 						const g = triGlyph(downI);
 						ch = g.ch;
@@ -316,7 +319,7 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.15;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 	}
 
@@ -326,16 +329,16 @@
 	}
 
 	.mid {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.faint {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 
 	.caption {
 		margin: 0;
 		font-size: 0.8rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 </style>

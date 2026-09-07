@@ -10,16 +10,18 @@
 		type FrameSettings,
 	} from "$site/components/FrameControls.svelte";
 	import Heart from '$site/icons/heart.svelte'
-	import type { PageData } from "./$types";
+	import { staticComponents, animatedComponents } from "$site/docs/catalog";
 
-	let { data }: { data: PageData } = $props();
+	const graphCount = staticComponents.filter(c => c.slug.startsWith('graph-')).length;
+	const diagramCount = staticComponents.length - graphCount;
+	const animationCount = animatedComponents.length;
 
 	// Live frame settings, driven by the panel under the player.
 	let frame = $state<FrameSettings>({ ...FRAME_DEFAULTS });
 </script>
 
 <div class="site-wrapper">
-	<Observatory codeHtml={data.codeHtml} />
+	<Observatory />
 	<Principles />
 	<TheSet />
 	<section class="showcase border-top pad-top-xl gap-lg box">
@@ -45,16 +47,16 @@
 					}}
 					steps={[
 						{
-							label: "33 Graphs",
+							label: `${graphCount} Graphs`,
 							detail: "tables, bars, stacks, plot, tree, timeline - composables for it all",
 						},
 						{
-							label: "5 Diagram Templates",
+							label: `${diagramCount} Diagram Templates`,
 							detail: "and an editor to build them your way.",
 						},
 						{
-							label: "29 Animations",
-							detail: "mostly just 29 ways of having fun with this library.",
+							label: `${animationCount} Animations`,
+							detail: `mostly just ${animationCount} ways of having fun with this library.`,
 						},
 					]}
 				/>
@@ -70,7 +72,7 @@
 		<a class="button outline" href="/docs">
 			Docs
 		</a>
-		<a class="button outline" href="/editor">
+		<a class="button outline" href="/docs/editor">
 			Play
 		</a>
 	</div>

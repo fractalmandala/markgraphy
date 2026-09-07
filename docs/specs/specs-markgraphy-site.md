@@ -44,14 +44,14 @@ itself (`src/lib/`) is FROZEN — never edit it, only import from it.
 
 | Token | Use |
 | --- | --- |
-| `--site-bg` | page background (oklch 0.11) |
+| `--bg` | page background (oklch 0.11) |
 | `--text-primary` | primary text (oklch 0.86) |
-| `--site-muted` | secondary text (oklch 0.62) |
-| `--site-faint` | subtle fill (selected swatch, hover chips) |
+| `--text-secondary` | secondary text (oklch 0.62) |
+| `--text-muted` | subtle fill (selected swatch, hover chips) |
 | `--border` | dashed rules, hairlines, inset borders |
 | `--site-max` | 72rem content max-width |
 | `--graph-accent` / `-2` / `-3` | accent trio — driven by the accent picker |
-| `--graph-frame` | graph frame dashes |
+| `--border` | graph frame dashes |
 
 Site renders DARK-FIRST (`data-graph-theme="dark"` on `<html>` in app.html).
 Never introduce light-theme logic.

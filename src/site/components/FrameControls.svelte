@@ -32,7 +32,6 @@
 		'reverse',
 		'pulse',
 		'scan',
-		'beacon',
 		'draw'
 	];
 	const EASINGS: EasingName[] = [
@@ -177,23 +176,23 @@
 	.key {
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.chip {
 		padding: 0.2rem 0.5rem;
 		font: inherit;
 		font-size: 0.7rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 		border-radius: 0;
 		cursor: pointer;
 	}
 
 	.chip:hover {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		border-color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
+		border-color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.reset {
@@ -204,9 +203,9 @@
 		padding: 0.2rem 0.4rem;
 		font: inherit;
 		font-size: 0.7rem;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 		border-radius: 0;
 		justify-self: start;
 	}
@@ -220,7 +219,7 @@
 
 	.val {
 		font-variant-numeric: tabular-nums;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	/* Bare track, matching the sliders elsewhere: no UA border, explicit fill. */
@@ -244,7 +243,7 @@
 		height: 0.375rem;
 		border: 0;
 		border-radius: 999px;
-		background: var(--graph-faint, oklch(0.85 0 0));
+		background: var(--text-muted, oklch(0.85 0 0));
 		background-image: linear-gradient(
 			to right,
 			var(--graph-accent, oklch(0.78 0.17 155)) 0 var(--fill),
@@ -267,7 +266,7 @@
 		height: 0.375rem;
 		border: 0;
 		border-radius: 999px;
-		background: var(--graph-faint, oklch(0.85 0 0));
+		background: var(--text-muted, oklch(0.85 0 0));
 		background-image: linear-gradient(
 			to right,
 			var(--graph-accent, oklch(0.78 0.17 155)) 0 var(--fill),
@@ -299,7 +298,7 @@
 		display: flex;
 		align-items: center;
 		gap: 0.4rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		cursor: pointer;
 	}
 

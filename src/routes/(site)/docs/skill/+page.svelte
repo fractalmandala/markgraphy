@@ -254,7 +254,7 @@
 	.note {
 		max-width: 56ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 
 	.section {
@@ -266,7 +266,7 @@
 	.section > p {
 		max-width: 56ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		text-wrap: pretty;
 	}
 
@@ -300,7 +300,7 @@
 		border: 0;
 		border-top: 1px dashed var(--border);
 		background: transparent;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font: inherit;
 		text-align: left;
 		cursor: pointer;
@@ -318,11 +318,11 @@
 
 	.agent:hover {
 		color: var(--text-primary);
-		background: var(--site-faint);
+		background: var(--text-muted);
 	}
 
 	.agent.selected {
-		background: var(--site-faint);
+		background: var(--text-muted);
 		color: var(--text-primary);
 	}
 
@@ -338,7 +338,7 @@
 		display: flex;
 		flex-direction: column;
 		border: 1px solid var(--border);
-		background: #0c0c0c;
+		background: var(--bg-terminal, #0c0c0c);
 	}
 
 	.block-head {
@@ -354,14 +354,14 @@
 		font-size: 0.62rem;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 
 	.copy {
 		padding: 0.125rem 0.5rem;
 		border: 1px dashed transparent;
 		background: transparent;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font: inherit;
 		font-size: 0.875rem;
 		cursor: pointer;
@@ -381,7 +381,7 @@
 		overflow-x: auto;
 		font-size: 0.8rem;
 		line-height: 1.6;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		white-space: pre;
 	}
 
@@ -424,7 +424,7 @@
 	.table td {
 		padding: 0.75rem;
 		border-bottom: 1px dashed var(--border);
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 
 	.table td:last-child {
@@ -449,6 +449,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 </style>

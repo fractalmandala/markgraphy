@@ -39,13 +39,13 @@
 
 	.lede {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.88rem;
 	}
 
 	.lede code {
 		padding: 0.125rem 0.375rem;
-		background: var(--site-faint);
+		background: var(--text-muted);
 		font-size: 0.875rem;
 		color: var(--text-primary);
 	}

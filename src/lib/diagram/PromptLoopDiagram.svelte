@@ -178,7 +178,7 @@
 </div>
 
 <style>
-	.back {
+	.loop {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
@@ -194,32 +194,27 @@
 		margin: 0;
 		font-size: 0.85rem;
 		line-height: 1.35;
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 		white-space: pre;
 	}
 
-	.title {
-		color: var(--graph-accent, oklch(0.78 0.17 155));
-		font-weight: 600;
-	}
-
 	.node {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		transition: color 0.25s ease;
 	}
 
 	.node.on {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		font-weight: 600;
 	}
 
 	.flow {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 		transition: color 0.25s ease;
 	}
 
 	.back {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 		transition: color 0.25s ease;
 	}
 
@@ -229,7 +224,7 @@
 	}
 
 	.tag {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		font-style: italic;
 		transition: color 0.25s ease;
 	}
@@ -263,7 +258,7 @@
 		flex-wrap: wrap;
 		gap: 1rem;
 		padding-top: 0.875rem;
-		border-top: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-top: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.buttons {
@@ -275,16 +270,16 @@
 	.ctrl {
 		padding: 0.25rem 0.6rem;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 		border-radius: 0;
 		cursor: pointer;
 	}
 
 	.ctrl:hover {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		border-color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
+		border-color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.primary {
@@ -303,7 +298,7 @@
 		width: 8px;
 		height: 8px;
 		padding: 0;
-		background: var(--graph-faint, oklch(0.3 0 0));
+		background: var(--text-muted, oklch(0.3 0 0));
 		border: none;
 		border-radius: 50%;
 		cursor: pointer;
@@ -318,7 +313,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		white-space: nowrap;
 	}
 

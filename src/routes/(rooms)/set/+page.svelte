@@ -176,8 +176,6 @@
 		flex: 1;
 		display: grid;
 		grid-template-columns: 17rem minmax(0, 1fr);
-		border-left: 1px dashed var(--border);
-		border-right: 1px dashed var(--border);
 		min-height: 0;
 	}
 
@@ -205,7 +203,7 @@
 	}
 
 	.find::placeholder {
-		color: var(--site-faint);
+		color: var(--text-muted);
 	}
 
 	.tabs {
@@ -215,7 +213,7 @@
 	}
 
 	.tab {
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		padding: 0 0.7rem;
 		min-height: 36px;
 		letter-spacing: 0.1em;
@@ -231,7 +229,7 @@
 	}
 
 	.tab[aria-pressed='true'] {
-		color: var(--site-bg);
+		color: var(--bg);
 		background: var(--text-primary);
 		border-color: var(--text-primary);
 	}
@@ -247,7 +245,7 @@
 		border: 0;
 		border-bottom: 1px dotted #2a2a2a;
 		padding: 0.42rem 0.35rem;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		display: grid;
 		grid-template-columns: 1fr auto;
 		gap: 0.6rem;
@@ -263,7 +261,7 @@
 	}
 
 	.spec-btn .fam {
-		color: var(--site-faint);
+		color: var(--text-muted);
 		font-size: 0.62rem;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
@@ -283,7 +281,6 @@
 	}
 
 	.plate {
-		--graph-background: var(--bg-raised);
 		min-height: 320px;
 		padding: 1.8rem 1.3rem 1.2rem;
 		background: var(--bg-raised);

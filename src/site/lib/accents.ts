@@ -32,6 +32,8 @@ export const accents = accentColors.map((p) => {
 
 const accentByColor = new Map(accentColors.map((p) => [p.accent.toLowerCase(), p]));
 
+let shimmerTimer: ReturnType<typeof setTimeout>;
+
 export function isAccentId(value: string | null): value is string {
 	return Boolean(value && accentByColor.has(value.toLowerCase()));
 }
@@ -41,6 +43,43 @@ export function currentAccentId(): string {
 		return DEFAULT_ACCENT_ID;
 	}
 	return document.documentElement.getAttribute('data-accent') ?? DEFAULT_ACCENT_ID;
+}
+
+/** Paint a custom (non-palette) accent onto <html>. Sets CSS vars directly. */
+export function setCustomAccent(hex: string) {
+	const normalized = hex.toLowerCase();
+	const root = document.documentElement;
+	if (root.getAttribute('data-accent') === normalized) return;
+
+	const apply = () => {
+		root.setAttribute('data-accent', normalized);
+		root.style.setProperty('--graph-accent', normalized);
+		root.style.setProperty('--graph-accent-2', `color-mix(in oklch, ${normalized} 65%, black)`);
+		root.style.setProperty('--graph-accent-3', `color-mix(in oklch, ${normalized} 50%, white)`);
+		try { localStorage.setItem(ACCENT_STORAGE_KEY, normalized); } catch { /* */ }
+		window.dispatchEvent(new Event(ACCENT_EVENT));
+	};
+
+	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const doc = document as Document & {
+		startViewTransition?: (update: () => void) => { finished: Promise<void> };
+	};
+
+	if (!reduce && typeof doc.startViewTransition === 'function') {
+		root.classList.add('accent-wiping');
+		const transition = doc.startViewTransition(apply);
+		transition.finished.finally(() => root.classList.remove('accent-wiping')).catch(() => {});
+		return;
+	}
+
+	apply();
+	if (!reduce) {
+		clearTimeout(shimmerTimer);
+		root.classList.remove('accent-shimmer');
+		void root.offsetWidth;
+		root.classList.add('accent-shimmer');
+		shimmerTimer = window.setTimeout(() => root.classList.remove('accent-shimmer'), 420);
+	}
 }
 
 /** Paint the accent onto <html>, persist it, and announce it. */
@@ -57,6 +96,9 @@ export function setAccent(hex: string) {
 
 	const apply = () => {
 		root.setAttribute('data-accent', normalized);
+		root.style.removeProperty('--graph-accent');
+		root.style.removeProperty('--graph-accent-2');
+		root.style.removeProperty('--graph-accent-3');
 		try {
 			localStorage.setItem(ACCENT_STORAGE_KEY, normalized);
 		} catch {
@@ -83,9 +125,10 @@ export function setAccent(hex: string) {
 	apply();
 
 	if (!reduce) {
+		clearTimeout(shimmerTimer);
 		root.classList.remove('accent-shimmer');
 		void root.offsetWidth;
 		root.classList.add('accent-shimmer');
-		window.setTimeout(() => root.classList.remove('accent-shimmer'), 420);
+		shimmerTimer = window.setTimeout(() => root.classList.remove('accent-shimmer'), 420);
 	}
 }

@@ -159,7 +159,7 @@
 		display: flex;
 		margin: 0;
 		gap: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.pct {
@@ -172,7 +172,7 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		gap: 0.25rem 1rem;
 	}
 
@@ -189,11 +189,11 @@
 	}
 
 	.c-muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.c-frame {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.sr-only {

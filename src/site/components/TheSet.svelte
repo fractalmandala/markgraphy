@@ -72,7 +72,7 @@
 	}
 
 	.t1, .t4 { background: var(--bg-surface); }
-	.t0, .t3, .t6 { background: var(--bg-dialog); }
+	.t0, .t3 { background: var(--bg-dialog); }
 	.t2, .t5 { background: none }
 
 	.tile :global(.graph) {
@@ -81,24 +81,6 @@
 
 	.tile.span {
 		grid-column: 1 / -1;
-	}
-
-	.docs {
-		position: absolute;
-		right: 0.9rem;
-		bottom: 0.45rem;
-		z-index: 11;
-		padding: 0 0.4rem;
-		background: var(--bg-raised);
-		color: var(--site-faint);
-		font-size: 0.62rem;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		text-decoration: none;
-	}
-
-	.docs:hover {
-		color: var(--graph-accent);
 	}
 
 	@media (max-width: 1024px) {

@@ -139,7 +139,7 @@
 	.story {
 		max-width: 56ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 		text-wrap: pretty;
 	}
@@ -149,7 +149,7 @@
 		gap: 0.5rem;
 		flex-wrap: wrap;
 		margin: 0;
-		color: var(--site-faint);
+		color: var(--text-muted);
 		font-size: 0.62rem;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
@@ -174,7 +174,6 @@
 	}
 
 	.plate {
-		--graph-background: var(--bg-raised);
 		flex: 1;
 		padding: 1.8rem 1.3rem 1.2rem;
 		background: var(--bg-raised);
@@ -193,7 +192,7 @@
 
 	.fig-link {
 		align-self: flex-end;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.62rem;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
@@ -211,14 +210,14 @@
 		min-width: 0;
 		padding: 0.85rem 0.9rem 0.95rem;
 		border: 1px solid var(--border);
-		background: #0c0c0c;
+		background: var(--bg-terminal, #0c0c0c);
 	}
 
 	.import-box header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.62rem;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
@@ -234,7 +233,7 @@
 		background: transparent !important;
 		font-size: 0.8rem;
 		line-height: 1.55;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		white-space: pre;
 	}
 </style>

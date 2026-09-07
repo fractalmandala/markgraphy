@@ -31,18 +31,21 @@
 				items: getStarted
 					.filter((item) => match(item.label, item.href))
 					.map((item) => ({ href: item.href, label: item.label, fam: '' }))
+					.sort((a, b) => a.label.localeCompare(b.label))
 			},
 			{
 				label: 'rooms',
 				items: rooms
 					.filter((item) => match(item.label, item.href))
 					.map((item) => ({ href: item.href, label: item.label, fam: 'room' }))
+					.sort((a, b) => a.label.localeCompare(b.label))
 			},
 			{
 				label: 'graphs',
 				items: graphs
 					.filter((item) => match(item.title, item.slug))
 					.map((item) => ({ href: `/docs/${item.slug}`, label: item.title, fam: 'graph' }))
+					.sort((a, b) => a.label.localeCompare(b.label))
 			},
 			{
 				label: 'animated',
@@ -52,12 +55,14 @@
 						.filter((item) => match(item.title, item.slug))
 						.map((item) => ({ href: `/docs/${item.slug}`, label: item.title, fam: 'anim' }))
 				]
+					.sort((a, b) => a.label.localeCompare(b.label))
 			},
 			{
 				label: 'diagrams',
 				items: diagrams
 					.filter((item) => match(item.title, item.slug))
 					.map((item) => ({ href: `/docs/${item.slug}`, label: item.title, fam: 'diagram' }))
+					.sort((a, b) => a.label.localeCompare(b.label))
 			}
 		].filter((group) => group.items.length > 0);
 	});
@@ -158,7 +163,7 @@
 	}
 
 	.find::placeholder {
-		color: var(--site-faint);
+		color: var(--text-muted);
 	}
 
 	.find:focus-visible {
@@ -201,7 +206,7 @@
 		padding: 0.3rem 0.35rem;
 		border-bottom: 1px dotted #2a2a2a;
 		font-size: 0.82rem;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		text-decoration: none;
 	}
 
@@ -221,14 +226,14 @@
 	}
 
 	.fam {
-		color: var(--site-faint);
+		color: var(--text-muted);
 		font-size: 0.62rem;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
 	}
 
 	.spec.active .fam {
-		color: var(--site-muted);
+		color: var(--text-secondary);
 	}
 
 	/* --- Mobile strip --- */
@@ -260,7 +265,7 @@
 		font-size: 0.68rem;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		text-decoration: none;
 	}
 

@@ -23,7 +23,7 @@
 		flex-wrap: wrap;
 		padding: 1rem var(--pad) 1.4rem;
 		border-top: 1px dashed var(--border);
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.7rem;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
@@ -36,7 +36,7 @@
 	}
 
 	a {
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		text-decoration: none;
 	}
 

@@ -165,7 +165,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.zone {
@@ -183,7 +183,7 @@
 	}
 
 	.muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.c-accent {
@@ -195,14 +195,14 @@
 	}
 
 	.c-accent3 {
-		color: var(--graph-accent-3, oklch(0.75 0.1 200));
+		color: var(--graph-accent-3, oklch(0.72 0.13 30));
 	}
 
 	.c-muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.c-frame {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 </style>

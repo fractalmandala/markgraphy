@@ -56,71 +56,8 @@
 </svelte:head>
 
 <section class="rules">
-	<div class="page-head">
-		<div>
-			<p class="kicker">[ rules ]</p>
-			<h1>A taste system<br />disguised as charts.</h1>
-		</div>
-		<p class="lede">Three constraints. Break any one and it becomes another chart library.</p>
-	</div>
 
 	<div class="grammar">
-		<article class="rule-plate">
-			<div class="rule-copy">
-				<p class="rule-idx">01</p>
-				<h2>Glyphs do the drawing.</h2>
-				<p>Borders are dashes and plus signs. Bars and cells are characters.</p>
-			</div>
-			<div class="rule-demo">
-				<div class="controls" role="group" aria-label="Glyph set">
-					{#each glyphSets as id (id)}
-						<button
-							type="button"
-							class="mark-btn"
-							aria-pressed={glyphSet === id}
-							onclick={() => (glyphSet = id)}
-						>
-							[ {id} ]
-						</button>
-					{/each}
-				</div>
-				<div class="demo-art">
-					<GraphRank title="RANK" glyphs={glyphSet} items={rankItems} />
-				</div>
-			</div>
-		</article>
-
-		<article class="rule-plate">
-			<div class="rule-copy">
-				<p class="rule-idx">02</p>
-				<h2>The frame is the brand.</h2>
-				<p>
-					Every graph sits in a dashed edge with a <span class="tok">[ TITLE ]</span> and corner
-					marks.
-				</p>
-			</div>
-			<div class="rule-demo">
-				<div class="controls" role="group" aria-label="Corner mark">
-					{#each corners as mark (mark)}
-						<button
-							type="button"
-							class="mark-btn"
-							aria-pressed={corner === mark}
-							onclick={() => (corner = mark)}
-						>
-							[ {mark} ]
-						</button>
-					{/each}
-				</div>
-				<div class="demo-art">
-					<Graph title="FRAME" corner={corner}>
-						<GraphBody>
-							<p class="caption">Graph · GraphBody · GraphRule · GraphTrack</p>
-						</GraphBody>
-					</Graph>
-				</div>
-			</div>
-		</article>
 
 		<article class="rule-plate">
 			<div class="rule-copy">
@@ -147,19 +84,7 @@
 			</div>
 		</article>
 	</div>
-
-	<div class="dont">
-		<article>
-			<p class="eyebrow">[ do ]</p>
-			<h3>Let unused rows go quiet.</h3>
-			<p>Accent the current step. Everything else stays muted ink.</p>
-		</article>
-		<article>
-			<p class="eyebrow">[ don't ]</p>
-			<h3>Do not plot in SVG.</h3>
-			<p>If it cannot be typed, it does not belong in the frame.</p>
-		</article>
-	</div>
+	
 </section>
 
 <style>
@@ -190,7 +115,7 @@
 	.rule-copy {
 		padding: 2rem 1.5rem 1.6rem;
 		border-right: 1px dashed var(--border);
-		background: var(--site-bg);
+		background: var(--bg);
 	}
 
 	.rule-idx {
@@ -199,7 +124,7 @@
 		font-size: clamp(3.4rem, 8vw, 6.2rem);
 		letter-spacing: -0.08em;
 		line-height: 0.8;
-		color: var(--site-faint);
+		color: var(--text-muted);
 	}
 
 	.rule-copy h2 {
@@ -211,7 +136,7 @@
 
 	.rule-copy p {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		max-width: 38ch;
 		font-size: 0.88rem;
 	}
@@ -233,7 +158,7 @@
 	}
 
 	.mark-btn {
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		padding: 0 0.7rem;
 		min-height: 36px;
 		letter-spacing: 0.1em;
@@ -249,7 +174,7 @@
 	}
 
 	.mark-btn[aria-pressed='true'] {
-		color: var(--site-bg);
+		color: var(--bg);
 		background: var(--text-primary);
 		border-color: var(--text-primary);
 	}
@@ -285,7 +210,7 @@
 
 	.dont p {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 		max-width: 44ch;
 	}

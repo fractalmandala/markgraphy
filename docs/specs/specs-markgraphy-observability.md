@@ -18,8 +18,8 @@ Status: implemented — pending user evaluation (2026-09-06)
 **Answer: three static (non-animated) graphs added to the `graphs` family**, each
 a self-contained panel inside the standard `Graph` frame. They follow the same
 house recipe as GraphUptime, GraphMeter, and GraphStat (revealed staggered cells,
-scoped CSS with `--graph-accent`/`--graph-accent-2`/`--graph-accent-3`/`--graph-muted`/
-`--graph-frame`/`--graph-foreground`, no Tailwind, no SVG, ASCII/Unicode glyphs
+scoped CSS with `--graph-accent`/`--graph-accent-2`/`--graph-accent-3`/`--text-secondary`/
+`--border`/`--graph-foreground`, no Tailwind, no SVG, ASCII/Unicode glyphs
 only). They are designed to be read next to each other on a status page.
 
 ## What was implemented

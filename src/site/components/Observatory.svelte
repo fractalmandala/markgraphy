@@ -2,19 +2,15 @@
 	// Home page hero: one instrument at a time in the vitrine, its dossier
 	// beside it, a filmstrip of the eight instruments beneath. j/k or arrows
 	// move through the strip.
-	import CopyCode from '$site/components/docs/copy-code.svelte';
 	import { staticComponents, animatedComponents } from '$site/docs/catalog';
-	import { instrumentPreview, instruments } from '$site/lib/instruments';
+	import { instruments } from '$site/lib/instruments';
 	import Logo from '$site/icons/mgbig.svelte'
 	import Graph from '$lib/frame/Graph.svelte'
 	import Agni from '$lib/animated/GraphAgni.svelte'
 
-	let { codeHtml }: { codeHtml: Record<string, string> } = $props();
-
 	let current = $state(0);
 
 	const instrument = $derived(instruments[current]);
-	const preview = $derived(instrumentPreview(instrument));
 	const index = $derived(String(current + 1).padStart(2, '0'));
 	const total = $derived(String(instruments.length).padStart(2, '0'));
 
@@ -109,14 +105,5 @@
 		}
 	}
 
-	@keyframes march {
-		to {
-			background-position:
-				8px 0,
-				100% 8px,
-				-8px 100%,
-				0 -8px;
-		}
-	}
 
 </style>

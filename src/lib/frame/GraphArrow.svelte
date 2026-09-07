@@ -24,7 +24,7 @@
 		min-width: 1.5rem;
 		align-items: center;
 		gap: 0.25rem;
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.stretch {

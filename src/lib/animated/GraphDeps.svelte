@@ -94,8 +94,7 @@
 	);
 
 	let revealed = $state(0);
-	// svelte-ignore state_referenced_locally
-	const preRevealed = moving ? 0 : rows.length;
+	const preRevealed = $derived(moving ? 0 : rows.length);
 
 	$effect(() => {
 		revealed = preRevealed;
@@ -190,7 +189,7 @@
 	}
 
 	.depth {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 		font-size: 0.7rem;
 		letter-spacing: 0.2em;
 		user-select: none;
@@ -198,12 +197,12 @@
 	}
 
 	.branch {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 		user-select: none;
 	}
 
 	.name {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.c-accent {
@@ -212,12 +211,12 @@
 	}
 
 	.at {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 		user-select: none;
 	}
 
 	.version {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		font-size: 0.78rem;
 	}
 
@@ -228,7 +227,7 @@
 	.caption {
 		margin: 0.6rem 0 0;
 		font-size: 0.78rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.sr-only {

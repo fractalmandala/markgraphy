@@ -60,7 +60,7 @@
 		padding: 0 0.7rem;
 		border: 1px solid var(--border);
 		background: transparent;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font: inherit;
 		font-size: 0.62rem;
 		letter-spacing: 0.1em;
@@ -73,7 +73,7 @@
 	}
 
 	.tab[aria-pressed='true'] {
-		color: var(--site-bg);
+		color: var(--bg);
 		background: var(--text-primary);
 		border-color: var(--text-primary);
 	}
@@ -85,7 +85,7 @@
 		gap: 0.8rem;
 		padding: 0.85rem 0.9rem;
 		border: 1px solid var(--border);
-		background: #0c0c0c;
+		background: var(--bg-terminal, #0c0c0c);
 	}
 
 	.cmd code {

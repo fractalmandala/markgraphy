@@ -38,7 +38,7 @@
 		height: 1rem;
 		align-items: center;
 		justify-content: center;
-		background: var(--site-bg);
+		background: var(--bg);
 		font-size: 0.875rem;
 		line-height: 1;
 		user-select: none;
@@ -50,7 +50,7 @@
 	}
 
 	.frame {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.tl {

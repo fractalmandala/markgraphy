@@ -202,26 +202,9 @@
 		if (count <= 0 || cols <= 0) return [];
 		const segs: Seg[] = [];
 		// Build a string of `cols` characters where each run is a marker.
-		const char = (idx: number): { ch: string; cls: string | undefined } => {
-			// Map run idx to a plot column.
-			const col = Math.round((idx / Math.max(1, count - 1)) * (cols - 1));
-			if (showNow && col === nowCol) return { ch: '|', cls: 'now' };
-			if (idx === active) return { ch: '●', cls: 'hot' };
-			return { ch: '·', cls: 'faint' };
-		};
 
 		let buf = '';
 		let cls: string | undefined;
-		const flush = (next: string | undefined) => {
-			if (next === cls) {
-				buf += next === undefined ? ' ' : char(0).ch;
-			} else {
-				if (buf.length > 0) segs.push({ text: buf, cls });
-				cls = next;
-				buf = ' ';
-			}
-		};
-		void flush;
 
 		for (let i = 0; i < cols; i++) {
 			// Which run (if any) lands on this column?
@@ -430,7 +413,7 @@
 		margin: 0;
 		font-size: 0.78rem;
 		line-height: 1.35;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		white-space: pre;
 		font-variant-numeric: tabular-nums;
 	}
@@ -441,7 +424,7 @@
 	}
 
 	.faint {
-		color: var(--graph-faint, oklch(0.3 0 0));
+		color: var(--text-muted, oklch(0.3 0 0));
 	}
 
 	.now {
@@ -449,17 +432,17 @@
 	}
 
 	.ax {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.warn {
-		color: oklch(0.7 0.18 35);
+		color: var(--graph-accent-3, oklch(0.72 0.13 30));
 	}
 
 	.caption {
 		margin: 0.4rem 0 0;
 		font-size: 0.78rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.sr-only {

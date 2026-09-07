@@ -1,6 +1,6 @@
 ---
 title: Markgraphy diagram set
-description: Porting decisions for the diagram set — tokenized accents, computed ASCII art, skin and monospace discipline, --graph-font repair, glyph coverage checks.
+description: Porting decisions for the diagram set — tokenized accents, computed ASCII art, skin and monospace discipline, --font-mono repair, glyph coverage checks.
 type: markgraphy
 ---
 
@@ -10,11 +10,11 @@ Ported from `/Users/amrit/fractalmandala/fractalsvelte/src/lib/comps/graphing/` 
 
 ## Porting decisions
 
-- **Accent system replaced.** The source hard-coded eight hex accents (`ACCENT_COLORS`) per component. Here every diagram reads the `--graph-*` variables (`--graph-accent`, `--graph-foreground`, `--graph-muted`, `--graph-faint`, `--graph-frame`, `--graph-background`, `--graph-font`), so the site accent picker re-themes diagrams exactly like graphs. No `accent` prop.
-- **Skin replaced.** Rounded 12–14px dark cards became the library's square, dashed-border language (`--graph-frame`, flat controls, no border-radius).
+- **Accent system replaced.** The source hard-coded eight hex accents (`ACCENT_COLORS`) per component. Here every diagram reads the `--graph-*` variables (`--graph-accent`, `--graph-foreground`, `--text-secondary`, `--text-muted`, `--border`, `--bg`, `--font-mono`), so the site accent picker re-themes diagrams exactly like graphs. No `accent` prop.
+- **Skin replaced.** Rounded 12–14px dark cards became the library's square, dashed-border language (`--border`, flat controls, no border-radius).
 - **Art is computed, not hand-counted.** `src/lib/diagram/ascii.ts` builds frame edges and rows from character grids (`dashEdge`, `splitLabeledEdge`, `overlayRow`, pad helpers), so borders line up at any title/label/value width. The source art had several off-by-one rows; the ports guarantee alignment. Helpers are exported for custom figures.
 - **Monospace discipline.** No letter-spacing or padding inside the art (both broke the character grid in the source — e.g. the padded `AI` chip became plain accent text); in-art font weights stay ≤ 600 (only 400/500/600 are imported; 700 would synthesize).
-- **`--graph-font` token repaired.** The token was missing its semicolon in `themes.css`, so its value swallowed the next declaration (dark `--graph-background` was lost) and every `font-family: var(--graph-font, …)` fell back to the inherited body font — a proportional sans, which misaligned all character art. Now `"Geist Mono", ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace`.
+- **`--font-mono` token repaired.** The token was missing its semicolon in `themes.css`, so its value swallowed the next declaration (dark `--bg` was lost) and every `font-family: var(--font-mono, …)` fell back to the inherited body font — a proportional sans, which misaligned all character art. Now `"Geist Mono", ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace`.
 - **Art glyph set is coverage-checked.** Geist Mono ships box drawing + block elements (fontsource `symbols2` subset, U+2500–259F) but not ▲▼→←, so art uses covered glyphs only (`v`, `^`; `◀▶` and the `▂▃▄▅▆▇█` bars are covered). Verified per-glyph with a canvas advance-width probe: every art glyph equals `M` at 400 and 600.
 - **Motion guards.** Amplifier freezes under `prefers-reduced-motion: reduce`; PromptLoop's pulse animation only runs under `no-preference`; both expose an opt-out (`animated`, pause button).
 

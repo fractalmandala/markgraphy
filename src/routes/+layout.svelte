@@ -1,19 +1,13 @@
 <script lang="ts">
-	// Root layout: global assets + document meta only. Route groups decide
-	// chrome — (site) adds header/footer, (bare) stays bare (OG card).
-	import '$site/appglobal.sass';
-	import '$site/global.sass'
-	import '$site/lib/styles/index.sass'
-	import { setTheme, getTheme, themes, initPresets, getPresetScript } from 'fractalstyler2/presets';
+
+	import 'fractalstyler2/styles';
+	import '$lib/styles/index.sass'
+	import { getPresetScript } from 'fractalstyler2/presets';
 	import favicon from '$lib/assets/favicon.svg';
 	import { SITE_DESCRIPTION, SITE_URL } from '$site/lib/site';
-	import { enableNavWipe } from '$site/lib/navwipe';
 	import type { Snippet } from 'svelte';
 
 	let { children }: { children: Snippet } = $props();
-
-	// Bottom-to-top wipe on every navigation, matching the mode swipe.
-	enableNavWipe();
 </script>
 
 <svelte:head>

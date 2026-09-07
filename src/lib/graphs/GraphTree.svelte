@@ -113,12 +113,12 @@
 	}
 
 	.branch {
-		color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		color: var(--border, oklch(0.6 0 0 / 0.5));
 		user-select: none;
 	}
 
 	.label {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.c-accent {
@@ -126,7 +126,7 @@
 	}
 
 	.meta {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.dim {

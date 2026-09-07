@@ -142,7 +142,7 @@
 		padding: 1px 0;
 		height: calc(var(--plot-h, 7) * 1em);
 		text-align: right;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.plot {
@@ -193,7 +193,7 @@
 		display: flex;
 		flex: 1;
 		justify-content: space-between;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.c-accent {
@@ -205,11 +205,11 @@
 	}
 
 	.c-muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.c-fg {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.sr-only {

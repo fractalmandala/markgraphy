@@ -59,7 +59,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					{#each rows as row, r}
+					{#each rows as row, r (r)}
 						<tr use:reveal={{ delay: stagger(r, 40), amount: 0.4 }}>
 							{#each row as cell, c}
 								<td class="cell" class:right={alignOf(c) === 'right'}>

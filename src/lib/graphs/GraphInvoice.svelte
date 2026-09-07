@@ -185,17 +185,17 @@
 		margin: 0;
 		letter-spacing: 0.025em;
 		text-transform: uppercase;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.name {
 		margin: 0;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.muted {
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.meta {
@@ -235,7 +235,7 @@
 		padding-top: 0;
 		padding-bottom: 0.75rem;
 		font-weight: 400;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.rulecell {
@@ -277,7 +277,7 @@
 		margin: 0;
 		max-width: 48ch;
 		text-wrap: pretty;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.c-accent {
@@ -285,10 +285,10 @@
 	}
 
 	.c-fg {
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	.c-muted {
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 </style>

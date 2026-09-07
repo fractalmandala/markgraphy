@@ -14,12 +14,12 @@
 		['--graph-accent', 'The one highlight. Default Svelte orange.'],
 		['--graph-accent-2', 'Second series when palette is duo or multi.'],
 		['--graph-accent-3', 'Third cycle. Leave it alone unless earned.'],
-		['--graph-frame', 'Dashed edge color. Keep it quieter than ink.'],
+		['--border', 'Dashed edge color. Keep it quieter than ink.'],
 		['--graph-framer', 'The dash pattern itself: on-length, off-length.'],
-		['--graph-foreground', 'Primary ink inside the frame.'],
-		['--graph-background', 'What the title and corners knock out of the edge.'],
-		['--graph-muted', 'Unused rows, captions, the receding path.'],
-		['--graph-faint', 'Empty cells and the quietest glyphs.']
+		['--text-primary', 'Primary ink inside the frame.'],
+		['--bg', 'What the title and corners knock out of the edge.'],
+		['--text-secondary', 'Unused rows, captions, the receding path.'],
+		['--text-muted', 'Empty cells and the quietest glyphs.']
 	];
 </script>
 
@@ -141,12 +141,12 @@
 	}
 
 	.station.on {
-		background: color-mix(in oklab, var(--graph-accent) 6%, var(--site-bg));
+		background: color-mix(in oklab, var(--graph-accent) 6%, var(--bg));
 	}
 
 	.st-num {
 		margin: 0;
-		color: var(--site-faint);
+		color: var(--text-muted);
 		letter-spacing: 0.16em;
 		font-size: 0.66rem;
 		text-transform: uppercase;
@@ -159,7 +159,7 @@
 	.station p:not(.st-num) {
 		max-width: 36ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 	}
 
@@ -175,7 +175,6 @@
 	}
 
 	.plate {
-		--graph-background: var(--bg-raised);
 		display: grid;
 		align-items: center;
 		min-width: 0;
@@ -206,7 +205,7 @@
 
 	.ghost-p {
 		margin: 0 0 0.5rem;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.85rem;
 	}
 
@@ -248,7 +247,7 @@
 
 	.token p {
 		margin: 0.3rem 0 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.75rem;
 	}
 
@@ -262,14 +261,14 @@
 	.block p {
 		max-width: 62ch;
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.88rem;
 	}
 
 	.block a {
 		color: var(--text-primary);
 		text-decoration: none;
-		border-bottom: 1px dotted var(--site-faint);
+		border-bottom: 1px dotted var(--text-muted);
 	}
 
 	@media (max-width: 1024px) {

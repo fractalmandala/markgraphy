@@ -172,7 +172,7 @@
 		line-height: 1.2;
 		letter-spacing: -0.025em;
 		font-variant-numeric: tabular-nums;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 	}
 
 	@media (min-width: 640px) {
@@ -183,7 +183,7 @@
 
 	.unit {
 		font-size: 1.25rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.spark {
@@ -206,7 +206,7 @@
 
 	.muted {
 		margin: 0;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.sr-only {

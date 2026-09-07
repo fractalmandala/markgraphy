@@ -32,7 +32,7 @@
 	}
 
 	.back a {
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		text-decoration: underline;
 		text-decoration-color: var(--border);
 		text-underline-offset: 3px;

@@ -34,9 +34,9 @@ published step-by-step guides for SvelteKit + mdsvex):
 - Limited langs: `svelte, typescript, bash, css, json, markdown` (recommendation: only load what
   the site needs).
 - Custom theme `markgraphy` built on the site's CSS variables so code re-themes with the
-  accent picker at runtime: transparent background, base `var(--site-muted)`, strings/constants
+  accent picker at runtime: transparent background, base `var(--text-secondary)`, strings/constants
   `var(--graph-accent, oklch(0.78 0.17 155))`, keywords/tags/functions/headings `var(--text-primary)`,
-  comments `color-mix(in oklab, var(--site-muted) 65%, transparent)`.
+  comments `color-mix(in oklab, var(--text-secondary) 65%, transparent)`.
 - `highlight(code, lang)` → shiki HTML (falls back to `text` on unknown lang).
 - `mdsvexHighlighter(code, lang)` for mdsvex: returns `` `{@html `${escapeSvelte(html)}`}` `` —
   the exact contract mdsvex expects for a custom highlighter (verified against mdsvex dist:
@@ -87,7 +87,7 @@ existed). `entries()` + `prerender = true` preserved.
 - `pnpm check` — 0 errors, 0 warnings.
 - `pnpm build` — succeeds; highlighter code compiled into the server chunk (`chunks/highlight.js`).
 - Prerendered output: 47/47 `[slug]` pages contain `class="shiki markgraphy"` blocks with
-  `background-color:transparent;color:var(--site-muted)`; accent-colored token spans present;
+  `background-color:transparent;color:var(--text-secondary)`; accent-colored token spans present;
   `graph-frame` carries its frame block.
 - Dev server: `/docs/installation` 4 blocks, `/docs/skill` 9 (4 for the selected agent + 4
   example prompts + SKILL.md; other agents swap client-side), `/docs/examples` 6 (scenario cards

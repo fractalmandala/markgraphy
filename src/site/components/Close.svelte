@@ -56,14 +56,14 @@
 
 	.close-meta {
 		margin: 0;
-		color: var(--site-muted);
+		color: var(--text-secondary);
 		font-size: 0.8rem;
 	}
 
 	.close-meta a {
 		color: var(--text-primary);
 		text-decoration: none;
-		border-bottom: 1px dotted var(--site-faint);
+		border-bottom: 1px dotted var(--text-muted);
 	}
 
 	.close-meta code {

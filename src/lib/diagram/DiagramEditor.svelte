@@ -253,7 +253,7 @@
 		flex-direction: column;
 		gap: 0.6rem;
 		padding: 0.75rem 1rem;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.group {
@@ -267,7 +267,7 @@
 		font-size: 0.75rem;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.options {
@@ -279,16 +279,16 @@
 	.chip {
 		padding: 0.2rem 0.55rem;
 		font-size: 0.75rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 		background: none;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 		border-radius: 0;
 		cursor: pointer;
 	}
 
 	.chip:hover {
-		color: var(--graph-foreground, oklch(0.93 0 0));
-		border-color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
+		border-color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.chip.on {
@@ -317,7 +317,7 @@
 
 	.group-label {
 		font-size: 0.7rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.chars {
@@ -330,7 +330,7 @@
 		min-width: 22px;
 		padding: 0.15rem 0.35rem;
 		font-size: 0.75rem;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		background: none;
 		border: 1px solid transparent;
 		border-radius: 0;
@@ -339,7 +339,7 @@
 
 	.char:hover {
 		color: var(--graph-accent, oklch(0.78 0.17 155));
-		border-color: var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-color: var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.workspace {
@@ -359,7 +359,7 @@
 		display: flex;
 		flex-direction: column;
 		min-width: 0;
-		border: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.pane-header {
@@ -368,7 +368,7 @@
 		justify-content: space-between;
 		gap: 1rem;
 		padding: 0.5rem 0.75rem;
-		border-bottom: 1px dashed var(--graph-frame, oklch(0.6 0 0 / 0.5));
+		border-bottom: 1px dashed var(--border, oklch(0.6 0 0 / 0.5));
 	}
 
 	.pane-title {
@@ -376,12 +376,12 @@
 		font-weight: 600;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.meta {
 		font-size: 0.7rem;
-		color: var(--graph-muted, oklch(0.62 0 0));
+		color: var(--text-secondary, oklch(0.62 0 0));
 	}
 
 	.exports {
@@ -395,7 +395,7 @@
 		padding: 1rem;
 		font-size: 0.825rem;
 		line-height: 1.4;
-		color: var(--graph-foreground, oklch(0.93 0 0));
+		color: var(--text-primary, oklch(0.93 0 0));
 		background: transparent;
 		border: none;
 		outline: none;

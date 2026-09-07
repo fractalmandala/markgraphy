@@ -163,3 +163,5 @@ export { default as GraphTypewriter } from './animated/GraphTypewriter.svelte';
 export type { GraphTypewriterProps } from './animated/GraphTypewriter.svelte';
 export { default as GraphWorkflow } from './animated/GraphWorkflow.svelte';
 export type { WorkflowTone, WorkflowNode, WorkflowEdge, GraphWorkflowProps } from './animated/GraphWorkflow.svelte';
+export { default as ShuffleText } from './animated/ShuffleText.svelte';
+export type { ShuffleTextProps, ShuffleDirection, AnimationMode, TagName } from './animated/ShuffleText.svelte';
