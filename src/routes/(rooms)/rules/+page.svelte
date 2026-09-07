@@ -290,18 +290,34 @@
 		max-width: 44ch;
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
+		.grammar {
+			gap: 1rem;
+			padding: 1rem 0 1.5rem;
+		}
+
 		.rule-plate {
 			grid-template-columns: 1fr;
+			min-height: 0;
 		}
 
 		.rule-copy {
+			padding: 1.4rem 1.1rem 1.2rem;
 			border-right: 0;
 			border-bottom: 1px dashed var(--border);
 		}
 
+		.rule-demo {
+			padding: 1.2rem 1rem;
+			gap: 0.85rem;
+		}
+
 		.dont {
 			grid-template-columns: 1fr;
+		}
+
+		.dont article {
+			padding: 1rem 1.1rem;
 		}
 
 		.dont article:first-child {

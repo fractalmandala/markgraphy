@@ -272,7 +272,7 @@
 		border-bottom: 1px dotted var(--site-faint);
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
 		.bench,
 		.live-row {
 			grid-template-columns: 1fr;
@@ -281,14 +281,33 @@
 		.station {
 			border-right: 0;
 			border-bottom: 1px dashed var(--border);
+			min-height: 0;
+			padding: 1.2rem 1rem 1.1rem;
+			gap: 0.7rem;
+		}
+
+		.station h2 {
+			font-size: 1.3rem;
 		}
 
 		.station:last-child {
 			border-bottom: 0;
 		}
 
+		.plate {
+			padding: 1.3rem 1rem 1.1rem;
+		}
+
+		.svx {
+			padding: 1rem;
+		}
+
 		.token-bay {
 			grid-template-columns: 1fr 1fr;
+		}
+
+		.token {
+			padding: 0.75rem 0.85rem;
 		}
 
 		.token:nth-child(3n) {

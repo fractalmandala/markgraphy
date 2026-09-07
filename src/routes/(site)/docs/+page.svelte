@@ -348,20 +348,26 @@
 		white-space: pre;
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
 		.cabinet {
 			grid-template-columns: 1fr;
 		}
 
 		.index {
 			max-height: 14rem;
-			padding-right: 0;
+			padding: 0.7rem 0.75rem 0.9rem 0;
 			border-right: 0;
 			border-bottom: 1px dashed var(--border);
 		}
 
 		.plate-wrap {
-			padding-left: 0;
+			padding: 1.1rem 0 1rem;
+			gap: 0.8rem;
+		}
+
+		.plate {
+			min-height: 240px;
+			padding: 1.2rem 0.9rem 1rem;
 		}
 	}
 </style>

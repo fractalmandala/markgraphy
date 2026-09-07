@@ -320,6 +320,20 @@
 		background: var(--bg-raised);
 	}
 
+	@media (max-width: 1024px) {
+		.page {
+			gap: 1.6rem;
+		}
+
+		.wall {
+			gap: 0.9rem;
+		}
+
+		.plate {
+			padding: 1.2rem 1rem 1rem;
+		}
+	}
+
 	.demo {
 		min-width: 0;
 		overflow-x: auto;

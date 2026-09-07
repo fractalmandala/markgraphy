@@ -221,6 +221,8 @@
 
 	.live {
 		min-width: 0;
+		overflow-x: auto;
+		scrollbar-width: thin;
 	}
 
 	/* The active instrument marches its frame. Reduced motion leaves it still. */
@@ -540,18 +542,41 @@
 		font-size: 0.8rem;
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
 		.stage {
 			grid-template-columns: 1fr;
+		}
+
+		.vitrine {
+			min-height: 320px;
+			padding: 1.5rem 1.1rem 1.2rem;
 		}
 
 		.dossier {
 			border-left: 0;
 			border-top: 1px dashed var(--border);
+			padding: 1.2rem 1.1rem 1.1rem;
+			gap: 0.9rem;
+		}
+
+		.section {
+			padding: 2.2rem 0 2.6rem;
+		}
+
+		.section-head {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.55rem;
 		}
 
 		.wall {
 			grid-template-columns: 1fr;
+			gap: 0.9rem;
+		}
+
+		.tile {
+			overflow-x: auto;
+			scrollbar-width: thin;
 		}
 
 		.principles {
@@ -559,6 +584,7 @@
 		}
 
 		.principle {
+			padding: 1.2rem 1.1rem 1.1rem;
 			border-right: 0;
 			border-bottom: 1px dashed var(--border);
 		}
@@ -569,6 +595,24 @@
 
 		.close {
 			grid-template-columns: 1fr;
+			gap: 1.2rem;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.vitrine {
+			min-height: 260px;
+		}
+
+		.film {
+			grid-template-columns: 1fr;
+			gap: 0.4rem;
+		}
+
+		.film-label {
+			writing-mode: horizontal-tb;
+			transform: none;
+			padding: 0;
 		}
 	}
 </style>

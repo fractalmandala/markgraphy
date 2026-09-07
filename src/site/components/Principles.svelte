@@ -48,7 +48,11 @@
 		gap: var(--space-sm);
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
+
+		.section {
+			padding: 2.2rem var(--pad) 2.6rem;
+		}
 
 		.principles {
 			grid-template-columns: 1fr;

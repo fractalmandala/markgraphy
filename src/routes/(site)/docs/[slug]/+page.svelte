@@ -165,17 +165,24 @@
 		flex-wrap: wrap;
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
 		.comp-layout {
 			grid-template-columns: 1fr;
 		}
 
 		.stage {
-			padding-right: 0;
+			padding: 1.1rem 0 1rem;
+			gap: 0.8rem;
+		}
+
+		.plate {
+			min-height: 200px;
+			padding: 1.2rem 1rem 1rem;
 		}
 
 		.side {
-			padding-left: 0;
+			padding: 1.1rem 0 1rem;
+			gap: 0.9rem;
 			border-left: 0;
 			border-top: 1px dashed var(--border);
 			background: none;

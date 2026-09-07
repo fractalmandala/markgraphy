@@ -55,7 +55,7 @@
 
 	.content {
 		min-width: 0;
-		padding: 1.6rem 1.3rem 4rem;
+		padding: 1.2rem 1rem 3rem;
 	}
 
 	@media (min-width: 1024px) {

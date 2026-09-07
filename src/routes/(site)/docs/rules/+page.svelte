@@ -329,15 +329,33 @@
 		font-size: 0.85rem;
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
+		.grammar {
+			gap: 1rem;
+		}
+
 		.rule-plate,
 		.dont {
 			grid-template-columns: 1fr;
 		}
 
+		.rule-plate {
+			min-height: 0;
+		}
+
 		.copy {
+			padding: 1.4rem 1.1rem 1.2rem;
 			border-right: 0;
 			border-bottom: 1px dashed var(--border);
+		}
+
+		.demo {
+			padding: 1.2rem 1rem;
+			gap: 0.9rem;
+		}
+
+		.dont article {
+			padding: 1rem 1.1rem;
 		}
 
 		.dont article:first-child {

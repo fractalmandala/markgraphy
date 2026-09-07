@@ -168,15 +168,27 @@
 		padding: 2rem 0 0;
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
 		.comp-layout {
 			grid-template-columns: 1fr;
+		}
+
+		.comp-stage {
+			padding: 1.1rem 0.9rem 1rem;
+			gap: 0.8rem;
+		}
+
+		.plate {
+			min-height: 240px;
+			padding: 1.2rem 0.9rem 1rem;
 		}
 
 		.comp-side {
 			border-left: 0;
 			border-top: 1px dashed var(--border);
 			background: none;
+			padding: 1.1rem 0.9rem 1rem;
+			gap: 0.9rem;
 		}
 	}
 </style>

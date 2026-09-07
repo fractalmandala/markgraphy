@@ -22,12 +22,12 @@
 	<Observatory codeHtml={data.codeHtml} />
 	<Principles />
 	<TheSet />
-	<section class="border-top pad-top-xl gap-lg box">
+	<section class="showcase border-top pad-top-xl gap-lg box">
 		<div class="section-head ta-c box xcenter">
 			<h2 class="weight-500 text-2xl">Frame Showcase</h2>
 		</div>
 		<Graph pad="lg" class="surface" ink="var(--text-primary)">
-			<div class="box pad-xl gap-lg">
+			<div class="showcase-inner box pad-xl gap-lg">
 				<GraphFlowPlayer
 					class="panel"
 					title="IN THIS LIBRARY"
@@ -63,7 +63,7 @@
 		</Graph>
 	</section>
 	<div class="box pad-y-2xl xcenter ycenter gap-xs" style="height: 256px">
-	<div class="row ycenter xcenter gap-sm">
+	<div class="row ycenter xcenter gap-sm wrap">
 		<a class="button primary" href="/docs">
 			Install and Use <span class="mover">→</span>
 		</a>
@@ -77,3 +77,12 @@
 	<div class="text-lg row ycenter gap-2xs">Built with <Heart/> for Sveltekit.</div>
 	</div>
 </div>
+
+<style>
+	@media (max-width: 1024px) {
+		.showcase-inner.pad-xl {
+			padding: calc(var(--space-md) * var(--pad-scale, 1));
+			gap: calc(var(--space-md) * var(--gap-scale, 1));
+		}
+	}
+</style>

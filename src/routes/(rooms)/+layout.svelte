@@ -47,7 +47,7 @@
 <a class="skip" href="#rooms">Skip to content</a>
 
 <div class="shell widefull">
-	<header class="row xbetween full" style="good">
+	<header class="hud">
 		<div class="brand">
 			<a class="brand-mark" href="/stage">mark<em>graphy</em></a>
 			<span class="brand-ver">v{SITE_VERSION} · mit</span>
@@ -59,7 +59,7 @@
 				</a>
 			{/each}
 		</nav>
-		<div class="hud-right bdr">
+		<div class="hud-right">
 			<div class="accents" role="group" aria-label="Accent">
 				{#each dots as accent (accent.id)}
 					<button
@@ -80,7 +80,6 @@
 	</header>
 
 	<div class="room" id="rooms">
-	<p>Lang: Supervisor</p>
 	<div>
 		{@render children()}
 	</div>
@@ -263,6 +262,8 @@
 		z-index: 1;
 		display: flex;
 		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 0.35rem 0.75rem;
 		padding: 1rem var(--pad) 1.4rem;
 		border-top: 1px dashed var(--border);
 		color: var(--site-muted);
@@ -370,31 +371,74 @@
 		text-align: right;
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
 		.hud {
-			grid-template-columns: 1fr;
+			grid-template-columns: 1fr auto;
+			gap: 0.4rem 0.75rem;
+			padding: 0.55rem var(--pad);
+		}
+
+		.nav {
+			grid-column: 1 / -1;
+			grid-row: 2;
+			justify-content: flex-start;
+			flex-wrap: nowrap;
+			overflow-x: auto;
+			scrollbar-width: none;
+			margin: 0 -0.65rem;
+		}
+
+		.nav::-webkit-scrollbar {
+			display: none;
+		}
+
+		.nav a {
+			min-height: 32px;
+			padding: 0.25rem 0.65rem;
 		}
 
 		.hud-right {
-			justify-content: space-between;
+			gap: 0.5rem;
+		}
+
+		.install-chip {
+			gap: 0.45rem;
+			min-height: 32px;
+			padding: 0.24rem 0.3rem 0.24rem 0.6rem;
+		}
+
+		.install-chip code {
+			font-size: 0.7rem;
+		}
+
+		.room :global(h1) {
+			font-size: clamp(2rem, 8vw, 3.4rem);
+		}
+
+		.room :global(.page-head) {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.9rem;
+			padding: 1.1rem 0 0.9rem;
+		}
+
+		.room :global(.page-head .lede) {
+			text-align: left;
+			margin-left: 0;
+		}
+	}
+
+	@media (max-width: 560px) {
+		.brand-ver {
+			display: none;
 		}
 
 		.hud-right .accents {
 			display: none;
 		}
 
-		.room :global(h1) {
-			font-size: clamp(2rem, 11vw, 3.4rem);
-		}
-
-		.room :global(.page-head) {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
-		.room :global(.page-head .lede) {
-			text-align: left;
-			margin-left: 0;
+		.nav a {
+			padding: 0.25rem 0.5rem;
 		}
 	}
 </style>

@@ -313,6 +313,17 @@
 		cursor: not-allowed;
 	}
 
+	@media (max-width: 1024px) {
+		.knob {
+			width: 100%;
+			place-self: stretch;
+		}
+
+		.slider {
+			grid-template-columns: minmax(0, 1fr) 3rem;
+		}
+	}
+
 	@media (max-width: 700px) {
 		.knob {
 			grid-template-columns: 1fr;

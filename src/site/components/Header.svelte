@@ -168,5 +168,19 @@
 		}
 	}
 
+	@media (max-width: 560px) {
+		header {
+			padding: 0.55rem var(--pad);
+		}
+
+		.hud-right.grow {
+			gap: 0.4rem;
+		}
+
+		.sitelogo :global(svg) {
+			width: 118px;
+			height: auto;
+		}
+	}
 
 </style>

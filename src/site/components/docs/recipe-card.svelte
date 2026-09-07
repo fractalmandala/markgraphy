@@ -181,6 +181,16 @@
 		overflow-x: auto;
 	}
 
+	@media (max-width: 1024px) {
+		.plate {
+			padding: 1.2rem 1rem 1rem;
+		}
+
+		.import-box {
+			padding: 0.75rem 0.8rem 0.85rem;
+		}
+	}
+
 	.fig-link {
 		align-self: flex-end;
 		color: var(--site-muted);

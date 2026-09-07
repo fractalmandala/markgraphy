@@ -101,13 +101,23 @@
 		color: var(--graph-accent);
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
+		.section {
+			padding: 2.2rem var(--pad) 2.6rem;
+		}
+
 		.section-head {
 			flex-direction: column;
 		}
 
 		.wall {
 			grid-template-columns: 1fr;
+			gap: var(--space-md);
+		}
+
+		.tile {
+			overflow-x: auto;
+			scrollbar-width: thin;
 		}
 	}
 </style>

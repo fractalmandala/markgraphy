@@ -93,6 +93,22 @@
 		font-size: clamp(2.6rem, 7.2vw, 6.4rem);
 	}
 
+	@media (max-width: 1024px) {
+		h1 {
+			font-size: clamp(2.3rem, 9vw, 4.2rem);
+		}
+
+		/* The hero frame and its interior grid take up too much of a narrow
+		   screen — tighten both to the md/lg steps of the space scale. */
+		.observatory :global(.graph.pad-xl) {
+			padding: calc(var(--space-md) * var(--pad-scale, 1));
+		}
+
+		.observatory :global(.grid-2) {
+			gap: calc(var(--space-md) * var(--gap-scale, 1));
+		}
+	}
+
 	@keyframes march {
 		to {
 			background-position:

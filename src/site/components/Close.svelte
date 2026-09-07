@@ -72,9 +72,14 @@
 		color: var(--graph-accent);
 	}
 
-	@media (max-width: 980px) {
+	@media (max-width: 1024px) {
+		.section {
+			padding: 2.2rem var(--pad) 2.6rem;
+		}
+
 		.close {
 			grid-template-columns: 1fr;
+			gap: 1.2rem;
 		}
 	}
 </style>

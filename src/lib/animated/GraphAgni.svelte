@@ -530,6 +530,9 @@
 		flex-direction: column;
 		justify-content: flex-end;
 		overflow-x: auto;
+		/* In the centered column the viewport sizes to max-content; cap it so a
+		   narrow frame gets an inner scroll instead of the art bleeding out. */
+		max-width: 100%;
 	}
 
 	.art {

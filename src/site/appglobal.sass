@@ -143,6 +143,21 @@ html.accent-shimmer::after
 .fg-prose h3
 	margin-top: 2rem
 	font-size: 1.25rem
+@media (max-width: 1024px)
+	.fg-prose h1,
+	.fg-prose h2,
+	.fg-prose h3
+		margin: 2rem 0 0.85rem
+	.fg-prose h1
+		font-size: 1.8rem
+	.fg-prose h2
+		margin-top: 2.25rem
+		font-size: 1.3rem
+	.fg-prose h3
+		margin-top: 1.6rem
+		font-size: 1.15rem
+	.fg-prose pre
+		padding: 0.85rem 1rem
 .fg-prose h1:first-child,
 .fg-prose h2:first-child,
 .fg-prose h3:first-child,
@@ -198,6 +213,8 @@ html.accent-shimmer::after
 	color: var(--site-muted)
 	line-height: 1.5
 	font-size: 1.2rem
+	@media (max-width: 1024px)
+		font-size: 1.05rem
 .lede-sm
 	margin: 0
 	line-height: 1.5
