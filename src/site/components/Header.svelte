@@ -136,7 +136,7 @@
 	</nav>
 		<div class="row gap-sm">
 			<!-- Accent dropdown -->
-			<div class="accent-dd" bind:this={dropdownEl} onkeydown={onKeydown}>
+			<div class="accent-dd" role="button" tabindex="0" bind:this={dropdownEl} onkeydown={onKeydown}>
 				<button
 					type="button"
 					class="accent-trigger"
